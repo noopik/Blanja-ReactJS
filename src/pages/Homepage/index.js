@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Carousel, Navbar } from '../../components/molecules';
+import { MainContent } from '../../components/Layouts';
 
 const Homepage = () => {
+  useEffect(() => {
+    document.title = 'Blanja | Homepage';
+  });
   return (
-    <div>
-      <h1>Homepage</h1>
-    </div>
+    <>
+      <Navbar />
+      <MainContent>
+        <Carousel className="carousel" />
+      </MainContent>
+    </>
   );
 };
 

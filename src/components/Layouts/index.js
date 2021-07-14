@@ -1,4 +1,4 @@
-import MainContainer from './MainContainer';
+import MainContent from './MainContent';
 import AuthContainer from './AuthContainer';
 
-export { MainContainer, AuthContainer };
+export { MainContent, AuthContainer };

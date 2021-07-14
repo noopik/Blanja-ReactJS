@@ -29,6 +29,8 @@ const FormInput = ({
   type,
   placeholder,
   name,
+  onChange,
+  value,
 }) => {
   return (
     <ContentWrapper
@@ -43,7 +45,13 @@ const FormInput = ({
       width={width}
       height={height}
     >
-      <Input type={type} placeholder={placeholder} name={name} />;
+      <Input
+        type={type}
+        placeholder={placeholder}
+        name={name}
+        onChange={onChange}
+        value={value}
+      />
     </ContentWrapper>
   );
 };

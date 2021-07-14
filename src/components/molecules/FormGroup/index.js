@@ -4,10 +4,13 @@ import { ContentWrapper } from '../../atoms/styled';
 
 const Form = styled.form`
   width: 400px;
-  display: ${(flex) => flex};
-  justify-content: ${({ justifyContent }) => justifyContent};
-  align-items: ${({ alignItems }) => alignItems};
-  gap: ${({ gap }) => gap};
+  /* display: ${(flex) => flex}; */
+  /* justify-content: ${({ justifyContent }) => justifyContent}; */
+  /* align-items: ${({ alignItems }) => alignItems}; */
+  /* gap: ${({ gap }) => gap || 10}px; */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `;
 
 const FormGroup = ({

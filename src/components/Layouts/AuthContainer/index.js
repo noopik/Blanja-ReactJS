@@ -9,6 +9,16 @@ const Container = styled.div`
   align-items: center;
   height: 100vh;
   width: 400px;
+
+  .btn-wrapper {
+    margin: 26px 40px;
+  }
+
+  .text-warning {
+    text-align: center;
+    margin-top: -16px;
+    margin-bottom: 24px;
+  }
 `;
 
 const index = ({ children }) => {

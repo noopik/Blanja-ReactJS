@@ -11,8 +11,10 @@ function Text({
   display,
   justifyContent,
   alignItems,
-  link,
+  to,
   color,
+  gap,
+  className,
 }) {
   // console.log(as);
   const Text = styled.p`
@@ -34,15 +36,17 @@ function Text({
     background-color: ${({ bg }) => bg};
     justify-content: ${({ justifyContent }) => justifyContent};
     align-items: ${({ alignItems }) => alignItems};
+    gap: ${({ gap }) => gap}px;
+
     &:hover {
-      opacity: 0.5;
-      cursor: pointer;
+      opacity: ${({ to }) => (to ? 0.5 : 1)};
+      cursor: ${({ to }) => (to ? 'pointer' : null)};
     }
   `;
 
-  if (link) {
+  if (to) {
     return (
-      <Link to="#" style={{ textDecoration: 'none' }}>
+      <Link to={to} style={{ textDecoration: 'none' }}>
         <Text
           as={as}
           bg={bg}
@@ -51,6 +55,7 @@ function Text({
           justifyContent={justifyContent}
           alignItems={alignItems}
           color={color}
+          gap={gap}
         >
           {children}
         </Text>
@@ -67,6 +72,8 @@ function Text({
       justifyContent={justifyContent}
       alignItems={alignItems}
       color={color}
+      gap={gap}
+      className={className}
     >
       {children}
     </Text>

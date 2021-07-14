@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { IconLogo } from '../index';
 import { TitleBrand } from './styled';
@@ -10,12 +11,14 @@ const Wrapper = styled.div`
   gap: 10px;
 `;
 
-const index = () => {
+const index = ({ className, size }) => {
   return (
-    <Wrapper>
-      <IconLogo />
-      <TitleBrand>Blanja</TitleBrand>
-    </Wrapper>
+    <Link to="/" className={`anchor ${className}`}>
+      <Wrapper>
+        <IconLogo size={size} />
+        <TitleBrand>Blanja</TitleBrand>
+      </Wrapper>
+    </Link>
   );
 };
 

@@ -27,3 +27,13 @@ body {
   font-family: 'Metropolis';
   background-color: white;
 }
+
+
+/* LINK COMPONENT BUILT IN REACT ROUTER DOM */
+
+.anchor {
+  text-decoration: none;
+}
+
+
+/* ICONS */
