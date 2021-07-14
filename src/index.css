@@ -37,3 +37,15 @@ body {
 
 
 /* ICONS */
+
+
+/* Carousel */
+
+.slick-dots {
+  display: flex !important;
+  justify-content: flex-start;
+}
+
+.slick-dots li button {
+  color: rebeccapurple;
+}

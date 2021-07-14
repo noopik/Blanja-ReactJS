@@ -24,7 +24,6 @@ const Button = styled.div`
       content: 'O';
       width: 100px;
       height: 100px;
-      background-color: violet;
     }
   }
   .slick-arrow.slick-prev {

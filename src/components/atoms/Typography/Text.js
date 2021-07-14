@@ -27,8 +27,9 @@ function Text({
     }}px;
     font-weight: ${({ as }) => (as === 'md' ? 600 : 400)}px;
     color: ${({ as }) => (as === 'sm' ? '#9B9B9B' : '#222222')};
-    color: ${({ as }) => {
+    color: ${({ as, color }) => {
       if (color === 'primary') return '#db3022';
+      if (color === 'secondary') return '#9B9B9B';
     }};
     display: ${({ display }) => display};
     width: 100%;

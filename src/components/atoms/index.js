@@ -5,6 +5,7 @@ import FormInput from './FormInput';
 import Button from './Button';
 import ToggleItem from './ButtonTogller/ToggleItem';
 import SearchInput from './SearchInput';
+import CardProduct from './CardProduct';
 
 export {
   IconLogo,
@@ -14,4 +15,5 @@ export {
   Button,
   ToggleItem,
   SearchInput,
+  CardProduct,
 };

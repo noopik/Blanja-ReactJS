@@ -56,6 +56,7 @@ export default class MultipleItems extends Component {
   render() {
     const { className } = this.props;
     const settings = {
+      dots: true,
       className: 'center',
       centerMode: true,
       infinite: true,

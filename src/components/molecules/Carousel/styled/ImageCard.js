@@ -15,32 +15,53 @@ const Wrapper = styled.div`
     object-fit: cover;
     z-index: -9;
   }
+
+  img.category {
+    object-fit: contain;
+    padding: 25px;
+  }
+
   h3 {
     position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
     padding: 10px;
-    background-color: #0e0e0d45;
     z-index: 9;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+    border-radius: 1rem;
+  }
+  h3.main {
+    background-color: #0e0e0d45;
     font-style: normal;
     font-weight: bold;
     font-size: 38px;
     line-height: 38px;
-    color: #ffffff;
-    border-radius: 1rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  }
+  h3.category {
+    background-color: #0e0e0d45;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 32px;
   }
 `;
 
-const ImageCard = ({ to }) => {
+const ImageCard = ({ to, image, title, category }) => {
   return (
     <Link className="anchor" to="#">
       <Wrapper>
-        <img src={ImageCarousel1} alt="img" />
-        <h3>Trend 2020</h3>
+        <img
+          className={category ? 'category' : ''}
+          src={image ? image : ImageCarousel1}
+          alt={title}
+        />
+        <h3 className={category ? 'category' : 'main'}>
+          {title ? title : 'Trend 2020'}
+        </h3>
       </Wrapper>
     </Link>
   );

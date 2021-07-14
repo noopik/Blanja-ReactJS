@@ -5,7 +5,7 @@ import { ContentWrapper } from '../styled';
 
 const Heading = ({ children, as, mt, mr, mb, ml, py, px, my, mx }) => {
   const Heading1 = styled.h1`
-    font-family: Metropolis;
+    font-family: 'Metropolis-SemiBold';
     font-size: 34px;
     color: #222222;
   `;
