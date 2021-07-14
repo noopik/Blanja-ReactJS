@@ -5,6 +5,7 @@ const TitleBrand = styled.h1`
   color: #db3022;
   font-size: 34px;
   font-family: 'Metropolis-Bold';
+  margin-bottom: 0;
 `;
 
 const index = ({ children }) => {

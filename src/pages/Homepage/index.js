@@ -7,6 +7,7 @@ import {
   Navbar,
 } from '../../components/molecules';
 import { MainContent, SectionContent } from '../../components/Layouts';
+import Footer from '../../components/molecules/Footer';
 
 const Homepage = () => {
   useEffect(() => {
@@ -29,6 +30,7 @@ const Homepage = () => {
           <CardGrouping />
         </SectionContent>
       </MainContent>
+      <Footer />
     </>
   );
 };
