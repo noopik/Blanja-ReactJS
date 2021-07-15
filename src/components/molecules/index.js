@@ -5,9 +5,12 @@ import Navbar from './Navbar';
 import Carousel from './Carousel';
 import HeaderSection from './HeaderSection';
 import CarouselCategory from './CarouselCategory';
-import CardGrouping from './CardGrouping'
+import CardGrouping from './CardGrouping';
+import CardCheckout from './CardCheckout';
+import CheckoutDetail from './CheckoutDetail';
 
 export {
+  CheckoutDetail,
   FormGroup,
   AuthFooter,
   AuthForgotPassword,
@@ -15,5 +18,6 @@ export {
   Carousel,
   HeaderSection,
   CarouselCategory,
-  CardGrouping
+  CardGrouping,
+  CardCheckout,
 };

@@ -2,31 +2,29 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { ContentWrapper } from '../styled';
+import { Heading1, Heading2, Heading3, Heading4 } from './styled';
 
-const Heading = ({ children, as, mt, mr, mb, ml, py, px, my, mx }) => {
-  const Heading1 = styled.h1`
-    font-family: 'Metropolis-SemiBold';
-    font-size: 34px;
-    color: #222222;
-  `;
+const fonts = {
+  regular: 'Metropolis',
+  medium: 'Metropolis-SemiBold',
+  bold: 'Metropolis-Bold',
+};
 
-  const Heading2 = styled.h2`
-    font-family: Metropolis;
-    font-size: 24px;
-    color: #222222;
-  `;
-
-  const Heading3 = styled.h3`
-    font-family: Metropolis;
-    font-size: 18px;
-    color: #222222;
-  `;
-
-  const Heading4 = styled.h4`
-    font-family: Metropolis;
-    font-size: 16px;
-    color: #222222;
-  `;
+const Heading = ({
+  children,
+  as,
+  mt,
+  mr,
+  mb,
+  ml,
+  py,
+  px,
+  my,
+  mx,
+  font,
+  className,
+}) => {
+  const typeFont = fonts[`${font}`];
 
   return (
     <ContentWrapper
@@ -39,15 +37,35 @@ const Heading = ({ children, as, mt, mr, mb, ml, py, px, my, mx }) => {
       my={my}
       mx={mx}
     >
-      {as === 1 && <Heading1>{children}</Heading1>}
-      {as === 2 && <Heading2>{children}</Heading2>}
-      {as === 3 && <Heading3>{children}</Heading3>}
-      {as === 4 && <Heading4>{children}</Heading4>}
+      {as === 1 && (
+        <Heading1 font={typeFont} className={className}>
+          {children}
+        </Heading1>
+      )}
+      {as === 2 && (
+        <Heading2 font={typeFont} className={className}>
+          {children}
+        </Heading2>
+      )}
+      {as === 3 && (
+        <Heading3 font={typeFont} className={className}>
+          {children}
+        </Heading3>
+      )}
+      {as === 4 && (
+        <Heading4 font={typeFont} className={className}>
+          {children}
+        </Heading4>
+      )}
     </ContentWrapper>
   );
 };
 
 export default Heading;
+
+Heading.defaultProps = {
+  as: 1,
+};
 
 PropTypes.Heading = {
   children: PropTypes.element,

@@ -5,17 +5,23 @@ import { BrandLogo, SearchInput } from '../../atoms';
 import {} from '../../atoms/Typography';
 import { Navbar, Wrapper } from './styled';
 import PublicNav from './styled/PublicNav';
+import UserNav from './styled/UserNav';
 
-const index = ({ children, onChange, value }) => {
+const NavbarComponent = ({ onChange, value, session }) => {
   return (
     <Navbar>
       <Wrapper className="container">
         <BrandLogo className="logo-brand" size={40} />
         <SearchInput onChange={onChange} value={value} />
-        <PublicNav />
+        {session === 'public' && <PublicNav />}
+        {session === 'user' && <UserNav />}
       </Wrapper>
     </Navbar>
   );
 };
 
-export default index;
+export default NavbarComponent;
+
+NavbarComponent.defaultProps = {
+  session: 'public',
+};

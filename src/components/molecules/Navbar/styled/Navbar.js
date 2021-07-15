@@ -5,6 +5,9 @@ const NavbarMain = styled.nav`
   background-color: white;
   width: 100vw;
   box-shadow: 0px 6px 40px rgba(173, 173, 173, 0.25);
+  position: fixed;
+  top: 0;
+  z-index: 99;
 
   .logo-brand {
     height: 40px;

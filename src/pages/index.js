@@ -1,3 +1,4 @@
 import Homepage from './Homepage';
+import MyBag from './MyBag';
 
-export { Homepage };
+export { Homepage, MyBag };

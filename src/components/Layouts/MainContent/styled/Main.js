@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 export const Main = styled.main`
+  margin-top: 150px;
   .carousel {
     margin-top: 50px;
   }

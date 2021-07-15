@@ -6,6 +6,10 @@ import Button from './Button';
 import ToggleItem from './ButtonTogller/ToggleItem';
 import SearchInput from './SearchInput';
 import CardProduct from './CardProduct';
+import AsideLeft from './AsideLeft';
+import AsideRight from './AsideRight';
+import CardWrapper from './CardWrapper';
+import InputCheck from './InputCheck';
 
 export {
   IconLogo,
@@ -16,4 +20,8 @@ export {
   ToggleItem,
   SearchInput,
   CardProduct,
+  AsideRight,
+  AsideLeft,
+  CardWrapper,
+  InputCheck,
 };
