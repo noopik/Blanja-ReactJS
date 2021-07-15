@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { MainContent, SectionContent } from '../../components/Layouts';
 import {
+  Breadcrumbs,
   CardGrouping,
   Footer,
   HeaderSection,
@@ -15,8 +16,9 @@ const CategoryPage = () => {
   return (
     <>
       <Navbar session="user" />
-      <MainContent>
+      <MainContent className="category-page">
         <SectionContent>
+          <Breadcrumbs className="breadcrumbs" />
           <HeaderSection title="T-Shirt" />
           <CardGrouping />
         </SectionContent>

@@ -9,6 +9,8 @@ import CardGrouping from './CardGrouping';
 import CardCheckout from './CardCheckout';
 import CheckoutDetail from './CheckoutDetail';
 import Footer from './Footer';
+import Breadcrumbs from './Breadcrumbs';
+import ImageGaleryProduct from './ImageGaleryProduct';
 
 export {
   CheckoutDetail,
@@ -22,4 +24,6 @@ export {
   CardGrouping,
   CardCheckout,
   Footer,
+  Breadcrumbs,
+  ImageGaleryProduct,
 };
