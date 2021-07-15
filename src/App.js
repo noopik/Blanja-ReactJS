@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import { Homepage, MyBag } from './pages';
+import { Homepage, MyBag, CategoryPage, CheckoutPage } from './pages';
 import {
   CustomerLogin,
   SellerLogin,
@@ -20,7 +20,9 @@ export default class App extends Component {
           <Route path="/seller-register" component={SellerRegister} />
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route exact path="/" component={Homepage} />
-          <Route exact path="/my-bag" component={MyBag} />
+          <Route path="/my-bag" component={MyBag} />
+          <Route path="/categories-product" component={CategoryPage} />
+          <Route path="/checkout" component={CheckoutPage} />
         </Switch>
       </Router>
     );

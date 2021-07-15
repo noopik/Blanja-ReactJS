@@ -23,7 +23,7 @@ const Text = styled.p`
     if (color === 'secondary') return '#9B9B9B';
   }};
   display: ${({ display }) => display};
-  width: 100%;
+  /* width: 100%; */
   width: ${({ width }) => width && width}px;
   background-color: ${({ bg }) => bg};
   justify-content: ${({ justifyContent }) => justifyContent};

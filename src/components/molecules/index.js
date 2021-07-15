@@ -8,6 +8,7 @@ import CarouselCategory from './CarouselCategory';
 import CardGrouping from './CardGrouping';
 import CardCheckout from './CardCheckout';
 import CheckoutDetail from './CheckoutDetail';
+import Footer from './Footer';
 
 export {
   CheckoutDetail,
@@ -20,4 +21,5 @@ export {
   CarouselCategory,
   CardGrouping,
   CardCheckout,
+  Footer,
 };

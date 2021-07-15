@@ -10,33 +10,11 @@ const fonts = {
   bold: 'Metropolis-Bold',
 };
 
-const Heading = ({
-  children,
-  as,
-  mt,
-  mr,
-  mb,
-  ml,
-  py,
-  px,
-  my,
-  mx,
-  font,
-  className,
-}) => {
+const Heading = ({ children, as, mt, mr, mb, ml, font, className }) => {
   const typeFont = fonts[`${font}`];
 
   return (
-    <ContentWrapper
-      mt={mt}
-      mr={mr}
-      mb={mb}
-      ml={ml}
-      py={py}
-      px={px}
-      my={my}
-      mx={mx}
-    >
+    <ContentWrapper mt={mt} mr={mr} mb={mb} ml={ml}>
       {as === 1 && (
         <Heading1 font={typeFont} className={className}>
           {children}

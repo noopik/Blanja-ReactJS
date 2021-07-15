@@ -10,6 +10,7 @@ import AsideLeft from './AsideLeft';
 import AsideRight from './AsideRight';
 import CardWrapper from './CardWrapper';
 import InputCheck from './InputCheck';
+import Divider from './Divider';
 
 export {
   IconLogo,
@@ -24,4 +25,5 @@ export {
   AsideLeft,
   CardWrapper,
   InputCheck,
+  Divider,
 };

@@ -5,12 +5,12 @@ import { Wrapper } from './styled';
 import HeadingCard from './Heading';
 import Body from './Body';
 
-const CheckoutDetail = ({ heading, body }) => {
+const CheckoutDetail = ({ heading, body, checkout }) => {
   return (
-    <Wrapper>
-      <InputCheck className="input" />
+    <Wrapper checkout={checkout}>
+      {!checkout && <InputCheck className="input" />}
       {heading && <HeadingCard />}
-      {body && <Body />}
+      {body && <Body checkout={checkout} />}
     </Wrapper>
   );
 };

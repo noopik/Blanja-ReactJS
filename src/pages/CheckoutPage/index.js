@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { AsideLeft, AsideRight } from '../../components/atoms';
+import { Heading, Text } from '../../components/atoms/Typography';
 import {
   AsideContent,
   MainContent,
@@ -12,25 +13,23 @@ import {
   Navbar,
 } from '../../components/molecules';
 
-const MyBag = () => {
-  useEffect(() => {
-    document.title = 'Blanja | My Bag';
-  });
+const CheckoutPage = () => {
   return (
     <>
       <Navbar session="user" />
       <MainContent>
         <SectionContent>
-          <HeaderSection title="My Bag" />
+          <HeaderSection title="Checkout" />
           <AsideContent>
             <AsideLeft className="left">
-              <CheckoutDetail heading />
-              <CheckoutDetail body />
-              <CheckoutDetail body />
-              <CheckoutDetail body />
+              <Heading as={3} font="regular" mb="24" mt="2">
+                Shipping Address
+              </Heading>
+              <CheckoutDetail body checkout />
+              <CheckoutDetail body checkout />
             </AsideLeft>
             <AsideRight className="right">
-              <CardCheckout myBag />
+              <CardCheckout checkout />
             </AsideRight>
           </AsideContent>
         </SectionContent>
@@ -39,4 +38,4 @@ const MyBag = () => {
   );
 };
 
-export default MyBag;
+export default CheckoutPage;

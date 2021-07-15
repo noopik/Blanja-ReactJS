@@ -3,12 +3,13 @@ import { CardWrapper } from '../../atoms';
 
 export const Wrapper = styled(CardWrapper)`
   display: flex;
+  margin-bottom: 1rem;
 
   .content {
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin-left: 2.6rem;
+    margin-left: ${({ checkout }) => (checkout ? 0 : 2.6)}rem;
     justify-content: space-between;
     .heading {
       margin-bottom: 0;

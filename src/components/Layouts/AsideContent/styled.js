@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   gap: 2rem;
 
   .left {
-    background-color: green;
+    /* background-color: green; */
     width: 70%;
   }
 
