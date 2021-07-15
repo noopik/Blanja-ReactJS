@@ -11,6 +11,8 @@ import AsideRight from './AsideRight';
 import CardWrapper from './CardWrapper';
 import InputCheck from './InputCheck';
 import Divider from './Divider';
+import StarRating from './StarRating';
+import Counter from './Counter';
 
 export {
   IconLogo,
@@ -26,4 +28,6 @@ export {
   CardWrapper,
   InputCheck,
   Divider,
+  StarRating,
+  Counter,
 };

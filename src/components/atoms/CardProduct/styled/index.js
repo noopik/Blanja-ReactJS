@@ -47,13 +47,6 @@ export const BodyProduct = styled.div`
     margin-bottom: 11px;
   }
 
-  .star-wrapper {
-    display: flex;
-    /* align-self: flex-start; */
-    gap: 2px;
-    height: 100%;
-  }
-
   .sold {
     margin-left: 3px;
     color: #9b9b9b;

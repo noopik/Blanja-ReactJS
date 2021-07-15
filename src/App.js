@@ -6,6 +6,7 @@ import {
   CategoryPage,
   CheckoutPage,
   ProductDetailPage,
+  UserProfile,
 } from './pages';
 import {
   CustomerLogin,
@@ -30,6 +31,7 @@ export default class App extends Component {
           <Route path="/categories-product" component={CategoryPage} />
           <Route path="/checkout" component={CheckoutPage} />
           <Route path="/product-detail" component={ProductDetailPage} />
+          <Route path="/user-profile" component={UserProfile} />
         </Switch>
       </Router>
     );

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card, BodyProduct } from './styled';
 import { ProductCategory } from '../../../assets/images';
 import { ICStar } from '../../../assets/Icons';
+import StarRating from '../StarRating';
 
 const CardProduct = ({ children, className, to, title }) => {
   return (
@@ -13,14 +14,7 @@ const CardProduct = ({ children, className, to, title }) => {
           <h3 className="title">Men's formal suit - Black & White</h3>
           <p className="price">$ 40.0</p>
           <p className="store">Xalora</p>
-          <div className="star-wrapper">
-            <img src={ICStar} />
-            <img src={ICStar} />
-            <img src={ICStar} />
-            <img src={ICStar} />
-            <img src={ICStar} />
-            <span className="sold">(10)</span>
-          </div>
+          <StarRating />
         </BodyProduct>
       </Card>
     </Link>
