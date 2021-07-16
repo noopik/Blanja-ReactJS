@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
-import { MainContent } from '../../components/Layouts';
-import { Navbar } from '../../components/molecules';
-import { Aside, Container } from './styled';
+import { Navbar, UserFormSetting } from '../../components/molecules';
+import { Aside, Container, Main, MainAside } from './styled';
 
-const UserProfile = () => {
+const UserProfile = ({ userName, children, active }) => {
   useEffect(() => {
-    document.title = 'Joe Tama';
+    document.title = userName;
   });
 
   return (
     <>
       <Navbar session="user" />
       <Container>
-        <Aside />
+        <Aside active={active} />
+        <MainAside>{children}</MainAside>
       </Container>
     </>
   );

@@ -8,5 +8,6 @@ const Container = ({ children }) => {
 export default Container;
 
 const Wrapper = styled.div`
-  background-color: yellow;
+  /* background-color: yellow; */
+  display: flex;
 `;

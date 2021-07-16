@@ -10,9 +10,12 @@ const Input = styled.input`
   padding: 16px 23px;
   font-size: 14px;
   font-weight: 500;
-  color: #9b9b9b;
+  color: ${({ value }) => (value ? '#222222' : '#9b9b9b')};
   filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.05));
   border-radius: 4px;
+  &:focus {
+    outline: none;
+  }
 `;
 
 const FormInput = ({

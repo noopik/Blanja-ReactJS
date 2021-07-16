@@ -13,6 +13,8 @@ import InputCheck from './InputCheck';
 import Divider from './Divider';
 import StarRating from './StarRating';
 import Counter from './Counter';
+import BtnNewAddres from './BtnNewAddress';
+import TabItemContent from './TabItem';
 
 export {
   IconLogo,
@@ -30,4 +32,6 @@ export {
   Divider,
   StarRating,
   Counter,
+  BtnNewAddres,
+  TabItemContent,
 };

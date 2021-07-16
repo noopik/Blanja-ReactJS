@@ -11,8 +11,11 @@ import CheckoutDetail from './CheckoutDetail';
 import Footer from './Footer';
 import Breadcrumbs from './Breadcrumbs';
 import ImageGaleryProduct from './ImageGaleryProduct';
+import { DatePicker } from './DatePicker';
+import UserFormSetting from './UserFormSetting';
 
 export {
+  DatePicker,
   CheckoutDetail,
   FormGroup,
   AuthFooter,
@@ -26,4 +29,5 @@ export {
   Footer,
   Breadcrumbs,
   ImageGaleryProduct,
+  UserFormSetting,
 };

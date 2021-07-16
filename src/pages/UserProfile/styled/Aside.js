@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ProfileUser } from '../../../assets/images';
 
-const Aside = () => {
+const Aside = ({ active }) => {
   return (
     <Wrapper>
       <div className="content">
@@ -11,7 +11,7 @@ const Aside = () => {
           <img className="avatar" src={ProfileUser} alt="image" />
           <div className="username-wrapper">
             <h3>Johannes Mikael</h3>
-            <Link to="#" className="anchor">
+            <Link to={``} className="anchor">
               <div className="edit-profile-wrapper">
                 <svg
                   width=" 16 "
@@ -35,7 +35,7 @@ const Aside = () => {
           </div>
         </div>
         <div class="menu-wrapper">
-          <Link to="#" className="anchor active">
+          <Link to={`/user/setting`} className="anchor">
             <div class="icon-wrapper blue">
               <svg
                 width="16"
@@ -60,11 +60,13 @@ const Aside = () => {
                 />
               </svg>
             </div>
-            <p className="text">My Account</p>
+            <p className={`text ${active === 'account' && 'active'}`}>
+              My Account
+            </p>
           </Link>
         </div>
         <div class="menu-wrapper">
-          <Link to="#" className="anchor">
+          <Link to={`/user/shipping-address`} className="anchor">
             <div class="icon-wrapper orange">
               <svg
                 width="16"
@@ -89,11 +91,13 @@ const Aside = () => {
                 />
               </svg>
             </div>
-            <p className="text">Shipping Adrress</p>
+            <p className={`text ${active === 'address' && 'active'}`}>
+              Shipping Adrress
+            </p>
           </Link>
         </div>
         <div class="menu-wrapper">
-          <Link to="#" className="anchor">
+          <Link to={`/user/orders`} className="anchor">
             <div class="icon-wrapper pink">
               <svg
                 width="16"
@@ -118,7 +122,7 @@ const Aside = () => {
                 />
               </svg>
             </div>
-            <p className="text">My order</p>
+            <p className={`text ${active === 'order' && 'active'}`}>My order</p>
           </Link>
         </div>
       </div>
@@ -129,7 +133,7 @@ const Aside = () => {
 export default Aside;
 
 const Wrapper = styled.aside`
-  background: #d40000;
+  /* background: #d40000; */
   padding-top: 150px;
   padding-right: 25px;
   width: 27%;
@@ -139,8 +143,8 @@ const Wrapper = styled.aside`
   justify-content: flex-end;
 
   .content {
-    background-color: yellow;
-    width: 80%;
+    width: 50%;
+    /* background-color: yellow; */
 
     /* START = USER PROFILE AVATAR */
     .user-profile-wrapper {
@@ -195,11 +199,6 @@ const Wrapper = styled.aside`
         color: #9b9b9b;
         width: 80%;
 
-        &.active {
-          color: #222222;
-          font-weight: 700;
-        }
-
         &:hover {
           cursor: pointer;
           box-sizing: border-box;
@@ -213,6 +212,10 @@ const Wrapper = styled.aside`
           margin: 0;
           display: flex;
           align-items: center;
+          &.active {
+            color: #222222;
+            font-weight: 700;
+          }
         }
 
         .icon-wrapper {
