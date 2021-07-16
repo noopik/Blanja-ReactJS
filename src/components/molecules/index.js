@@ -13,6 +13,7 @@ import Breadcrumbs from './Breadcrumbs';
 import ImageGaleryProduct from './ImageGaleryProduct';
 import { DatePicker } from './DatePicker';
 import UserFormSetting from './UserFormSetting';
+import DataTable from './DataTable';
 
 export {
   DatePicker,
@@ -30,4 +31,5 @@ export {
   Breadcrumbs,
   ImageGaleryProduct,
   UserFormSetting,
+  DataTable,
 };

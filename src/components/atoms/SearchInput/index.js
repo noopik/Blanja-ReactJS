@@ -23,16 +23,20 @@ const Wrapper = styled.div`
   }
 `;
 
-const SearchInput = ({ onChange, value }) => {
+const SearchInput = ({ onChange, value, className, placeholder }) => {
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <div className="wrapper">
         <WrapperSearchInput>
           <input
             className="input"
             type="text"
             name="search"
-            placeholder="Mau Mencari Apa? Cari saya atau cari dia!"
+            placeholder={`${
+              placeholder
+                ? placeholder
+                : 'Mau Mencari Apa? Cari saya atau cari dia!'
+            }  `}
             onChange={onChange}
             value={value}
           />

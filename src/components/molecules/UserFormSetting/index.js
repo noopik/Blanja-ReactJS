@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { ProfileUser } from '../../../assets/images';
 import { Button, Divider, FormInput } from '../../atoms';
 
-const UserFormSetting = () => {
+const UserFormSetting = ({ session }) => {
   return (
     <Wrapper>
       <Form className="form">
@@ -19,25 +19,8 @@ const UserFormSetting = () => {
           <label htmlFor="phone">Phone Number</label>
           <FormInput type="text" name="phone" value="089652365" />
         </div>
-        <div className="form-wrapper">
-          <label htmlFor="phone">Gender</label>
-          <div class="gender">
-            <input type="radio" name="gender" id="male" />
-            <label class="checkmark-gender-user" for="male">
-              Laki - laki
-            </label>
-          </div>
-          <div class="gender">
-            <input type="radio" name="gender" id="female" />
-            <label class="checkmark-gender-user" for="female">
-              Perempuan
-            </label>
-          </div>
-        </div>
-        <div className="form-wrapper">
-          <label htmlFor="birth">Date of Birth</label>
-          {/* <DatePicker /> */}
-        </div>
+        {session && FormSeller}
+        {!session && FormUser}
         <div className="form-wrapper">
           <label />
           {/* <DatePicker /> */}
@@ -58,6 +41,45 @@ const UserFormSetting = () => {
 };
 
 export default UserFormSetting;
+
+// DINAMYC CONTENT
+
+const FormSeller = (
+  <div className="form-wrapper">
+    <label htmlFor="phone">Store Description</label>
+    <textarea
+      className="text-area"
+      name="description"
+      placeholder="Product Description"
+    ></textarea>
+  </div>
+);
+
+const FormUser = (
+  <>
+    <div className="form-wrapper">
+      <label htmlFor="phone">Gender</label>
+      <div class="gender">
+        <input type="radio" name="gender" id="male" />
+        <label class="checkmark-gender-user" for="male">
+          Laki - laki
+        </label>
+      </div>
+      <div class="gender">
+        <input type="radio" name="gender" id="female" />
+        <label class="checkmark-gender-user" for="female">
+          Perempuan
+        </label>
+      </div>
+    </div>
+    <div className="form-wrapper">
+      <label htmlFor="birth">Date of Birth</label>
+      {/* <DatePicker /> */}
+    </div>
+  </>
+);
+
+// STYLING CURRENT COMPONENT
 
 const Wrapper = styled.div`
   display: flex;
@@ -97,6 +119,22 @@ const Form = styled.div`
           cursor: pointer;
           opacity: 0.8;
         }
+      }
+    }
+
+    .text-area {
+      color: #222222;
+      border: 1px solid #9b9b9b;
+      height: 100px;
+      width: 400px;
+      box-sizing: border-box;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.05));
+      border-radius: 4px;
+      &:focus {
+        outline: none;
       }
     }
 

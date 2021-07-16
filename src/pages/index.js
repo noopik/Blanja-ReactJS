@@ -7,6 +7,9 @@ import UserProfile from './UserProfile';
 import UserProfileAddress from './UserProfileAddress';
 import UserProfileOrder from './UserProfileOrder';
 import UserProfileSetting from './UserProfileSetting';
+import SellerStore from './SellerStore';
+import SellerProductPage from './SellerProducts';
+import SellerSellingProducts from './SellerSellingProducts';
 
 export {
   Homepage,
@@ -18,4 +21,7 @@ export {
   UserProfileSetting,
   UserProfileAddress,
   UserProfileOrder,
+  SellerStore,
+  SellerProductPage,
+  SellerSellingProducts,
 };

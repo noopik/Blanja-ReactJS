@@ -7,7 +7,7 @@ const Input = styled.input`
   height: 48px;
   width: 400px;
   box-sizing: border-box;
-  padding: 16px 23px;
+  padding: 8px 16px;
   font-size: 14px;
   font-weight: 500;
   color: ${({ value }) => (value ? '#222222' : '#9b9b9b')};
