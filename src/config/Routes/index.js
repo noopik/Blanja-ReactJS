@@ -48,6 +48,8 @@ const Routes = () => {
           path="/admin/seller/selling-products"
           component={SellerSellingProducts}
         />
+        <Route path="/admin/seller/orders" component={SellerSellingProducts} />
+        <Route path="/admin/seller#cancel" component={SellerSellingProducts} />
       </Switch>
     </Router>
   );

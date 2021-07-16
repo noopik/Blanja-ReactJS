@@ -14,6 +14,7 @@ import ImageGaleryProduct from './ImageGaleryProduct';
 import { DatePicker } from './DatePicker';
 import UserFormSetting from './UserFormSetting';
 import DataTable from './DataTable';
+import TextEditor from './TextEditor';
 
 export {
   DatePicker,
@@ -32,4 +33,5 @@ export {
   ImageGaleryProduct,
   UserFormSetting,
   DataTable,
+  TextEditor,
 };

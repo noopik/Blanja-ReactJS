@@ -8,7 +8,11 @@ import styled from 'styled-components';
 const UserProfileOrder = () => {
   return (
     <>
-      <UserProfilePage userName="Nopik | Orders" active="order">
+      <UserProfilePage
+        userName="Nopik | Orders"
+        active="order"
+        session="customer"
+      >
         <Main heading="My Orders">
           <TabsWrapper defaultActiveKey="profile">
             <Tab eventKey="home" title="Home">

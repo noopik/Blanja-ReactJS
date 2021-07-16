@@ -3,13 +3,17 @@ import styled from 'styled-components';
 import { ICImgNull } from '../../assets/Icons';
 import { Button, Divider, FormInput } from '../../components/atoms';
 import { Text } from '../../components/atoms/Typography';
+import { TextEditor } from '../../components/molecules';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 
 const SellerSellingProducts = () => {
   return (
     <>
-      <UserProfilePage userName="Seller Diana | Selling Products">
+      <UserProfilePage
+        userName="Seller Diana | Selling Products"
+        session="seller"
+      >
         <Main heading="Inventory" className="inventory-wrapper">
           <label htmlFor="name-product">
             <Text color="secondary" as="lg">
@@ -87,10 +91,26 @@ const SellerSellingProducts = () => {
             <Button className="btn">Upload Photo</Button>
           </div>
         </Main>
-        <Main heading="Description"></Main>
+        <Main heading="Description">
+          <TextEditor />
+        </Main>
+        <ButtonWrapper>
+          <Button className="btn" primary>
+            Jual
+          </Button>
+        </ButtonWrapper>
       </UserProfilePage>
     </>
   );
 };
 
 export default SellerSellingProducts;
+
+const ButtonWrapper = styled.div`
+  width: 80%;
+  margin-top: 32px;
+  text-align: right;
+  .btn {
+    width: 150px;
+  }
+`;

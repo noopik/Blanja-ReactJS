@@ -6,7 +6,7 @@ import { Main } from '../UserProfile/styled';
 const UserProfileSetting = () => {
   return (
     <>
-      <UserProfilePage userName="Nooopik" active="account">
+      <UserProfilePage userName="Nooopik" active="account" session="customer">
         <Main>
           <UserFormSetting />
         </Main>

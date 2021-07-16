@@ -8,7 +8,11 @@ import { Main } from '../UserProfile/styled';
 const UserProfileAddress = () => {
   return (
     <>
-      <UserProfilePage userName="Nopik | Shipping Address" active="address">
+      <UserProfilePage
+        userName="Nopik | Shipping Address"
+        active="address"
+        session="customer"
+      >
         <Main
           heading="Choose another address"
           subHeading="Manage your shipping address"
