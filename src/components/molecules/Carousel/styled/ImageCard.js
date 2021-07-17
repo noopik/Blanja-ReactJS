@@ -50,12 +50,12 @@ const Wrapper = styled.div`
   }
 `;
 
-const ImageCard = ({ to, image, title, category }) => {
+const ImageCard = ({ to, image, title, category, bgCard, className }) => {
   return (
-    <Link className="anchor" to="#">
-      <Wrapper>
+    <Link className="anchor" to={`${to}`}>
+      <Wrapper className={className}>
         <img
-          className={category ? 'category' : ''}
+          className={`${category ? 'category' : ''} ${bgCard}`}
           src={image ? image : ImageCarousel1}
           alt={title}
         />

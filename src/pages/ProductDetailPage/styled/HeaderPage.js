@@ -1,19 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import AliceCarousel from 'react-alice-carousel';
 import { ProductCategory } from '../../../assets/images';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { ImageGaleryProduct } from '../../../components/molecules';
 import { Heading, Text } from '../../../components/atoms/Typography';
-import { Button, Counter, StarRating } from '../../../components/atoms';
+import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
+import NumberFormat from 'react-number-format';
 
-const HeaderPage = () => {
+const HeaderPage = ({ data }) => {
+  const [dataProduct, setDataProduct] = useState({});
+
+  useEffect(() => {
+    setDataProduct(data);
+  }, [data]);
+
   return (
     <Main>
       <div className="image-content"></div>
-      <ImageGaleryProduct />
+      <ImageGaleryProduct images={dataProduct.imageProduct} />
       <aside>
-        <Heading>Baju Muslim Pira</Heading>
+        <Heading>
+          {dataProduct.nameProduct ? dataProduct.nameProduct : <Loader line />}
+        </Heading>
         <Text as="lg" color="secondary" className="rating">
           Zalora
         </Text>
@@ -21,7 +30,19 @@ const HeaderPage = () => {
         <Text as="lg" color="secondary" className="price">
           Price
         </Text>
-        <Heading className="total-price">$ 20.0</Heading>
+        <Heading className="total-price">
+          {dataProduct.price ? (
+            <NumberFormat
+              value={dataProduct.price}
+              displayType={'text'}
+              thousandSeparator={true}
+              prefix={'Rp. '}
+              className="price"
+            />
+          ) : (
+            <Loader line className="loader-price" />
+          )}
+        </Heading>
         <div className="check-wrapper">
           <Text as="lg" font="medium">
             Color
@@ -98,6 +119,9 @@ const Main = styled.main`
 
     .total-price {
       margin-bottom: 20px;
+      .loader-price {
+        margin-top: 1rem;
+      }
     }
     /* RATING */
     .rating {

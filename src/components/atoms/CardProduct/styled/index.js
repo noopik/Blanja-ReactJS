@@ -4,8 +4,9 @@ export const Card = styled.div`
   color: #222222;
   background-color: white;
   box-shadow: 0px 0px 14px rgba(173, 173, 173, 0.25);
-  border-radius: 8px;
+  border-radius: 10px;
   display: flex;
+  height: 100%;
   flex-direction: column;
 
   &:hover {
@@ -15,7 +16,8 @@ export const Card = styled.div`
 
   .image-product {
     height: 140px;
-    object-fit: contain;
+    object-fit: fill;
+    border-radius: 10px 10px 0 0;
   }
 `;
 
@@ -45,6 +47,7 @@ export const BodyProduct = styled.div`
     line-height: 12px;
     color: #9b9b9b;
     margin-bottom: 11px;
+    margin-top: 11px;
   }
 
   .sold {

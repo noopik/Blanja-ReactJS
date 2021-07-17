@@ -1,17 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ProductCategory } from '../../../assets/images';
+import { DMNullImage, ProductCategory1 } from '../../../assets/images';
 
-const ImageProducts = () => {
+const ImageProducts = ({ images }) => {
   return (
     <ImageWrapper>
-      <img className="main-image" src={ProductCategory} alt="1" />
+      <img className="main-image" src={images ? images : DMNullImage} alt="1" />
       <div className="tumb-wrapper">
-        <img className="mini-img" src={ProductCategory} alt="2" />
-        <img className="mini-img" src={ProductCategory} alt="3" />
-        <img className="mini-img" src={ProductCategory} alt="4" />
-        <img className="mini-img" src={ProductCategory} alt="5" />
-        <img className="mini-img" src={ProductCategory} alt="6" />
+        <img className="mini-img" src={DMNullImage} alt="2" />
+        <img className="mini-img" src={DMNullImage} alt="3" />
+
+        <img className="mini-img" src={DMNullImage} alt="4" />
+        <img className="mini-img" src={DMNullImage} alt="5" />
+        <img className="mini-img" src={DMNullImage} alt="6" />
       </div>
     </ImageWrapper>
   );
@@ -22,9 +23,10 @@ export default ImageProducts;
 const ImageWrapper = styled.div`
   /* background-color: yellow; */
   width: max-content;
+  width: 500px;
 
   img {
-    width: 250px;
+    width: 100%;
     /* height: 378px; */
     border-radius: 20px;
   }
@@ -35,7 +37,8 @@ const ImageWrapper = styled.div`
     display: flex;
     gap: 1rem;
     img {
-      width: 65px;
+      width: 70px;
+      border-radius: 5px;
     }
   }
 `;

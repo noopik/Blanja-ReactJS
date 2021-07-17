@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -29,27 +29,38 @@ const Wrapper = styled.div`
   }
 `;
 
-const Breadcrumbs = ({ className }) => {
+const Breadcrumbs = ({ className, data, active }) => {
+  const [dataBreadcrumb, setDataBreadcrumb] = useState();
+
+  useEffect(() => {
+    setDataBreadcrumb(data);
+  }, [data]);
+
   return (
     <Wrapper className={className}>
       <ul>
         <li>
-          <Link to="#" className="anchor">
+          <Link to="/" className="anchor">
             Home
           </Link>
           <span>/</span>
         </li>
         <li>
-          <Link to="#" className="anchor">
+          <Link
+            to="/categories"
+            className={`${active === 'category' ? 'active' : ''} anchor`}
+          >
             T-Shirt
           </Link>
-          <span>/</span>
+          {dataBreadcrumb?.nameProduct && <span>/</span>}
         </li>
-        <li>
-          <Link to="#" className="anchor active">
-            Baju Batik
-          </Link>
-        </li>
+        {dataBreadcrumb?.nameProduct && (
+          <li>
+            <Link to="#" className="anchor active">
+              {dataBreadcrumb.nameProduct ? dataBreadcrumb.nameProduct : 'Kooo'}
+            </Link>
+          </li>
+        )}
       </ul>
     </Wrapper>
   );

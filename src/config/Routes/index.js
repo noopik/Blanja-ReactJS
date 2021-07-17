@@ -33,10 +33,9 @@ const Routes = () => {
         <Route path="/forgot-password" component={ForgotPassword} />
         {/* MAIN HOME */}
         <Route exact path="/" component={Homepage} />
+        <Route path="/categories" component={CategoryPage} />
         <Route path="/my-bag" component={MyBag} />
-        <Route path="/categories-product" component={CategoryPage} />
         <Route path="/checkout" component={CheckoutPage} />
-        <Route path="/product-detail" component={ProductDetailPage} />
         {/* USER CUSTOMER */}
         <Route path="/user/setting" component={UserProfileSetting} />
         <Route path="/user/shipping-address" component={UserProfileAddress} />
@@ -50,6 +49,7 @@ const Routes = () => {
         />
         <Route path="/admin/seller/orders" component={SellerSellingProducts} />
         <Route path="/admin/seller#cancel" component={SellerSellingProducts} />
+        <Route path="/product/:name-:id" component={ProductDetailPage} />
       </Switch>
     </Router>
   );

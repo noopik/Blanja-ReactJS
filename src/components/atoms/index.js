@@ -15,6 +15,7 @@ import StarRating from './StarRating';
 import Counter from './Counter';
 import BtnNewAddres from './BtnNewAddress';
 import TabItemContent from './TabItem';
+import Loader from './Loader';
 
 export {
   IconLogo,
@@ -34,4 +35,5 @@ export {
   Counter,
   BtnNewAddres,
   TabItemContent,
+  Loader,
 };

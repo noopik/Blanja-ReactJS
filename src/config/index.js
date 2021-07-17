@@ -1,3 +1,4 @@
 import Routes from './Routes';
+import Axios from './apiAdapter';
 
-export { Routes };
+export { Routes, Axios };

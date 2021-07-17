@@ -5,7 +5,13 @@ import 'slick-carousel/slick/slick-theme.css';
 import styled from 'styled-components';
 import { ImageCard } from './../Carousel/styled';
 // import './styled/carousel.css';
-import { ProductCategory } from '../../../assets/images/index';
+import {
+  ProductCategory1,
+  ProductCategory2,
+  ProductCategory3,
+  ProductCategory4,
+  ProductCategory5,
+} from '../../../assets/images/index';
 
 const ButtonNext = styled.div`
   position: relative;
@@ -100,13 +106,76 @@ export default class MultipleItems extends Component {
           {...settings}
           className=""
         >
-          <ImageCard category image={ProductCategory} title="T-Shirt" />
-          <ImageCard category image={ProductCategory} title="T-Shirt" />
-          <ImageCard category image={ProductCategory} title="T-Shirt" />
-          <ImageCard category image={ProductCategory} title="T-Shirt" />
-          <ImageCard category image={ProductCategory} title="T-Shirt" />
-          <ImageCard category image={ProductCategory} title="T-Shirt" />
-          <ImageCard category image={ProductCategory} title="T-Shirt" />
+          <ImageCard
+            category
+            image={ProductCategory1}
+            title="T-Shirt"
+            bgCard="red"
+            to="categories"
+          />
+          <ImageCard
+            category
+            image={ProductCategory2}
+            title="Pants"
+            bgCard="blue"
+            to="categories"
+          />
+          <ImageCard
+            category
+            image={ProductCategory3}
+            title="Jacket"
+            bgCard="red"
+            to="categories"
+          />
+          <ImageCard
+            category
+            image={ProductCategory4}
+            title="Jeans"
+            bgCard="orange"
+            to="categories"
+          />
+          <ImageCard
+            category
+            image={ProductCategory5}
+            title="Shoes"
+            bgCard="cyan"
+            to="categories"
+          />
+          <ImageCard
+            category
+            image={ProductCategory1}
+            title="T-Shirt"
+            bgCard="red"
+            to="categories"
+          />
+          <ImageCard
+            category
+            image={ProductCategory2}
+            title="Pants"
+            bgCard="blue"
+            to="categories"
+          />
+          <ImageCard
+            category
+            image={ProductCategory3}
+            title="Jacket"
+            bgCard="blue"
+            to="categories"
+          />
+          <ImageCard
+            category
+            image={ProductCategory4}
+            title="Jeans"
+            bgCard="orange"
+            to="categories"
+          />
+          <ImageCard
+            category
+            image={ProductCategory5}
+            title="Shoes"
+            bgCard="cyan"
+            to="categories"
+          />
         </Slider>
       </HeaderCarousel>
     );

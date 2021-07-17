@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Counter } from '../../atoms';
 import { Heading, Text } from '../../atoms/Typography';
-import { ProductCategory } from '../../../assets/images';
+import { ProductCategory1 } from '../../../assets/images';
 import styled from 'styled-components';
 
 const Body = ({ price, checkout }) => {
   return (
     <BodyWrapper className="content">
       <div className="product">
-        <img src={ProductCategory} alt="img" />
+        <img src={ProductCategory1} alt="img" />
         <div className="desc">
           <Text as="lg" className="">
             Men's formal suit - Black

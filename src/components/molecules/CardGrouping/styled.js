@@ -7,6 +7,7 @@ export const GridContainer = styled.div`
   grid-template-rows: auto;
   gap: 25px;
   padding: 0;
+  /* background-color: yellow; */
 `;
 
 export const Item = styled.div`

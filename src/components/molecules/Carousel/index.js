@@ -6,6 +6,12 @@ import styled from 'styled-components';
 import { ImageCard } from './styled';
 // import './styled/carousel.css';
 import ButtonArrow from './styled/ButtonArrow';
+import {
+  DMCarousel1,
+  DMCarousel2,
+  DMCarousel3,
+  DMCarousel4,
+} from '../../../assets/images';
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -73,21 +79,10 @@ export default class MultipleItems extends Component {
     return (
       <HeaderCarousel className={className}>
         <Slider {...settings}>
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
-          <ImageCard />
+          <ImageCard image={DMCarousel1} title="Casual Epic" />
+          <ImageCard image={DMCarousel2} title="Urban Distro" />
+          <ImageCard image={DMCarousel3} title="Metropolitan" />
+          <ImageCard image={DMCarousel4} title="Anak Gunung" />
         </Slider>
       </HeaderCarousel>
     );
