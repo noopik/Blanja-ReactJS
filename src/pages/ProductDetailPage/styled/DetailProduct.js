@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Loader } from '../../../components/atoms';
 import { Heading, Text } from '../../../components/atoms/Typography';
 import { CardGrouping } from '../../../components/molecules';
+import { customMedia } from '../../../components/Layouts';
 
 const DetailProduct = ({ data }) => {
   const [dataDescription, setDataDescription] = useState({});
@@ -40,6 +41,11 @@ export default DetailProduct;
 const Wrapper = styled.div`
   /* background-color: yellow; */
   margin-top: 40px;
+  ${customMedia.lessThan('1280px')`
+    // background-color: cyan; 
+  margin-top: 100px;
+
+  `}
 
   .condition-wrapper {
     .condition-product {

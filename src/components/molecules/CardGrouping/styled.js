@@ -21,6 +21,10 @@ export const GridContainer = styled.div`
     display: grid;
     grid-template-columns: auto auto  ;
   `}
+  ${customMedia.lessThan('450px')`
+    display: grid;
+    grid-template-columns: auto;
+  `}
 `;
 
 export const Item = styled.div`

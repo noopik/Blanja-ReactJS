@@ -50,7 +50,7 @@ const NavbarComponent = ({ onChange, value, session }) => {
           actionSearch={actionSearch}
         />
         {session === 'public' && <PublicNav />}
-        {session === 'user' || (session === 'seller' && <UserNav />)}
+        {session !== 'public' && <UserNav />}
         <ButtonIcon onClick={handleShowNavCollapes} />
         <NavbarCollapse />
       </Wrapper>

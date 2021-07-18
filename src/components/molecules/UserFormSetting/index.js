@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ProfileUser } from '../../../assets/images';
 import { Button, Divider, FormInput } from '../../atoms';
+import { customMedia } from '../../Layouts';
 
 const UserFormSetting = ({ session }) => {
   return (
@@ -84,6 +85,10 @@ const FormUser = (
 const Wrapper = styled.div`
   display: flex;
   width: max-content;
+  ${customMedia.lessThan('1410px')`
+    /* for screen sizes less than 1280px */
+    flex-direction: column-reverse;
+  `}
 `;
 
 const Form = styled.div`
@@ -146,16 +151,30 @@ const Form = styled.div`
 `;
 
 const ProfileWrapper = styled.div`
+  background-color: pink;
+  ${customMedia.lessThan('1410px')`
+    /* for screen sizes less than 1280px */
+    width: 100%; 
+  `}
+
   &.profile-image {
     width: max-content;
     display: flex;
     margin-left: 64px;
+    ${customMedia.lessThan('1586px')`
+    /* for screen sizes less than 1280px */
+    margin-left: 34px; 
+  `}
     .vertical {
       width: 2px;
       height: 50%;
     }
     .image-wrapper {
       margin-left: 79px;
+      ${customMedia.lessThan('1586px')`
+    /* for screen sizes less than 1280px */
+    margin-left: 34px; 
+  `}
       display: flex;
       flex-direction: column;
       gap: 1rem;

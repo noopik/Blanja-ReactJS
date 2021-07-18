@@ -9,54 +9,31 @@ class Footer extends Component {
     super(props);
   }
 
-  componentWillMount() {}
-
-  componentDidMount() {}
-
-  componentWillReceiveProps(nextProps) {}
-
-  shouldComponentUpdate(nextProps, nextState) {}
-
-  componentWillUpdate(nextProps, nextState) {}
-
-  componentDidUpdate(prevProps, prevState) {}
-
-  componentWillUnmount() {}
-
   render() {
     return (
       <FooterWrapper>
-        <div className="body container">
+        <div className="body">
           <div className="company">
             <BrandLogo className="logo" />
-            <p>We kaboom your beauty holiday instalty and memorable.</p>
+            <p>Memenuhi kebutuhan hidup Anda dan keluarga</p>
           </div>
           <div className="navigation">
             <ul>
-              <li className="nav-title">New Account</li>
+              <li className="nav-title">Tentang kami</li>
               <Link to="#" className="anchor">
-                <li>New Account</li>
-              </Link>
-              <Link to="#" className="anchor">
-                <li>New Account</li>
+                <li>Lorem lorem</li>
               </Link>
             </ul>
             <ul>
-              <li className="nav-title">New Account</li>
+              <li className="nav-title">Melayani</li>
               <Link to="#" className="anchor">
-                <li>New Account</li>
-              </Link>
-              <Link to="#" className="anchor">
-                <li>New Account</li>
+                <li>Lorem lorem</li>
               </Link>
             </ul>
             <ul>
-              <li className="nav-title">New Account</li>
+              <li className="nav-title">Career</li>
               <Link to="#" className="anchor">
-                <li>New Account</li>
-              </Link>
-              <Link to="#" className="anchor">
-                <li>New Account</li>
+                <li>Lorem lorem</li>
               </Link>
             </ul>
           </div>

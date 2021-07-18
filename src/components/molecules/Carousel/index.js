@@ -68,6 +68,14 @@ export default class MultipleItems extends Component {
       infinite: true,
       centerPadding: '85px',
       slidesToShow: 2,
+      responsive: [
+        {
+          breakpoint: 900,
+          settings: {
+            slidesToShow: 1,
+          },
+        },
+      ],
       speed: 800,
       nextArrow: <SampleNextArrow />,
       prevArrow: <SamplePrevArrow />,

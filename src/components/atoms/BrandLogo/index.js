@@ -5,9 +5,10 @@ import { IconLogo } from '../index';
 import { TitleBrand } from './styled';
 
 const Wrapper = styled.div`
+  /* background-color: yellow; */
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 10px;
 `;
 

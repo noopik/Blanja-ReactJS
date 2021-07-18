@@ -93,6 +93,32 @@ export default class MultipleItems extends Component {
       slidesToScroll: 1,
       autoplay: true,
       autoplaySpeed: 2000,
+      responsive: [
+        {
+          breakpoint: 1000,
+          settings: {
+            slidesToShow: 5,
+          },
+        },
+        {
+          breakpoint: 900,
+          settings: {
+            slidesToShow: 4,
+          },
+        },
+        {
+          breakpoint: 700,
+          settings: {
+            slidesToShow: 3,
+          },
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 1,
+          },
+        },
+      ],
       nextArrow: <SampleNextArrow />,
     };
 

@@ -91,9 +91,9 @@ const NavbarCollapse = ({ showOnClick }) => {
         </div>
       </div>
       <div className="body">
-        <Link>Category</Link>
-        <Link>My Bag</Link>
-        <Link>Profile</Link>
+        <Link to="/categories">Category</Link>
+        <Link to="/my-bag">My Bag</Link>
+        <Link to="/user/setting">Profile</Link>
       </div>
     </NavbarCollapseWrapper>
   );

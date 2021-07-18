@@ -105,6 +105,7 @@ const Homepage = () => {
           </CardGrouping>
         </SectionContent>
       </MainContent>
+
       <Footer />
     </>
   );

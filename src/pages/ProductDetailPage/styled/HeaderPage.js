@@ -7,6 +7,7 @@ import { ImageGaleryProduct } from '../../../components/molecules';
 import { Heading, Text } from '../../../components/atoms/Typography';
 import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
 import NumberFormat from 'react-number-format';
+import { customMedia } from '../../../components/Layouts';
 
 const HeaderPage = ({ data }) => {
   const [dataProduct, setDataProduct] = useState({});
@@ -106,6 +107,11 @@ const Main = styled.main`
   /* background-color: yellowgreen; */
   display: flex;
   margin-top: 32px;
+  ${customMedia.lessThan('laptop')`
+    /* for screen sizes less than 1280px */
+    height: 500px;
+
+  `}
 
   aside {
     /* background-color: pink; */
@@ -218,6 +224,13 @@ const Main = styled.main`
 
     /* BUTTON ACTION */
     .d-flex {
+      ${customMedia.lessThan('laptop')`
+        /* for screen sizes less than 1280px */ 
+        display: flex;
+        flex-direction: row; 
+        flex-wrap: wrap; 
+        gap: 1rem;
+      `}
       .btn-mini {
         width: 160px;
         border: 1.5px solid #222222;
@@ -225,9 +238,22 @@ const Main = styled.main`
         border-radius: 24px;
         color: #222222;
         margin-right: 10px;
+        ${customMedia.lessThan('890px')`
+        width: 100%;
+        margin-right: 0;
+
+      `}
       }
       .btn-main {
         width: 343px;
+        ${customMedia.lessThan('laptop')`
+        /* for screen sizes less than 1280px */ 
+        width: 350px; 
+      `}
+        ${customMedia.lessThan('890px')`
+        /* for screen sizes less than 1280px */ 
+        width: 100%;
+      `}
       }
     }
   }
