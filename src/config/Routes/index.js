@@ -12,6 +12,7 @@ import {
   SellerStore,
   SellerProductPage,
   SellerSellingProducts,
+  ResultProducts,
 } from '../../pages';
 import {
   CustomerLogin,
@@ -34,6 +35,7 @@ const Routes = () => {
         {/* MAIN HOME */}
         <Route exact path="/" component={Homepage} />
         <Route path="/categories" component={CategoryPage} />
+        <Route path="/products" component={ResultProducts} />
         <Route path="/my-bag" component={MyBag} />
         <Route path="/checkout" component={CheckoutPage} />
         {/* USER CUSTOMER */}

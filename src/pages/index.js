@@ -10,6 +10,7 @@ import UserProfileSetting from './UserProfileSetting';
 import SellerStore from './SellerStore';
 import SellerProductPage from './SellerProducts';
 import SellerSellingProducts from './SellerSellingProducts';
+import ResultProducts from './ResultProducts';
 
 export {
   Homepage,
@@ -24,4 +25,5 @@ export {
   SellerStore,
   SellerProductPage,
   SellerSellingProducts,
+  ResultProducts,
 };

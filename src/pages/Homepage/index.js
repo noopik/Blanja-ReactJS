@@ -13,9 +13,11 @@ import { CardProduct } from '../../components/atoms';
 import { Axios } from '../../../src/config';
 
 const Homepage = () => {
-  const [newProducts, setNewProducts] = useState([{}]);
-  const [popularProducts, setPopularProducts] = useState([{}]);
+  const [newProducts, setNewProducts] = useState([]);
+  const [popularProducts, setPopularProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  // console.log(newProducts);
+  // console.log(popularProducts);
 
   useEffect(() => {
     document.title = 'Blanja | Homepage';
@@ -53,7 +55,7 @@ const Homepage = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar session="public" />
       <MainContent>
         <Carousel className="carousel" />
         <SectionContent className="section">

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../../../../assets/colors';
-import { Button } from '../../../atoms';
 import { ProfileUser } from '../../../../assets/images';
 
 const Wrapper = styled.div`
