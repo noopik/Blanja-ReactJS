@@ -15,6 +15,7 @@ import { DatePicker } from './DatePicker';
 import UserFormSetting from './UserFormSetting';
 import DataTable from './DataTable';
 import TextEditor from './TextEditor';
+import NavbarCollapse from './NavbarCollapse';
 
 export {
   DatePicker,
@@ -34,4 +35,5 @@ export {
   UserFormSetting,
   DataTable,
   TextEditor,
+  NavbarCollapse,
 };

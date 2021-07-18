@@ -79,10 +79,10 @@ export default class MultipleItems extends Component {
     return (
       <HeaderCarousel className={className}>
         <Slider {...settings}>
-          <ImageCard image={DMCarousel1} title="Casual Epic" />
-          <ImageCard image={DMCarousel2} title="Urban Distro" />
-          <ImageCard image={DMCarousel3} title="Metropolitan" />
-          <ImageCard image={DMCarousel4} title="Anak Gunung" />
+          <ImageCard image={DMCarousel1} title="Casual Epic" to="#" />
+          <ImageCard image={DMCarousel2} title="Urban Distro" to="#" />
+          <ImageCard image={DMCarousel3} title="Metropolitan" to="#" />
+          <ImageCard image={DMCarousel4} title="Anak Gunung" to="#" />
         </Slider>
       </HeaderCarousel>
     );

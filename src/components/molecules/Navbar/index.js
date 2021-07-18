@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import {} from '../../molecules';
-import { BrandLogo, SearchInput } from '../../atoms';
+import { BrandLogo, ButtonIcon, ButtonTogller, SearchInput } from '../../atoms';
 import {} from '../../atoms/Typography';
 import { Navbar, Wrapper } from './styled';
 import PublicNav from './styled/PublicNav';
 import UserNav from './styled/UserNav';
 import { useDispatch } from 'react-redux';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
+import NavbarCollapse from '../NavbarCollapse';
+import { useEffect } from 'react';
 
 const NavbarComponent = ({ onChange, value, session }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
+  // const [showOnClick, setShowOnClick] = useState(false);
 
   let onSearch = '';
   const handleSearch = (e) => {
@@ -29,11 +32,16 @@ const NavbarComponent = ({ onChange, value, session }) => {
     history.push(`/products?src=${onSearch.keyword}`, onSearch.keyword);
     dispatch({ type: 'SET_SEARCHING', value: '' });
   };
-  console.log('history', history);
+  // console.log('history', history);
+  const handleShowNavCollapes = () => {
+    // setShowOnClick(true);
+    // console.log(showOnClick);
+    dispatch({ type: 'SET_NAVCOLLAPSE', value: true });
+  };
 
   return (
     <Navbar>
-      <Wrapper className="container">
+      <Wrapper>
         <BrandLogo className="logo-brand" size={40} />
         <SearchInput
           onChange={(e) => handleSearch(e)}
@@ -43,6 +51,8 @@ const NavbarComponent = ({ onChange, value, session }) => {
         />
         {session === 'public' && <PublicNav />}
         {session === 'user' || (session === 'seller' && <UserNav />)}
+        <ButtonIcon onClick={handleShowNavCollapes} />
+        <NavbarCollapse />
       </Wrapper>
     </Navbar>
   );

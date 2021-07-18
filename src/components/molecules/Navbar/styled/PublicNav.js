@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../../../../assets/colors';
 import { Button } from '../../../atoms';
+import { customMedia } from '../../../Layouts';
+
 const Wrapper = styled.div`
+  ${customMedia.lessThan('865px')`
+      /* for screen sizes less than 768px */
+      display: none;
+  `}
   display: flex;
 
   .icon {
@@ -68,6 +74,7 @@ const PublicNav = () => {
           </defs>
         </svg>
       </Link>
+
       <Link to="/customer-login" className="prefix">
         <ButtonNav primary>Login</ButtonNav>
       </Link>

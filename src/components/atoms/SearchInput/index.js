@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { colors } from '../../../assets/colors';
+import { customMedia } from '../../Layouts/BreakPoints';
 import WrapperSearchInput from './WrapperSearchInput';
 
 const Wrapper = styled.div`
@@ -13,6 +14,12 @@ const Wrapper = styled.div`
     /* display: none;  */
     gap: 1rem;
     /* background-color: yellow; */
+    ${customMedia.lessThan('laptop')`
+        /* for screen sizes less than 1280px */ 
+      // background-color: cyan; 
+      margin-left: 0; 
+      width: 100%;
+    `}
     width: 80%;
     margin-left: 60px;
   }

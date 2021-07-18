@@ -16,6 +16,7 @@ import Counter from './Counter';
 import BtnNewAddres from './BtnNewAddress';
 import TabItemContent from './TabItem';
 import Loader from './Loader';
+import ButtonIcon from './ButtonIcon';
 
 export {
   IconLogo,
@@ -36,4 +37,5 @@ export {
   BtnNewAddres,
   TabItemContent,
   Loader,
+  ButtonIcon,
 };
