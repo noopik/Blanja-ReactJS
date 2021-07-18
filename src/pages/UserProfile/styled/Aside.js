@@ -181,7 +181,7 @@ const Aside = ({ active, session }) => {
             <Link className="link" to="/admin/seller/products">
               My Products
             </Link>
-            <Link className="link" to="/admin/selling-products">
+            <Link className="link" to="/admin/seller/selling">
               Selling Products
             </Link>
           </div>

@@ -9,7 +9,7 @@ const UserProfile = ({ userName, children, active, session }) => {
 
   return (
     <>
-      <Navbar session="user" />
+      <Navbar session={session} />
       <Container>
         <Aside active={active} session={session} />
         <MainAside>{children}</MainAside>

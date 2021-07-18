@@ -1,18 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 import { Tabs, Tab } from 'react-bootstrap';
 import styled from 'styled-components';
 import TabContent from '../../components/atoms/TabItem';
+import { DataTable } from '../../components/molecules';
+import { Axios } from '../../config';
 
 const SellerProductPage = () => {
+  // console.log(dataProduct);
+
   return (
     <>
-      <UserProfilePage userName="Seller Diana | Produk" active="account">
+      <UserProfilePage
+        userName="Seller Diana | Produk"
+        active="account"
+        session="seller"
+      >
         <Main heading="My Products">
           <TabsWrapper defaultActiveKey="all-items">
             <Tab eventKey="all-items" title="All Items">
-              <TabContent title="Sold out"></TabContent>
+              <TabContent title="Sold out">
+                <DataTable />
+              </TabContent>
             </Tab>
             <Tab eventKey="sold-out" title="Sold out">
               <TabContent title="Sold out" />

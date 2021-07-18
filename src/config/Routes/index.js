@@ -42,13 +42,22 @@ const Routes = () => {
         <Route path="/user/orders" component={UserProfileOrder} />
         {/* USER SELLER */}
         <Route exact path="/admin/seller" component={SellerStore} />
-        <Route path="/admin/seller/products" component={SellerProductPage} />
         <Route
-          path="/admin/seller/selling-products"
+          exact
+          path="/admin/seller/products"
+          component={SellerProductPage}
+        />
+        <Route
+          exact
+          path="/admin/seller/selling"
           component={SellerSellingProducts}
         />
-        <Route path="/admin/seller/orders" component={SellerSellingProducts} />
-        <Route path="/admin/seller#cancel" component={SellerSellingProducts} />
+        <Route
+          path="/admin/seller/selling/:slug"
+          component={SellerSellingProducts}
+        />
+        <Route path="/admin/seller/orders" />
+        <Route path="/admin/seller#cancel" />
         <Route path="/product/:name-:id" component={ProductDetailPage} />
       </Switch>
     </Router>

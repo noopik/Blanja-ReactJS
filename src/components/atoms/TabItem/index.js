@@ -1,14 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DataTable } from '../../molecules';
 import SearchInput from '../SearchInput';
 
 const TabContent = ({ children, title }) => {
   return (
     <Content>
       <SearchInput className="input-wrapper" placeholder="Find your products" />
-      <DataTable />
-      <h1>{title}</h1>
+      {children}
     </Content>
   );
 };

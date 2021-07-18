@@ -13,11 +13,18 @@ import {
   AuthForgotPassword,
   FormGroup,
 } from '../../../components/molecules';
+import { useHistory } from 'react-router-dom';
 
 const CustomerLogin = () => {
+  const history = useHistory();
+
   useEffect(() => {
     document.title = 'Login | Customer';
   });
+
+  const action = () => {
+    history.push('/user/setting');
+  };
 
   return (
     <AuthContainer>
@@ -38,7 +45,7 @@ const CustomerLogin = () => {
         <FormInput type="password" placeholder="Password" />
         <AuthForgotPassword />
       </FormGroup>
-      <Button primary className="btn-wrapper">
+      <Button primary className="btn-wrapper" onClick={action}>
         LOGIN
       </Button>
       <AuthFooter login session="customer" />

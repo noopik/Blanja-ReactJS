@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ICImgNull } from '../../assets/Icons';
 import { Button, Divider, FormInput } from '../../components/atoms';
@@ -6,8 +6,79 @@ import { Text } from '../../components/atoms/Typography';
 import { TextEditor } from '../../components/molecules';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
+import { Axios } from '../../../src/config';
+import { useParams } from 'react-router-dom';
 
 const SellerSellingProducts = () => {
+  const [isLoading, seIsLoading] = useState(false);
+  const { slug } = useParams();
+  const [form, setForm] = useState({
+    nameProduct: '',
+    price: '',
+    stock: '',
+    imageProduct: '',
+    description: '',
+  });
+
+  const initialForm = {
+    nameProduct: '',
+    price: '',
+    stock: '',
+    imageProduct: '',
+    description: '',
+  };
+
+  // console.log(slug);
+  useEffect(() => {
+    if (slug) {
+      Axios.get(`/products/${slug}`)
+        .then((res) => {
+          const resData = res.data.data[0];
+          // console.log('resData', resData);
+          setForm(resData);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  }, []);
+  // console.log('form', form);
+
+  const handleForm = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const sendData = () => {
+    seIsLoading(true);
+    Axios.post('/products/add', form)
+      .then((res) => {
+        console.log(form);
+        console.log('Upload success');
+        setForm({ ...initialForm });
+        seIsLoading(false);
+      })
+      .catch((err) => {
+        seIsLoading(false);
+      });
+  };
+
+  const updateData = () => {
+    seIsLoading(true);
+    Axios.post(`/products/${slug}`, form)
+      .then((res) => {
+        console.log(form);
+        console.log('Upload success');
+        setForm({ ...initialForm });
+        seIsLoading(false);
+      })
+      .catch((err) => {
+        seIsLoading(false);
+      });
+  };
+
   return (
     <>
       <UserProfilePage
@@ -20,7 +91,12 @@ const SellerSellingProducts = () => {
               Name of goods
             </Text>
           </label>
-          <FormInput type="text" name="name-product" />
+          <FormInput
+            type="text"
+            name="nameProduct"
+            onChange={(e) => handleForm(e)}
+            value={form.nameProduct}
+          />
         </Main>
         <Main heading="Item Details" className="item-details">
           <div className="form-wrapper">
@@ -29,7 +105,12 @@ const SellerSellingProducts = () => {
                 Unit price
               </Text>
             </label>
-            <FormInput type="text" name="price" />
+            <FormInput
+              type="text"
+              name="price"
+              onChange={(e) => handleForm(e)}
+              value={form.price}
+            />
           </div>
           <div className="form-wrapper">
             <label htmlFor="quantity">
@@ -37,7 +118,12 @@ const SellerSellingProducts = () => {
                 Stock
               </Text>
             </label>
-            <FormInput type="text" name="quantity" />
+            <FormInput
+              type="text"
+              name="stock"
+              onChange={(e) => handleForm(e)}
+              value={form.stock}
+            />
           </div>
           <div className="form-wrapper selected">
             <label htmlFor="quantity">
@@ -58,34 +144,12 @@ const SellerSellingProducts = () => {
           </div>
         </Main>
         <Main heading="Photo of Goods" className="photos">
-          <div className="content-upload">
-            <div className="img-wrapper">
-              <div className="img-item">
-                <div className="img">
-                  <img src={ICImgNull} />
-                </div>
-                <Text>Foto Utama</Text>
-              </div>
-              <div className="img-item">
-                <div className="img">
-                  <img src={ICImgNull} />
-                </div>
-                <Text>Foto Utama</Text>
-              </div>
-              <div className="img-item">
-                <div className="img">
-                  <img src={ICImgNull} />
-                </div>
-                <Text>Foto Utama</Text>
-              </div>
-              <div className="img-item">
-                <div className="img">
-                  <img src={ICImgNull} />
-                </div>
-                <Text>Foto Utama</Text>
-              </div>
-            </div>
-          </div>
+          <FormInput
+            type="text"
+            name="imageProduct"
+            onChange={(e) => handleForm(e)}
+            value={form.imageProduct}
+          />
           <Divider className="divider" />
           <div className="btn-wrapper">
             <Button className="btn">Upload Photo</Button>
@@ -93,11 +157,24 @@ const SellerSellingProducts = () => {
         </Main>
         <Main heading="Description">
           <TextEditor />
+          <FormInput
+            type="text"
+            name="description"
+            onChange={(e) => handleForm(e)}
+            value={form.description}
+          />
         </Main>
         <ButtonWrapper>
-          <Button className="btn" primary>
-            Jual
-          </Button>
+          {!slug && (
+            <Button className="btn" primary onClick={sendData}>
+              Jual
+            </Button>
+          )}
+          {slug && (
+            <Button className="btn" primary onClick={updateData}>
+              UPDATE
+            </Button>
+          )}
         </ButtonWrapper>
       </UserProfilePage>
     </>
@@ -114,3 +191,34 @@ const ButtonWrapper = styled.div`
     width: 150px;
   }
 `;
+
+const UploadMultipleImage = (
+  <div className="content-upload">
+    <div className="img-wrapper">
+      <div className="img-item">
+        <div className="img">
+          <img src={ICImgNull} />
+        </div>
+        <Text>Foto Utama</Text>
+      </div>
+      <div className="img-item">
+        <div className="img">
+          <img src={ICImgNull} />
+        </div>
+        <Text>Foto Utama</Text>
+      </div>
+      <div className="img-item">
+        <div className="img">
+          <img src={ICImgNull} />
+        </div>
+        <Text>Foto Utama</Text>
+      </div>
+      <div className="img-item">
+        <div className="img">
+          <img src={ICImgNull} />
+        </div>
+        <Text>Foto Utama</Text>
+      </div>
+    </div>
+  </div>
+);

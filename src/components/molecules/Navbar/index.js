@@ -12,9 +12,9 @@ const NavbarComponent = ({ onChange, value, session }) => {
     <Navbar>
       <Wrapper className="container">
         <BrandLogo className="logo-brand" size={40} />
-        <SearchInput onChange={onChange} value={value} />
+        <SearchInput onChange={onChange} value={value} session={session} />
         {session === 'public' && <PublicNav />}
-        {session === 'user' && <UserNav />}
+        {session === 'user' || (session === 'seller' && <UserNav />)}
       </Wrapper>
     </Navbar>
   );

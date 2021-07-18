@@ -6,7 +6,11 @@ import { Main } from '../UserProfile/styled';
 const SellerStore = () => {
   return (
     <>
-      <UserProfilePage userName="Seller Diana" active="account">
+      <UserProfilePage
+        userName="Seller Diana"
+        active="account"
+        session="seller"
+      >
         <Main heading="My Profile Store">
           <UserFormSetting session="seller" />
         </Main>
