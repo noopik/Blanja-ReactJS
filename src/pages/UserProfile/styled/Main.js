@@ -1,13 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ProfileUser } from '../../../assets/images';
-import {
-  Button,
-  CardWrapper,
-  Divider,
-  FormInput,
-} from '../../../components/atoms';
+import { CardWrapper, Divider } from '../../../components/atoms';
 import { Heading, Text } from '../../../components/atoms/Typography';
+import { customMedia } from '../../../components/Layouts';
 
 const Main = ({ children, heading, subHeading, className }) => {
   return (
@@ -38,12 +33,45 @@ const Wrapper = styled.div`
   .card-wrapper {
     width: 80%;
     height: 90%;
+    ${customMedia.lessThan('1300px')`
+    width: 90%;
+    `}
+    ${customMedia.lessThan('1000px')`
+    width: 100%;
+    .input {
+      width: 100%;
+    }
+  `}
   }
   .content {
     margin-bottom: 60px;
     /* display: flex; */
   }
   /* START = Page SellerSellingProducts */
+  .form-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .input-wrapper {
+      .form-select {
+        /* background-color: cyan; */
+        width: 400px;
+        ${customMedia.lessThan('1300px')`
+          width: 100%;
+        `}
+      }
+      .input {
+        /* background-color: yellow; */
+        ${customMedia.lessThan('1300px')`
+          width: 100%;
+        `}
+      }
+    }
+    /* background-color: red; */
+  }
+  label.title-form {
+    margin-right: 1rem;
+  }
   &.inventory-wrapper {
     margin-bottom: 2rem;
     .content {
@@ -90,8 +118,29 @@ const Wrapper = styled.div`
       }
     }
   }
+  .photos {
+    display: flex;
+    justify-content: center;
+  }
   &.photos {
     margin-bottom: 2rem;
+    .photo-wrapper {
+      display: flex;
+      justify-content: center;
+      .photo {
+        /* background-color: yellow; */
+        height: 200px;
+        width: 200px;
+        border-radius: 25px;
+        display: flex;
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: fill;
+        }
+      }
+    }
+    /* DIBAWAH INI MASIH BELUM TERPAKAI */
     .content {
       margin-bottom: 0;
       .content-upload {

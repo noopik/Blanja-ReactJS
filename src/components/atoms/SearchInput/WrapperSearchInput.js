@@ -43,11 +43,7 @@ const WrapperSearchInput = ({ placeholder, onChange, value, actionSearch }) => {
         className="input"
         type="text"
         name="search"
-        placeholder={`${
-          placeholder
-            ? placeholder
-            : 'Mau Mencari Apa? Cari saya atau cari dia!'
-        }  `}
+        placeholder={`${placeholder ? placeholder : 'Mau Mencari Apa? '}  `}
         onChange={onChange}
         value={value}
       />

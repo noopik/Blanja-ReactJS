@@ -45,7 +45,7 @@ const NavbarComponent = ({ onChange, value, session }) => {
         <BrandLogo className="logo-brand" size={40} />
         <SearchInput
           onChange={(e) => handleSearch(e)}
-          placeholder="Mau cari aku atau dia ?"
+          placeholder=""
           session={session}
           actionSearch={actionSearch}
         />

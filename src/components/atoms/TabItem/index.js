@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { customMedia } from '../../Layouts';
 import SearchInput from '../SearchInput';
-
 const TabContent = ({ children, title }) => {
   return (
     <Content>
@@ -20,6 +20,11 @@ const Content = styled.div`
   .input-wrapper {
     width: 40%;
     margin-bottom: 1rem;
+    ${customMedia.lessThan('751px')`
+   
+    width: 100%;
+  `}
+
     .wrapper {
       margin: 0;
 

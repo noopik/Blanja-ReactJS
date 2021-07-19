@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react';
-import { Navbar, UserFormSetting } from '../../components/molecules';
+import {
+  Navbar,
+  NavbarAsideProfileCollapse,
+  UserFormSetting,
+} from '../../components/molecules';
 import { Aside, Container, Main, MainAside } from './styled';
 
 const UserProfile = ({ userName, children, active, session }) => {
@@ -13,6 +17,7 @@ const UserProfile = ({ userName, children, active, session }) => {
       <Container>
         <Aside active={active} session={session} />
         <MainAside>{children}</MainAside>
+        <NavbarAsideProfileCollapse session={session} />
       </Container>
     </>
   );

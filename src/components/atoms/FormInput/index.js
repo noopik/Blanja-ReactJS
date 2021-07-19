@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ContentWrapper } from '../styled';
 
 const Input = styled.input`
   border: 1px solid #9b9b9b;
@@ -18,44 +17,16 @@ const Input = styled.input`
   }
 `;
 
-const FormInput = ({
-  mt,
-  mr,
-  mb,
-  ml,
-  pt,
-  pr,
-  pb,
-  pl,
-  width,
-  height,
-  type,
-  placeholder,
-  name,
-  onChange,
-  value,
-}) => {
+const FormInput = ({ type, placeholder, name, onChange, value, className }) => {
   return (
-    <ContentWrapper
-      mt={mt}
-      mr={mr}
-      mb={mb}
-      ml={ml}
-      pt={pt}
-      pr={pr}
-      pb={pb}
-      pl={pl}
-      width={width}
-      height={height}
-    >
-      <Input
-        type={type}
-        placeholder={placeholder}
-        name={name}
-        onChange={onChange}
-        value={value}
-      />
-    </ContentWrapper>
+    <Input
+      type={type}
+      placeholder={placeholder}
+      name={name}
+      onChange={onChange}
+      value={value}
+      className={className}
+    />
   );
 };
 

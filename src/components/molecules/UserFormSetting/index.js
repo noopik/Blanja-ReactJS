@@ -9,16 +9,43 @@ const UserFormSetting = ({ session }) => {
     <Wrapper>
       <Form className="form">
         <div className="form-wrapper">
-          <label htmlFor="name">Name</label>
-          <FormInput type="text" name="name" value="Johanes" />
+          <label htmlFor="name" className="name-input">
+            Name
+          </label>
+          <div className="form-input">
+            <FormInput
+              type="text"
+              name="name"
+              value="Johanes"
+              className="input"
+            />
+          </div>
         </div>
         <div className="form-wrapper">
-          <label htmlFor="email">Email</label>
-          <FormInput type="text" name="email" value="johanes@gmail.com" />
+          <label htmlFor="email" className="name-input">
+            Email
+          </label>
+          <div className="form-input">
+            <FormInput
+              type="text"
+              name="email"
+              value="johanes@gmail.com"
+              className="input"
+            />
+          </div>
         </div>
         <div className="form-wrapper">
-          <label htmlFor="phone">Phone Number</label>
-          <FormInput type="text" name="phone" value="089652365" />
+          <label htmlFor="phone" className="name-input">
+            Phone Number
+          </label>
+          <div className="form-input">
+            <FormInput
+              type="text"
+              name="phone"
+              value="089652365"
+              className="input"
+            />
+          </div>
         </div>
         {session && FormSeller}
         {!session && FormUser}
@@ -33,7 +60,7 @@ const UserFormSetting = ({ session }) => {
       <ProfileWrapper className="profile-image">
         <Divider className="vertical" />
         <div className="image-wrapper">
-          <img src={ProfileUser} alt="avatar" />
+          <img src={ProfileUser} alt="avatar" className="avatar" />
           <Button>Select Image</Button>
         </div>
       </ProfileWrapper>
@@ -47,34 +74,45 @@ export default UserFormSetting;
 
 const FormSeller = (
   <div className="form-wrapper">
-    <label htmlFor="phone">Store Description</label>
-    <textarea
-      className="text-area"
-      name="description"
-      placeholder="Product Description"
-    ></textarea>
+    <label htmlFor="phone" className="name-input">
+      Store Description
+    </label>
+    <div className="form-input">
+      <textarea
+        className="text-area"
+        name="description"
+        placeholder="Product Description"
+      ></textarea>
+    </div>
   </div>
 );
 
 const FormUser = (
   <>
     <div className="form-wrapper">
-      <label htmlFor="phone">Gender</label>
-      <div class="gender">
-        <input type="radio" name="gender" id="male" />
-        <label class="checkmark-gender-user" for="male">
-          Laki - laki
-        </label>
-      </div>
-      <div class="gender">
-        <input type="radio" name="gender" id="female" />
-        <label class="checkmark-gender-user" for="female">
-          Perempuan
-        </label>
+      <label htmlFor="phone" className="name-input">
+        Gender
+      </label>
+      <div className="form-input">
+        <div class="gender">
+          <input type="radio" name="gender" id="male" />
+          <label class="checkmark-gender-user" for="male">
+            Laki - laki
+          </label>
+        </div>
+        <div class="gender">
+          <input type="radio" name="gender" id="female" />
+          <label class="checkmark-gender-user" for="female">
+            Perempuan
+          </label>
+        </div>
       </div>
     </div>
     <div className="form-wrapper">
-      <label htmlFor="birth">Date of Birth</label>
+      <label htmlFor="birth" className="name-input">
+        Date of Birth
+      </label>
+      <div className="form-input"></div>
       {/* <DatePicker /> */}
     </div>
   </>
@@ -84,19 +122,47 @@ const FormUser = (
 
 const Wrapper = styled.div`
   display: flex;
-  width: max-content;
+  width: 100%;
+  /* background-color: cyan; */
+  justify-content: space-between;
   ${customMedia.lessThan('1410px')`
-    /* for screen sizes less than 1280px */
-    flex-direction: column-reverse;
-  `}
+    flex-direction: column-reverse; 
+    width: 100%;
+  `}/* background-color: yellow; */
 `;
 
 const Form = styled.div`
+  /* background-color: greenyellow; */
   &.form {
+    width: 100%;
     .form-wrapper {
+      /* background-color: orange; */
       display: flex;
+      flex-direction: row;
       margin-bottom: 1rem;
-      width: max-content;
+      width: 100%;
+      ${customMedia.lessThan('1410px')`
+      margin-top: 1rem;
+        width: 100%;
+        `}
+      .name-input {
+        /* background-color: orange; */
+        width: 200px;
+      }
+      .form-input {
+        /* background-color: red; */
+        width: 100%;
+        .input {
+          width: 100%;
+          /* background-color: yellow; */
+        }
+        input {
+          ${customMedia.lessThan('1410px')`
+            margin-top: 1rem;
+            width: 100%;
+        `}
+        }
+      }
       label {
         margin-right: 32px;
         width: 120px;
@@ -107,6 +173,7 @@ const Form = styled.div`
         font-size: 14px;
         line-height: 24px;
         color: #9b9b9b;
+        /* background-color: yellow; */
       }
       .gender {
         display: flex;
@@ -131,7 +198,8 @@ const Form = styled.div`
       color: #222222;
       border: 1px solid #9b9b9b;
       height: 100px;
-      width: 400px;
+      /* width: 400px; */
+      width: 100%;
       box-sizing: border-box;
       padding: 8px 16px;
       font-size: 14px;
@@ -151,29 +219,42 @@ const Form = styled.div`
 `;
 
 const ProfileWrapper = styled.div`
-  background-color: pink;
+  /* background-color: pink; */
   ${customMedia.lessThan('1410px')`
     /* for screen sizes less than 1280px */
     width: 100%; 
   `}
 
+  /* RESPONSIVE lesstThan 1015px */
+
   &.profile-image {
-    width: max-content;
     display: flex;
     margin-left: 64px;
+    margin-right: 32px;
+    /* RESPONSIVE lesstThan 1015px */
+    /* background-color: yellow; */
     ${customMedia.lessThan('1586px')`
-    /* for screen sizes less than 1280px */
-    margin-left: 34px; 
+    margin-left: 0; 
+  `}
+    /* RESPONSIVE lesstThan 1015px */ 
+  ${customMedia.lessThan('1410px')` 
+    justify-content: center; 
+  `} 
+    ${customMedia.lessThan('1586px')`
+    // margin-left: 34px; 
   `}
     .vertical {
       width: 2px;
-      height: 50%;
+      height: 80%;
     }
     .image-wrapper {
+      .avatar {
+        width: 150px;
+      }
       margin-left: 79px;
       ${customMedia.lessThan('1586px')`
     /* for screen sizes less than 1280px */
-    margin-left: 34px; 
+    // margin-left: 34px; 
   `}
       display: flex;
       flex-direction: column;

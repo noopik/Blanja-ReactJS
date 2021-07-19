@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Button, CardWrapper, Divider } from '../../atoms';
 import { Heading, Text } from '../../atoms/Typography';
 
@@ -50,7 +51,9 @@ const CardCheckout = ({ myBag, checkout }) => {
           </div>
         </>
       )}
-      <Button primary>BUY</Button>
+      <Link to="/checkout">
+        <Button primary>BUY</Button>
+      </Link>
     </CardWrapper>
   );
 };

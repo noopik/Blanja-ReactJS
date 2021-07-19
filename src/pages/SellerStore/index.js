@@ -1,18 +1,25 @@
 import React from 'react';
-import { UserFormSetting } from '../../components/molecules';
+import styled from 'styled-components';
+import {
+  NavbarAsideProfileCollapse,
+  UserFormSetting,
+} from '../../components/molecules';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 
 const SellerStore = () => {
+  let session = 'seller';
+  let active = 'account';
+
   return (
     <>
       <UserProfilePage
         userName="Seller Diana"
-        active="account"
-        session="seller"
+        active={active}
+        session={session}
       >
         <Main heading="My Profile Store">
-          <UserFormSetting session="seller" />
+          <UserFormSetting session={session} />
         </Main>
       </UserProfilePage>
     </>

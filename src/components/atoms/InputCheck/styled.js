@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Label = styled.label`
-  background-color: yellowgreen;
+  /* background-color: yellowgreen; */
   display: block;
   position: relative;
   cursor: pointer;

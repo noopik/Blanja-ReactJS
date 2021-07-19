@@ -23,6 +23,12 @@ import EditIcon from '@material-ui/icons/Edit';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { Axios } from '../../../config';
 import { useHistory } from 'react-router-dom';
+import Alert from '@material-ui/lab/Alert';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import { Modal } from '..';
+import { useDispatch } from 'react-redux';
+import { Button } from '../../atoms';
+import styled from 'styled-components';
 
 function createData(name, price, stock, id) {
   return { name, price, stock, id };
@@ -61,8 +67,8 @@ const headCells = [
     disablePadding: true,
     label: 'Nama Produk',
   },
-  { id: 'calories', numeric: true, disablePadding: false, label: 'Price' },
-  { id: 'fat', numeric: true, disablePadding: false, label: 'Stock' },
+  { id: 'price', numeric: true, disablePadding: false, label: 'Price' },
+  { id: 'stock', numeric: true, disablePadding: false, label: 'Stock' },
 ];
 
 function EnhancedTableHead(props) {
@@ -84,12 +90,12 @@ function EnhancedTableHead(props) {
     <TableHead>
       <TableRow>
         <TableCell padding="checkbox">
-          <Checkbox
+          {/* <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ 'aria-label': 'select all desserts' }}
-          />
+          /> */}
         </TableCell>
         {headCells.map((headCell) => (
           <TableCell
@@ -147,10 +153,36 @@ const useToolbarStyles = makeStyles((theme) => ({
   },
 }));
 
+// STYLING ALERT
+const useStylesAlert = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    position: 'absolute',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
+
+const ButtonModalWrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
+  const classesAlert = useStylesAlert();
   const { numSelected, deleteAction, editAction } = props;
-
+  const dispatch = useDispatch();
+  // console.log('numSelected', numSelected);
+  // SHOW MODAL
+  const handleModalOpen = () => {
+    dispatch({ type: 'SET_MODAL', value: true });
+  };
+  const handleModalClose = () => {
+    dispatch({ type: 'SET_MODAL', value: false });
+  };
+  // console.log(showModal);
   return (
     <Toolbar
       className={clsx(classes.root, {
@@ -164,7 +196,7 @@ const EnhancedTableToolbar = (props) => {
           variant="subtitle1"
           component="div"
         >
-          {numSelected} selected
+          Selected
         </Typography>
       ) : (
         <Typography
@@ -176,10 +208,24 @@ const EnhancedTableToolbar = (props) => {
           Products
         </Typography>
       )}
-
-      {numSelected > 0 ? (
+      {numSelected > 0 && (
+        <div className={classesAlert.root}>
+          {/* <Alert severity="warning">
+            Yakin Mau Mengubah Data Produk ?
+          </Alert> */}
+          <Modal header="Yakin Anda mau mengubah data produk ?">
+            <ButtonModalWrapper>
+              <Button primary onClick={editAction}>
+                Ya
+              </Button>
+              <Button onClick={handleModalClose}>Tidak</Button>
+            </ButtonModalWrapper>
+          </Modal>
+        </div>
+      )}
+      {numSelected > 0 && (
         <>
-          <Tooltip title="Edit" onClick={editAction}>
+          <Tooltip title="Edit" onClick={handleModalOpen}>
             <IconButton aria-label="edit">
               <EditIcon />
             </IconButton>
@@ -190,12 +236,6 @@ const EnhancedTableToolbar = (props) => {
             </IconButton>
           </Tooltip>
         </>
-      ) : (
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
-          </IconButton>
-        </Tooltip>
       )}
     </Toolbar>
   );
@@ -214,7 +254,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   table: {
-    minWidth: 750,
+    minWidth: 320,
   },
   visuallyHidden: {
     border: 0,
@@ -277,11 +317,12 @@ export default function EnhancedTable(props) {
   };
   const editAction = () => {
     // console.log(selected);
-    if (selected.length > 1) {
-      return console.log('Pilih satu saja');
-    }
-    historyUrl.push(`/admin/seller/selling/${selected}`);
+    // if (selected.length > 1) {
+    //   return console.log('Pilih satu saja');
+    // }
+    historyUrl.push(`/admin/seller/selling/${selected[0]}`);
   };
+
   // console.log(rows);
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -292,31 +333,22 @@ export default function EnhancedTable(props) {
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
       const newSelecteds = rows.map((n) => n.id);
+
       setSelected(newSelecteds);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
+  const handleClick = (event, id, name) => {
+    // console.log(id);
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
+    let newSelected = [id, name];
 
     setSelected(newSelected);
   };
+
+  console.log('mendapatkan satu state', selected);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -340,7 +372,7 @@ export default function EnhancedTable(props) {
     <div className={classes.root}>
       <Paper className={classes.paper}>
         <EnhancedTableToolbar
-          numSelected={selected.length}
+          numSelected={selected[0]}
           deleteAction={deleteHandle}
           editAction={editAction}
         />
@@ -353,10 +385,10 @@ export default function EnhancedTable(props) {
           >
             <EnhancedTableHead
               classes={classes}
-              numSelected={selected.length}
+              numSelected={selected}
               order={order}
               orderBy={orderBy}
-              onSelectAllClick={handleSelectAllClick}
+              // onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
               rowCount={rows.length}
             />
@@ -370,7 +402,7 @@ export default function EnhancedTable(props) {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.id)}
+                      onClick={(event) => handleClick(event, row.id, row.name)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}

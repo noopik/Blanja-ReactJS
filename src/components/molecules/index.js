@@ -16,6 +16,10 @@ import UserFormSetting from './UserFormSetting';
 import DataTable from './DataTable';
 import TextEditor from './TextEditor';
 import NavbarCollapse from './NavbarCollapse';
+import NavSellerAside from './NavSeller';
+import NavCustomerAside from './NavCustomerAside';
+import NavbarAsideProfileCollapse from './NavbarAsideProfileCollapse';
+import Modal from './Modal';
 
 export {
   DatePicker,
@@ -36,4 +40,8 @@ export {
   DataTable,
   TextEditor,
   NavbarCollapse,
+  NavSellerAside,
+  NavCustomerAside,
+  NavbarAsideProfileCollapse,
+  Modal,
 };

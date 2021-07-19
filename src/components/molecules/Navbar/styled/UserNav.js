@@ -3,10 +3,15 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../../../../assets/colors';
 import { ProfileUser } from '../../../../assets/images';
+import { customMedia } from '../../../Layouts';
 
 const Wrapper = styled.div`
   display: flex;
   gap: 1rem;
+  ${customMedia.lessThan('865px')`
+      /* for screen sizes less than 768px */
+      display: none;
+  `}
 
   .icon {
     display: flex;
@@ -70,7 +75,7 @@ const UserNav = () => {
           </defs>
         </svg>
       </Link>
-      <Link to="/customer-login" className="icon">
+      <Link to="#" className="icon">
         <svg
           class="stroke"
           width="24"
@@ -95,7 +100,7 @@ const UserNav = () => {
           />
         </svg>
       </Link>
-      <Link to="/seller-login" className="icon">
+      <Link to="#" className="icon">
         <svg
           class="stroke"
           width="24"
@@ -120,9 +125,11 @@ const UserNav = () => {
           />
         </svg>
       </Link>
-      <div className="icon user">
-        <img src={ProfileUser} alt="user" />
-      </div>
+      <Link to="/user/setting">
+        <div className="icon user">
+          <img src={ProfileUser} alt="user" />
+        </div>
+      </Link>
     </Wrapper>
   );
 };
