@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import ContentLoader, {
-  Facebook,
-  List,
-  BulletList,
-} from 'react-content-loader';
+import ContentLoader from 'react-content-loader';
 
 const index = ({ line, box, className }) => {
   return (

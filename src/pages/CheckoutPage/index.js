@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   AsideLeft,
   AsideRight,
@@ -15,10 +16,18 @@ import {
   CardCheckout,
   CheckoutDetail,
   HeaderSection,
+  Modal,
   Navbar,
 } from '../../components/molecules';
 
 const CheckoutPage = () => {
+  const dispatch = useDispatch();
+  // console.log('numSelected', numSelected);
+  // SHOW MODAL
+  const handleModalOpen = () => {
+    console.log(1);
+    dispatch({ type: 'SET_MODAL', value: true });
+  };
   useEffect(() => {
     document.title = 'Blanja | Checkout';
   });
@@ -44,7 +53,9 @@ const CheckoutPage = () => {
                   16] Sokaraja, Kab. Banyumas, 53181
                 </Text>
                 <div className="btn-wrapper">
-                  <Button>Choose Another Address</Button>
+                  <Button onClick={handleModalOpen}>
+                    Choose Another Address
+                  </Button>
                 </div>
               </CardWrapper>
               <CheckoutDetail body checkout />

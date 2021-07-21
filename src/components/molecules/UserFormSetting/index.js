@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ProfileUser } from '../../../assets/images';
 import { Button, Divider, FormInput } from '../../atoms';
 import { customMedia } from '../../Layouts';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 
 const UserFormSetting = ({ session }) => {
   return (
@@ -48,7 +51,7 @@ const UserFormSetting = ({ session }) => {
           </div>
         </div>
         {session && FormSeller}
-        {!session && FormUser}
+        {!session && <FormUser />}
         <div className="form-wrapper">
           <label />
           {/* <DatePicker /> */}
@@ -87,36 +90,52 @@ const FormSeller = (
   </div>
 );
 
-const FormUser = (
-  <>
-    <div className="form-wrapper">
-      <label htmlFor="phone" className="name-input">
-        Gender
-      </label>
-      <div className="form-input">
-        <div class="gender">
-          <input type="radio" name="gender" id="male" />
-          <label class="checkmark-gender-user" for="male">
-            Laki - laki
-          </label>
-        </div>
-        <div class="gender">
-          <input type="radio" name="gender" id="female" />
-          <label class="checkmark-gender-user" for="female">
-            Perempuan
-          </label>
+const FormUser = () => {
+  const [value, setValue] = useState('female');
+
+  const handleChange = (event) => {
+    setValue(event.target.value);
+  };
+  return (
+    <>
+      <div className="form-wrapper">
+        <label htmlFor="phone" className="name-input">
+          Gender
+        </label>
+        <div className="form-input ">
+          <RadioGroup
+            aria-label="gender"
+            name="gender1"
+            value={value}
+            onChange={handleChange}
+            className="gender-wrapper"
+          >
+            <div className="gender">
+              <FormControlLabel
+                value="male"
+                control={<Radio />}
+                label="Laki - laki"
+              />
+            </div>
+            <div className="gender">
+              <FormControlLabel
+                value="female"
+                control={<Radio />}
+                label="Perempuan"
+              />
+            </div>
+          </RadioGroup>
         </div>
       </div>
-    </div>
-    <div className="form-wrapper">
-      <label htmlFor="birth" className="name-input">
-        Date of Birth
-      </label>
-      <div className="form-input"></div>
-      {/* <DatePicker /> */}
-    </div>
-  </>
-);
+      <div className="form-wrapper">
+        <label htmlFor="birth" className="name-input">
+          Date of Birth
+        </label>
+        <div className="form-input"></div>
+      </div>
+    </>
+  );
+};
 
 // STYLING CURRENT COMPONENT
 
@@ -150,7 +169,14 @@ const Form = styled.div`
         width: 200px;
       }
       .form-input {
-        /* background-color: red; */
+        .gender-wrapper {
+          /* background-color: red; */
+          display: flex;
+          flex-direction: row;
+          .gender {
+            /* background-color: yellow; */
+          }
+        }
         width: 100%;
         .input {
           width: 100%;
@@ -174,23 +200,6 @@ const Form = styled.div`
         line-height: 24px;
         color: #9b9b9b;
         /* background-color: yellow; */
-      }
-      .gender {
-        display: flex;
-        align-items: center;
-        margin-right: 1rem;
-        label {
-          /* margin-right: 0; */
-          margin: 0;
-          margin-left: 1rem;
-          width: 80px;
-          display: flex;
-          justify-content: flex-start;
-        }
-        &:hover {
-          cursor: pointer;
-          opacity: 0.8;
-        }
       }
     }
 
@@ -234,7 +243,7 @@ const ProfileWrapper = styled.div`
     /* RESPONSIVE lesstThan 1015px */
     /* background-color: yellow; */
     ${customMedia.lessThan('1586px')`
-    margin-left: 0; 
+    // margin-left: 0; 
   `}
     /* RESPONSIVE lesstThan 1015px */ 
   ${customMedia.lessThan('1410px')` 

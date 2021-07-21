@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { customMedia } from '../../../Layouts';
 
 export const Card = styled.div`
   color: #222222;
@@ -8,16 +9,27 @@ export const Card = styled.div`
   display: flex;
   height: 100%;
   flex-direction: column;
+  /* background-color: yellow; */
+  /* width: 250px; */
+  ${customMedia.lessThan('1670px')` 
+    // flex-direction: column;
+  `}
+  width: 100%;
 
   &:hover {
     box-shadow: 0px 0px 14px rgba(44, 44, 44, 0.164);
     cursor: pointer;
   }
-
-  .image-product {
+  .image-wrapper {
+    width: 100%;
     height: 140px;
-    object-fit: fill;
-    border-radius: 10px 10px 0 0;
+    /* background-color: yellow; */
+    .image-product {
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      border-radius: 10px 10px 0 0;
+    }
   }
 `;
 

@@ -3,12 +3,12 @@ import styled from 'styled-components';
 
 const Counter = ({ price }) => {
   const [count, setCount] = useState(1);
-  const [totalPrice, setTotalPrice] = useState(price);
+  // const [totalPrice, setTotalPrice] = useState(price);
   // let price = 100;
 
   useEffect(() => {
-    let multiple = count * price;
-    setTotalPrice(multiple);
+    // let multiple = count * price;
+    // setTotalPrice(multiple);
   }, [count]);
 
   const increase = () => {
@@ -43,7 +43,7 @@ export default Counter;
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-
+  margin-top: 1rem;
   p {
     margin: 0 1rem;
     /* background-color: yellowgreen; */

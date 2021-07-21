@@ -50,7 +50,15 @@ const Wrapper = styled.div`
   }
 `;
 
-const ImageCard = ({ to, image, title, category, bgCard, className }) => {
+const ImageCard = ({
+  to,
+  image,
+  title,
+  category,
+  bgCard,
+  className,
+  onClick,
+}) => {
   return (
     <Link className="anchor" to={`${to}`}>
       <Wrapper className={className}>

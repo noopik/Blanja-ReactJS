@@ -68,8 +68,10 @@ const Wrapper = styled.aside`
 
   /* background-color: cyan; */
 
-  .content {
+.content {
+    /* background-color: cyan; */
     width: max-content;
+    position: fixed;
 
     /* START = USER PROFILE AVATAR */
     .user-profile-wrapper {

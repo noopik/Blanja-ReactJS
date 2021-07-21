@@ -8,7 +8,10 @@ export const FooterWrapper = styled.footer`
   width: 100vw;
   margin-top: 100px;
   padding-top: 45px;
-
+  .container-wrapper {
+    width: 80%;
+    margin: 0 auto;
+  }
   .body {
     margin: 0 auto;
     display: flex;

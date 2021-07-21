@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { customMedia } from '../../Layouts';
 
-export default function TransitionsModal({ children, className, header }) {
+export default function TransitionsModal({ children, className, header, id }) {
   const [open, setOpen] = useState(false);
 
   const modalState = useSelector((state) => state.modalReducer);
@@ -23,6 +23,7 @@ export default function TransitionsModal({ children, className, header }) {
     dispatch({ type: 'SET_MODAL', value: false });
   };
   // console.log('in modal', open);
+  const openModal = () => {};
 
   return (
     <Wrapper
@@ -36,7 +37,7 @@ export default function TransitionsModal({ children, className, header }) {
         timeout: 500,
       }}
     >
-      <Fade in={open}>
+      <Fade in={open} id={id}>
         <div className={`paper ${className}`}>
           <div className="header">
             <h1 className="heading">{header}</h1>

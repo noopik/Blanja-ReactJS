@@ -6,12 +6,14 @@ import styled from 'styled-components';
 import { ImageCard } from './../Carousel/styled';
 // import './styled/carousel.css';
 import {
+  DMNullImage,
   ProductCategory1,
   ProductCategory2,
   ProductCategory3,
   ProductCategory4,
   ProductCategory5,
 } from '../../../assets/images/index';
+import { Axios } from '../../../config';
 
 const ButtonNext = styled.div`
   position: relative;
@@ -78,6 +80,10 @@ export default class MultipleItems extends Component {
     super(props);
     this.play = this.play.bind(this);
     this.pause = this.pause.bind(this);
+    this.state = {
+      categories: [],
+      colors: ['red', 'blue', 'orange', 'cyan'],
+    };
   }
   play() {
     this.slider.slickPlay();
@@ -85,11 +91,29 @@ export default class MultipleItems extends Component {
   pause() {
     this.slider.slickPause();
   }
+
+  componentDidMount() {
+    Axios.get('/category')
+      .then((res) => {
+        // console.log(res.data.data);
+        const resdata = res.data;
+        const data = resdata.data;
+        this.setState({
+          categories: data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
   render() {
     const { className } = this.props;
+    const { categories, colors } = this.state;
+    // console.log(categories);
     const settings = {
       infinite: true,
-      slidesToShow: 6,
+      slidesToShow: 4,
       slidesToScroll: 1,
       autoplay: true,
       autoplaySpeed: 2000,
@@ -97,19 +121,19 @@ export default class MultipleItems extends Component {
         {
           breakpoint: 1000,
           settings: {
-            slidesToShow: 5,
+            slidesToShow: 3,
           },
         },
         {
           breakpoint: 900,
           settings: {
-            slidesToShow: 4,
+            slidesToShow: 3,
           },
         },
         {
           breakpoint: 700,
           settings: {
-            slidesToShow: 3,
+            slidesToShow: 2,
           },
         },
         {
@@ -132,76 +156,16 @@ export default class MultipleItems extends Component {
           {...settings}
           className=""
         >
-          <ImageCard
-            category
-            image={ProductCategory1}
-            title="T-Shirt"
-            bgCard="red"
-            to="categories"
-          />
-          <ImageCard
-            category
-            image={ProductCategory2}
-            title="Pants"
-            bgCard="blue"
-            to="categories"
-          />
-          <ImageCard
-            category
-            image={ProductCategory3}
-            title="Jacket"
-            bgCard="red"
-            to="categories"
-          />
-          <ImageCard
-            category
-            image={ProductCategory4}
-            title="Jeans"
-            bgCard="orange"
-            to="categories"
-          />
-          <ImageCard
-            category
-            image={ProductCategory5}
-            title="Shoes"
-            bgCard="cyan"
-            to="categories"
-          />
-          <ImageCard
-            category
-            image={ProductCategory1}
-            title="T-Shirt"
-            bgCard="red"
-            to="categories"
-          />
-          <ImageCard
-            category
-            image={ProductCategory2}
-            title="Pants"
-            bgCard="blue"
-            to="categories"
-          />
-          <ImageCard
-            category
-            image={ProductCategory3}
-            title="Jacket"
-            bgCard="blue"
-            to="categories"
-          />
-          <ImageCard
-            category
-            image={ProductCategory4}
-            title="Jeans"
-            bgCard="orange"
-            to="categories"
-          />
-          <ImageCard
-            category
-            image={ProductCategory5}
-            title="Shoes"
-            bgCard="cyan"
-            to="categories"
-          />
+          {categories &&
+            categories.map((item, index) => (
+              <ImageCard
+                category
+                image={item.image ? item.image : DMNullImage}
+                title={item.nameCategory}
+                bgCard={colors[index]}
+                to={`categories/${item.id}`}
+              />
+            ))}
         </Slider>
       </HeaderCarousel>
     );

@@ -11,13 +11,12 @@ const ProductDetail = () => {
   const [dataProduct, setDataProduct] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {}, []);
-
   useEffect(() => {
     setIsLoading(true);
     Axios.get(`/products/${id}`)
       .then((result) => {
         const resdata = result.data.data;
+        console.log(2525, resdata);
         setDataProduct(resdata[0]);
         document.title = resdata[0].nameProduct;
         setIsLoading(false);
@@ -26,14 +25,14 @@ const ProductDetail = () => {
     setIsLoading(false);
   }, [id]);
 
-  // console.log(dataProduct);
+  console.log(1111, dataProduct);
 
   return (
     <>
       <Navbar />
       <MainContent>
         <SectionContent>
-          <Breadcrumbs data={dataProduct} />
+          <Breadcrumbs data={dataProduct} title={dataProduct.id_category} />
           <HeaderProductPage data={dataProduct} />
           <DetailProduct data={dataProduct} />
         </SectionContent>

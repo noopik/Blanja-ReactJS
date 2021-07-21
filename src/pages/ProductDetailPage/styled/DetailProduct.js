@@ -42,9 +42,10 @@ const Wrapper = styled.div`
   /* background-color: yellow; */
   margin-top: 40px;
   ${customMedia.lessThan('1280px')`
-    // background-color: cyan; 
-  margin-top: 100px;
-
+    margin-top: 100px; 
+    `}
+  ${customMedia.lessThan('872px')`
+    margin-top: 50px; 
   `}
 
   .condition-wrapper {

@@ -16,8 +16,6 @@ const Homepage = () => {
   const [newProducts, setNewProducts] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  // console.log(newProducts);
-  // console.log(popularProducts);
 
   useEffect(() => {
     document.title = 'Blanja | Homepage';
@@ -37,7 +35,6 @@ const Homepage = () => {
         setIsLoading(false);
       });
   }, []);
-  // console.log(newProducts);
   // DATA FOR POPULAR PRODUCTS SECTION
   useEffect(() => {
     setIsLoading(true);

@@ -10,6 +10,7 @@ import ProductCategory3 from './CT-jacket.jpg';
 import ProductCategory4 from './CT-jeans.jpg';
 import ProductCategory5 from './CT-sepatu.jpg';
 import DMNullImage from './DM_Empty.png';
+import AN_GifLoading from './loading-animation.gif';
 
 export {
   ImageCarousel1,
@@ -24,4 +25,5 @@ export {
   DMCarousel3,
   DMCarousel4,
   DMNullImage,
+  AN_GifLoading,
 };

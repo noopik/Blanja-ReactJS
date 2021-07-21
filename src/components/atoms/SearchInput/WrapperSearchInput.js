@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Axios } from '../../../config';
 import NumberFormat from 'react-number-format';
 import { Button } from '../../../components/atoms';
+import { customMedia } from '../../Layouts';
 
 const WrapperSearchInput = ({ placeholder, onChange, value, actionSearch }) => {
   const searchState = useSelector((state) => state.searchReducer);
@@ -21,8 +22,8 @@ const WrapperSearchInput = ({ placeholder, onChange, value, actionSearch }) => {
     Axios.get(`/products?src=${onSearch}&limit=10`)
       .then((res) => {
         // console.log(res.data.data);
-        const data = res.data;
-        console.log(data);
+        // const data = res.data;
+        // console.log(data);
         setResult(res.data.data);
       })
       .catch((err) => {
@@ -122,6 +123,11 @@ const Wrapper = styled.div`
     font: inherit;
     border: 0;
     /* background-color: yellow; */
+  }
+  input::-webkit-input-placeholder {
+    ${customMedia.lessThan('550px')`
+    color: transparent;
+    `}
   }
   input:focus {
     outline: none;

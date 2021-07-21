@@ -37,60 +37,61 @@ const ImageProducts = ({ images }) => {
 export default ImageProducts;
 
 const ImageWrapper = styled.div`
-  /* background-color: yellow; */
-  /* width: max-content; */
-  /* width: 500px; */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width: 50%;
   position: relative;
 
   ${customMedia.lessThan('laptop')`
     /* for screen sizes less than 1280px */
     width: 600px;
-    `}
+  `}
+  ${customMedia.lessThan('872px')` 
+    // background-color: pink;
+    width: 100%;
+    // flex-direction: row;
+  `} 
+
 
   .image-main-wrapper {
-    background-color: pink;
-    width: 100%;
-    height: 80%;
+    width: 400px;
+    height: 379px;
     display: flex;
-    flex: 1;
-    /* height: 70%; */
-    ${customMedia.lessThan('871px')`
-    /* for screen sizes less than 1280px */ 
-    // width: 80% 
-  `}
+    ${customMedia.lessThan('872px')` 
+      width : 100%; 
+    `}
     img.main-image {
-      /* height: max-content; */
-      /* height: 500px; */
-      /* object-fit: cover; */
+      object-fit: cover;
       width: 100%;
-      /* display: none; */
+      height: 100%;
     }
   }
 
   img {
-    /* width: 100%; */
-    /* height: 50px; */
     border-radius: 20px;
   }
 
   .tumb-wrapper {
     margin-top: 1rem;
-    height: 20%;
-    width: 100%;
+    height: 60px;
+    /* width: 100%; */
     position: relative;
     /* background-color: red; */
     display: flex;
     gap: 1rem;
-    /* position: absolute; */
-    overflow: scroll;
+    overflow: hidden;
+    ${customMedia.lessThan('872px')` 
+      flex-flow: wrap;
+      width : 100%; 
+    `}
     .mini-img {
       display: flex;
       /* background-color: blue; */
       width: 100%;
+      ${customMedia.lessThan('872px')` 
+        width: 60px;
+      `}
       img {
         border-radius: 5px;
       }

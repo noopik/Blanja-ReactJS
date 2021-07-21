@@ -254,13 +254,13 @@ const SellerSellingProducts = () => {
         </Main>
         <Main heading="Description">
           <TextEditor />
-          <FormInput
+          {/* <FormInput
             type="text"
             name="description"
             onChange={(e) => handleForm(e)}
             value={form.description}
             className="input"
-          />
+          /> */}
         </Main>
         <ButtonWrapper>
           {!slug && (

@@ -1,6 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { ContentWrapper } from '../styled';
 import { Heading1, Heading2, Heading3, Heading4 } from './styled';
 

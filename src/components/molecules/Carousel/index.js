@@ -14,7 +14,7 @@ import {
 } from '../../../assets/images';
 
 function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
+  const { className, onClick } = props;
   // console.log(123, className);
   return (
     <ButtonArrow>
@@ -37,7 +37,7 @@ function SampleNextArrow(props) {
 }
 
 function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
+  const { className, onClick } = props;
   return (
     <ButtonArrow prev>
       <div className={className} onClick={onClick}>

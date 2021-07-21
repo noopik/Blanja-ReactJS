@@ -301,7 +301,7 @@ export default function EnhancedTable(props) {
   // console.log(rows);
   const deleteHandle = () => {
     console.log(selected);
-    Axios.delete(`/products/${selected}`)
+    Axios.delete(`/products/${selected[0]}`)
       .then((res) => {
         // console.log(res)
         Axios.get('/products')

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Card, BodyProduct } from './styled';
-import StarRating from '../StarRating';
 import NumberFormat from 'react-number-format';
+import { Link } from 'react-router-dom';
+import { AN_GifLoading } from '../../../assets/images';
+import StarRating from '../StarRating';
+import { BodyProduct, Card } from './styled';
 
 const CardProduct = ({
   className,
@@ -28,7 +29,14 @@ const CardProduct = ({
   const headingCard = () => {
     const heading = title;
     const split = heading.split(' ');
-    let main = `${split[0]} ${split[1]} ${split[2]}`;
+    let main = `${split[0]}`;
+
+    if (split[1]) {
+      main += ` ${split[1]}`;
+    }
+    if (split[2]) {
+      main += ` ${split[2]}`;
+    }
     setTitleProduct(main);
   };
 
@@ -42,7 +50,13 @@ const CardProduct = ({
   return (
     <Link to={`/product/${slug}`} className="anchor">
       <Card className={className}>
-        <img className="image-product" src={image} alt={title} />
+        <div className="image-wrapper">
+          <img
+            className="image-product"
+            src={image ? image : AN_GifLoading}
+            alt={title}
+          />
+        </div>
         <BodyProduct>
           <h3 className="title">{titleProduct}</h3>
           <NumberFormat

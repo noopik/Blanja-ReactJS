@@ -8,17 +8,22 @@ import { Heading, Text } from '../../../components/atoms/Typography';
 import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
 import NumberFormat from 'react-number-format';
 import { customMedia } from '../../../components/Layouts';
+import { useHistory } from 'react-router-dom';
 
 const HeaderPage = ({ data }) => {
   const [dataProduct, setDataProduct] = useState({});
+  const history = useHistory();
 
   useEffect(() => {
     setDataProduct(data);
   }, [data]);
 
+  const handleActionBuy = () => {
+    history.push('/checkout');
+  };
+
   return (
     <Main>
-      <div className="image-content"></div>
       <ImageGaleryProduct images={dataProduct.imageProduct} />
       <aside>
         <Heading>
@@ -92,7 +97,7 @@ const HeaderPage = ({ data }) => {
         <div className="d-flex">
           <Button className="btn-mini">Chat</Button>
           <Button className="btn-mini">Add Bag</Button>
-          <Button primary className="btn-main">
+          <Button primary className="btn-main" onClick={handleActionBuy}>
             Buy Now
           </Button>
         </div>
@@ -108,15 +113,22 @@ const Main = styled.main`
   display: flex;
   margin-top: 32px;
   ${customMedia.lessThan('laptop')`
-    /* for screen sizes less than 1280px */
-    height: 500px;
-
+    height: max-content;
   `}
+  ${customMedia.lessThan('872px')` 
+  flex-direction: column;
+  `} 
+  /* flex-direction: column; */
+  
 
   aside {
     /* background-color: pink; */
     width: 100%;
     margin-left: 2rem;
+    ${customMedia.lessThan('872px')`
+      margin-left: 0; 
+      margin-top: 1rem; 
+    `}
 
     .price {
       display: inline-block;
@@ -141,6 +153,8 @@ const Main = styled.main`
       .btn-wrapper {
         width: max-content;
         display: flex;
+        margin-top: 1rem;
+
         .container-check {
           display: block;
           position: relative;
