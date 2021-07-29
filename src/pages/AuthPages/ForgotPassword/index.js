@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import { BrandLogo, Button, FormInput } from '../../../components/atoms';
-import { Heading, Text } from '../../../components/atoms/Typography';
+import { BrandLogo } from '../../../components/atoms';
+import { Heading } from '../../../components/atoms/Typography';
 import { AuthContainer } from '../../../components/Layouts';
-import {
-  AuthFooter,
-  AuthForgotPassword,
-  FormGroup,
-} from '../../../components/molecules';
 
 class ForgotPassword extends Component {
   constructor() {
@@ -26,7 +21,7 @@ class ForgotPassword extends Component {
   }
 
   render() {
-    const { verifiedPassword } = this.state;
+    // const { verifiedPassword } = this.state;
 
     return (
       <AuthContainer>

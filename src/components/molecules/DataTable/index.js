@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import clsx from 'clsx';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
 import { lighten, makeStyles } from '@material-ui/core/styles';
+import Switch from '@material-ui/core/Switch';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -11,24 +13,19 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Switch from '@material-ui/core/Switch';
+import Typography from '@material-ui/core/Typography';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import { Axios } from '../../../config';
-import { useHistory } from 'react-router-dom';
-import Alert from '@material-ui/lab/Alert';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import { Modal } from '..';
+import clsx from 'clsx';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Button } from '../../atoms';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { Modal } from '..';
+import { Axios } from '../../../config';
+import { Button } from '../../atoms';
 
 function createData(name, price, stock, id) {
   return { name, price, stock, id };
@@ -74,13 +71,13 @@ const headCells = [
 function EnhancedTableHead(props) {
   const {
     classes,
-    onSelectAllClick,
+    // onSelectAllClick,
     order,
     orderBy,
-    numSelected,
-    rowCount,
+    // numSelected,
+    // rowCount,
     onRequestSort,
-    data,
+    // data,
   } = props;
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
@@ -294,7 +291,7 @@ export default function EnhancedTable(props) {
 
   let rows = [];
   if (dataProduct.length > 0) {
-    dataProduct.map((item) => {
+    dataProduct.forEach((item) => {
       rows.push(createData(item.nameProduct, item.price, item.stock, item.id));
     });
   }
@@ -330,15 +327,15 @@ export default function EnhancedTable(props) {
     setOrderBy(property);
   };
 
-  const handleSelectAllClick = (event) => {
-    if (event.target.checked) {
-      const newSelecteds = rows.map((n) => n.id);
+  // const handleSelectAllClick = (event) => {
+  //   if (event.target.checked) {
+  //     const newSelecteds = rows.map((n) => n.id);
 
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
-  };
+  //     setSelected(newSelecteds);
+  //     return;
+  //   }
+  //   setSelected([]);
+  // };
 
   const handleClick = (event, id, name) => {
     // console.log(id);

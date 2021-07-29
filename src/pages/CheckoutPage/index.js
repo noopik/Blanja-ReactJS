@@ -16,7 +16,6 @@ import {
   CardCheckout,
   CheckoutDetail,
   HeaderSection,
-  Modal,
   Navbar,
 } from '../../components/molecules';
 

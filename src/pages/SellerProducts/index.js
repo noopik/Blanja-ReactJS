@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import UserProfilePage from '../UserProfile';
-import { Main } from '../UserProfile/styled';
-import { Tabs, Tab } from 'react-bootstrap';
+import React from 'react';
+import { Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
 import TabContent from '../../components/atoms/TabItem';
 import { DataTable } from '../../components/molecules';
-import { Axios } from '../../config';
+import UserProfilePage from '../UserProfile';
+import { Main } from '../UserProfile/styled';
 
 const SellerProductPage = () => {
   // console.log(dataProduct);

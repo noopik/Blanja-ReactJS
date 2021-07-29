@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import SelectDatepicker from 'react-select-datepicker';
 
 export const DatePicker = () => {

@@ -1,10 +1,6 @@
 import React, { useEffect } from 'react';
-import {
-  Navbar,
-  NavbarAsideProfileCollapse,
-  UserFormSetting,
-} from '../../components/molecules';
-import { Aside, Container, Main, MainAside } from './styled';
+import { Navbar, NavbarAsideProfileCollapse } from '../../components/molecules';
+import { Aside, Container, MainAside } from './styled';
 
 const UserProfile = ({ userName, children, active, session }) => {
   useEffect(() => {

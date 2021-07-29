@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Breadcrumbs, Navbar } from '../../components/molecules';
-import { MainContent, SectionContent } from '../../components/Layouts';
-import { DetailProduct, HeaderProductPage } from './styled';
 import { useParams } from 'react-router-dom';
+import { MainContent, SectionContent } from '../../components/Layouts';
+import { Breadcrumbs, Navbar } from '../../components/molecules';
 import { Axios } from '../../config';
-import { Loader } from '../../components/atoms';
+import { DetailProduct, HeaderProductPage } from './styled';
 
 const ProductDetail = () => {
   let { id } = useParams();
   const [dataProduct, setDataProduct] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-
+  console.log(isLoading);
   useEffect(() => {
     setIsLoading(true);
     Axios.get(`/products/${id}`)

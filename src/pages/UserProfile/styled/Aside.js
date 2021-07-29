@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { ProfileUser } from '../../../assets/images';
 import { customMedia } from '../../../components/Layouts';
 import {
-  NavSellerAside,
   NavCustomerAside,
+  NavSellerAside,
 } from '../../../components/molecules';
 
 const Aside = ({ active, session }) => {
@@ -14,7 +13,7 @@ const Aside = ({ active, session }) => {
     <Wrapper>
       <div className="content">
         <div className="user-profile-wrapper">
-          <img className="avatar" src={ProfileUser} alt="image" />
+          <img className="avatar" src={ProfileUser} alt="johanness " />
           <div className="username-wrapper">
             <h3>Johannes Mikael</h3>
             <Link to={``} className="anchor">

@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import { customMedia } from '../../components/Layouts';
 
 const SellerSellingProducts = () => {
-  const [isLoading, seIsLoading] = useState(false);
+  // const [isLoading, seIsLoading] = useState(false);
   const [category, setCategory] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
@@ -82,32 +82,32 @@ const SellerSellingProducts = () => {
 
   const sendData = () => {
     console.log('form', form);
-    seIsLoading(true);
+    // seIsLoading(true);
     Axios.post('/products/add', form)
       .then((res) => {
         console.log(form);
         console.log('Upload success');
         setForm({ ...initialForm });
         setUploadImage('');
-        seIsLoading(false);
+        // seIsLoading(false);
         history.push('/admin/seller/products');
       })
       .catch((err) => {
-        seIsLoading(false);
+        // seIsLoading(false);
       });
   };
 
   const updateData = () => {
-    seIsLoading(true);
+    // seIsLoading(true);
     Axios.post(`/products/${slug}`, form)
       .then((res) => {
         console.log(form);
         console.log('Upload success');
         setForm({ ...initialForm });
-        seIsLoading(false);
+        // seIsLoading(false);
       })
       .catch((err) => {
-        seIsLoading(false);
+        // seIsLoading(false);
       });
   };
 
@@ -228,7 +228,7 @@ const SellerSellingProducts = () => {
         <Main heading="Photo of Goods" className="photos">
           <div className="photo-wrapper">
             <div className="photo">
-              <img src={uploadImage ? uploadImage : ICImgNull} />
+              <img src={uploadImage ? uploadImage : ICImgNull} alt="goods" />
             </div>
           </div>
           <Divider className="divider" />
@@ -311,33 +311,33 @@ const InputUrlPhoto = styled.div`
   }
 `;
 
-const UploadMultipleImage = (
-  <div className="content-upload">
-    <div className="img-wrapper">
-      <div className="img-item">
-        <div className="img">
-          <img src={ICImgNull} />
-        </div>
-        <Text>Foto Utama</Text>
-      </div>
-      <div className="img-item">
-        <div className="img">
-          <img src={ICImgNull} />
-        </div>
-        <Text>Foto Utama</Text>
-      </div>
-      <div className="img-item">
-        <div className="img">
-          <img src={ICImgNull} />
-        </div>
-        <Text>Foto Utama</Text>
-      </div>
-      <div className="img-item">
-        <div className="img">
-          <img src={ICImgNull} />
-        </div>
-        <Text>Foto Utama</Text>
-      </div>
-    </div>
-  </div>
-);
+// const UploadMultipleImage = (
+//   <div className="content-upload">
+//     <div className="img-wrapper">
+//       <div className="img-item">
+//         <div className="img">
+//           <img src={ICImgNull} />
+//         </div>
+//         <Text>Foto Utama</Text>
+//       </div>
+//       <div className="img-item">
+//         <div className="img">
+//           <img src={ICImgNull} />
+//         </div>
+//         <Text>Foto Utama</Text>
+//       </div>
+//       <div className="img-item">
+//         <div className="img">
+//           <img src={ICImgNull} />
+//         </div>
+//         <Text>Foto Utama</Text>
+//       </div>
+//       <div className="img-item">
+//         <div className="img">
+//           <img src={ICImgNull} />
+//         </div>
+//         <Text>Foto Utama</Text>
+//       </div>
+//     </div>
+//   </div>
+// );

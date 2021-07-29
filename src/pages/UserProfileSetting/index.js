@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { UserFormSetting } from '../../components/molecules';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';

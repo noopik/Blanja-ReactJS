@@ -1,9 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
-import {
-  NavbarAsideProfileCollapse,
-  UserFormSetting,
-} from '../../components/molecules';
+import { UserFormSetting } from '../../components/molecules';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 

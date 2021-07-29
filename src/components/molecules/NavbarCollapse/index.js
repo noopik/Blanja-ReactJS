@@ -1,12 +1,8 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button } from '../../atoms';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
-import { ICNavArrow } from '../../../assets/Icons';
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { customMedia } from '../../Layouts';
 
 const NavbarCollapse = ({ showOnClick }) => {

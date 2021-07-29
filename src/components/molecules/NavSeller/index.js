@@ -1,6 +1,4 @@
 import React from 'react';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import ListIcon from '@material-ui/icons/List';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ICMenuAside } from '../../../assets/Icons';

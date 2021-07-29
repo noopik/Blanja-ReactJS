@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
 import styled from 'styled-components';
-import { ImageCard } from './../Carousel/styled';
 // import './styled/carousel.css';
-import {
-  DMNullImage,
-  ProductCategory1,
-  ProductCategory2,
-  ProductCategory3,
-  ProductCategory4,
-  ProductCategory5,
-} from '../../../assets/images/index';
+import { DMNullImage } from '../../../assets/images/index';
 import { Axios } from '../../../config';
+import { ImageCard } from './../Carousel/styled';
 
 const ButtonNext = styled.div`
   position: relative;
@@ -53,7 +46,7 @@ const ButtonNext = styled.div`
 `;
 
 function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
+  const { className, onClick } = props;
   // console.log(123, className);
   return (
     <ButtonNext>

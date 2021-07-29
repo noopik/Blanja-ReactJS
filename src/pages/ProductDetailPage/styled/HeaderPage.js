@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import AliceCarousel from 'react-alice-carousel';
-import { ProductCategory } from '../../../assets/images';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import { ImageGaleryProduct } from '../../../components/molecules';
-import { Heading, Text } from '../../../components/atoms/Typography';
-import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
 import NumberFormat from 'react-number-format';
-import { customMedia } from '../../../components/Layouts';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
+import { Heading, Text } from '../../../components/atoms/Typography';
+import { customMedia } from '../../../components/Layouts';
+import { ImageGaleryProduct } from '../../../components/molecules';
 
 const HeaderPage = ({ data }) => {
   const [dataProduct, setDataProduct] = useState({});

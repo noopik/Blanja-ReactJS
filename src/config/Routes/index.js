@@ -1,25 +1,25 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import {
-  Homepage,
-  MyBag,
   CategoryPage,
   CheckoutPage,
+  Homepage,
+  MyBag,
   ProductDetailPage,
-  UserProfileSetting,
-  UserProfileAddress,
-  UserProfileOrder,
-  SellerStore,
+  ResultProducts,
   SellerProductPage,
   SellerSellingProducts,
-  ResultProducts,
+  SellerStore,
+  UserProfileAddress,
+  UserProfileOrder,
+  UserProfileSetting,
 } from '../../pages';
 import {
   CustomerLogin,
-  SellerLogin,
   CustomerRegister,
-  SellerRegister,
   ForgotPassword,
+  SellerLogin,
+  SellerRegister,
 } from '../../pages/AuthPages';
 
 const Routes = () => {

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { FooterWrapper } from './styled';
-import { BrandLogo } from '../../atoms';
 import { Link } from 'react-router-dom';
+import { BrandLogo } from '../../atoms';
+import { FooterWrapper } from './styled';
 
 class Footer extends Component {
-  constructor(props) {
-    super(props);
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     return (

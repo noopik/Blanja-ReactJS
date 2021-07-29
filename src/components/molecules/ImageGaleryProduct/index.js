@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DMNullImage, ProductCategory1 } from '../../../assets/images';
+import { DMNullImage } from '../../../assets/images';
 import { customMedia } from '../../Layouts';
 
 const ImageProducts = ({ images }) => {

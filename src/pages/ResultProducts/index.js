@@ -1,29 +1,23 @@
+import FilterListIcon from '@material-ui/icons/FilterList';
+import PageviewIcon from '@material-ui/icons/Pageview';
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { CardProduct } from '../../components/atoms';
 import { MainContent, SectionContent } from '../../components/Layouts';
 import {
-  Breadcrumbs,
   CardGrouping,
-  CheckoutDetail,
   Footer,
   HeaderSection,
   Navbar,
 } from '../../components/molecules';
-import { CardProduct, CardWrapper } from '../../components/atoms';
 import { Item } from '../../components/molecules/CardGrouping/styled';
 import { Axios } from '../../config';
-import { useHistory, useLocation, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { Heading } from '../../components/atoms/Typography';
-import styled from 'styled-components';
-import PageviewIcon from '@material-ui/icons/Pageview';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import Pagination from 'react-bootstrap/Pagination';
-import PageItem from 'react-bootstrap/PageItem';
 
 const ResultProducts = () => {
   const [dataProducts, setdataProducts] = useState([{}]);
   const [metaDataProducts, setMetaDataProducts] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [sortPrice, setSortPrice] = useState('ASC');
   // const params = useParams();
   const history = useHistory();
@@ -167,9 +161,9 @@ const InfoResult = styled.div`
   }
 `;
 
-const PaginationWrapper = styled.div`
-  background-color: yellow;
-  margin-top: 5rem;
-  display: flex;
-  justify-content: center;
-`;
+// const PaginationWrapper = styled.div`
+//   background-color: yellow;
+//   margin-top: 5rem;
+//   display: flex;
+//   justify-content: center;
+// `;

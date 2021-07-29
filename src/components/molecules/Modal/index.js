@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import Modal from '@material-ui/core/Modal';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { customMedia } from '../../Layouts';
@@ -23,7 +22,6 @@ export default function TransitionsModal({ children, className, header, id }) {
     dispatch({ type: 'SET_MODAL', value: false });
   };
   // console.log('in modal', open);
-  const openModal = () => {};
 
   return (
     <Wrapper

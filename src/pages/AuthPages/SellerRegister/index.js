@@ -6,13 +6,9 @@ import {
   FormInput,
   ToggleItem,
 } from '../../../components/atoms';
+import { Heading } from '../../../components/atoms/Typography';
 import { AuthContainer } from '../../../components/Layouts';
-import { Heading, Text } from '../../../components/atoms/Typography';
-import {
-  AuthFooter,
-  AuthForgotPassword,
-  FormGroup,
-} from '../../../components/molecules';
+import { AuthFooter, FormGroup } from '../../../components/molecules';
 
 const SellerRegister = () => {
   useEffect(() => {

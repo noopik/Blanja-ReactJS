@@ -1,9 +1,8 @@
 import React from 'react';
-import { Button, CardWrapper, InputCheck } from '../../atoms';
-import { Heading, Text } from '../../atoms/Typography';
-import { Wrapper } from './styled';
-import HeadingCard from './Heading';
+import { InputCheck } from '../../atoms';
 import Body from './Body';
+import HeadingCard from './Heading';
+import { Wrapper } from './styled';
 
 const CheckoutDetail = ({ heading, body, checkout }) => {
   return (

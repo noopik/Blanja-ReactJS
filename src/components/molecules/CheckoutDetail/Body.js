@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Counter } from '../../atoms';
-import { Heading, Text } from '../../atoms/Typography';
-import { ProductCategory1 } from '../../../assets/images';
+import React from 'react';
 import styled from 'styled-components';
+import { ProductCategory1 } from '../../../assets/images';
+import { Counter } from '../../atoms';
+import { Text } from '../../atoms/Typography';
 
 const Body = ({ price, checkout }) => {
   return (

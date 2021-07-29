@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import {} from '../../molecules';
-import { BrandLogo, ButtonIcon, ButtonTogller, SearchInput } from '../../atoms';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { useHistory, useLocation } from 'react-router-dom';
+import { BrandLogo, ButtonIcon, SearchInput } from '../../atoms';
 import {} from '../../atoms/Typography';
+import {} from '../../molecules';
+import NavbarCollapse from '../NavbarCollapse';
 import { Navbar, Wrapper } from './styled';
 import PublicNav from './styled/PublicNav';
 import UserNav from './styled/UserNav';
-import { useDispatch } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
-import NavbarCollapse from '../NavbarCollapse';
-import { useEffect } from 'react';
 
 const NavbarComponent = ({ onChange, value, session }) => {
   const dispatch = useDispatch();
