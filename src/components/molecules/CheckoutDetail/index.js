@@ -4,10 +4,10 @@ import Body from './Body';
 import HeadingCard from './Heading';
 import { Wrapper } from './styled';
 
-const CheckoutDetail = ({ heading, body, checkout }) => {
+const CheckoutDetail = ({ heading, body, checkout, onClick }) => {
   return (
     <Wrapper checkout={checkout}>
-      {!checkout && <InputCheck className="input" />}
+      {!checkout && <InputCheck className="input" onClick={onClick} />}
       {heading && <HeadingCard />}
       {body && <Body checkout={checkout} />}
     </Wrapper>

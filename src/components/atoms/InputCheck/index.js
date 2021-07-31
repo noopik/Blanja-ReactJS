@@ -1,9 +1,9 @@
 import React from 'react';
 import { Label } from './styled';
 
-const InputCheck = ({ className }) => {
+const InputCheck = ({ className, onClick }) => {
   return (
-    <Label className={className}>
+    <Label className={className} onClick={onClick}>
       <input type="checkbox" />
       <span class="checkmark"></span>
     </Label>

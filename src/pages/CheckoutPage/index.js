@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
 import {
   AsideLeft,
   AsideRight,
@@ -16,17 +15,16 @@ import {
   CardCheckout,
   CheckoutDetail,
   HeaderSection,
+  Modal,
+  ModalChooseAddress,
+  ModalPayment,
   Navbar,
 } from '../../components/molecules';
 
 const CheckoutPage = () => {
-  const dispatch = useDispatch();
-  // console.log('numSelected', numSelected);
-  // SHOW MODAL
-  const handleModalOpen = () => {
-    console.log(1);
-    dispatch({ type: 'SET_MODAL', value: true });
-  };
+  const [showModalAddress, setShowModalAddress] = useState(false);
+  const [showModalBuy, setShowModalBuy] = useState(false);
+
   useEffect(() => {
     document.title = 'Blanja | Checkout';
   });
@@ -52,7 +50,7 @@ const CheckoutPage = () => {
                   16] Sokaraja, Kab. Banyumas, 53181
                 </Text>
                 <div className="btn-wrapper">
-                  <Button onClick={handleModalOpen}>
+                  <Button onClick={() => setShowModalAddress(true)}>
                     Choose Another Address
                   </Button>
                 </div>
@@ -61,11 +59,28 @@ const CheckoutPage = () => {
               <CheckoutDetail body checkout />
             </AsideLeft>
             <AsideRight className="right">
-              <CardCheckout checkout />
+              <CardCheckout checkout buyAction={() => setShowModalBuy(true)} />
             </AsideRight>
           </AsideContent>
         </SectionContent>
       </MainContent>
+      {/* Modal Choose Another Address */}
+      <Modal
+        showModal={showModalAddress}
+        closeModal={() => setShowModalAddress(false)}
+        title="Choose Another Address"
+        size="large"
+      >
+        <ModalChooseAddress />
+      </Modal>
+      {/* Modal Buy */}
+      <Modal
+        showModal={showModalBuy}
+        closeModal={() => setShowModalBuy(false)}
+        title="Payment"
+      >
+        <ModalPayment />
+      </Modal>
     </>
   );
 };

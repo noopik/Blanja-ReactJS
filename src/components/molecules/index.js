@@ -20,8 +20,13 @@ import NavSellerAside from './NavSeller';
 import NavCustomerAside from './NavCustomerAside';
 import NavbarAsideProfileCollapse from './NavbarAsideProfileCollapse';
 import Modal from './Modal';
+import ModalChooseAddress from './ModalChooseAddress';
+import UserAddressCard from './UserAddressCard';
+import ModalPayment from './ModalPayment';
 
 export {
+  ModalPayment,
+  UserAddressCard,
   DatePicker,
   CheckoutDetail,
   FormGroup,
@@ -44,4 +49,5 @@ export {
   NavCustomerAside,
   NavbarAsideProfileCollapse,
   Modal,
+  ModalChooseAddress,
 };

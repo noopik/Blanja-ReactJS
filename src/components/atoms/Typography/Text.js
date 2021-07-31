@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-// console.log(as);
 const Text = styled.p`
   font-family: ${({ font }) => {
     if (font === 'medium') return 'Metropolis-SemiBold';

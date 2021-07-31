@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { colors } from '../../../assets/colors';
 import { customMedia } from '../../Layouts/BreakPoints';
@@ -46,7 +46,6 @@ const SearchInput = ({
   // Handle Selected
   const handleColors = (e, change) => {
     // console.log(e.target.innerText);
-    let reset = {};
     switch (change.target) {
       case 'color':
         setColor({
@@ -126,7 +125,12 @@ const SearchInput = ({
           </div>
         )}
       </Wrapper>
-      <Modal showModal={showModal} closeModal={() => setShowModal(false)}>
+      <Modal
+        showModal={showModal}
+        closeModal={() => setShowModal(false)}
+        title="Filter"
+        size="medium"
+      >
         <ModalContent>
           <div className="section check-wrapper">
             <Text as="lg" font="medium">
@@ -160,6 +164,7 @@ const SearchInput = ({
               </label>
             </div>
           </div>
+
           <div className="section size">
             <Text as="lg" font="medium">
               Sizes

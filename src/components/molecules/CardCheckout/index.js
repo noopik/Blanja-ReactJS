@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, CardWrapper, Divider } from '../../atoms';
 import { Heading, Text } from '../../atoms/Typography';
 
-const CardCheckout = ({ myBag, checkout }) => {
+const CardCheckout = ({ myBag, checkout, buyAction }) => {
   return (
     <CardWrapper>
       <Heading as={3}>Shopping summary</Heading>
@@ -52,7 +52,9 @@ const CardCheckout = ({ myBag, checkout }) => {
         </>
       )}
       <Link to="/checkout">
-        <Button primary>BUY</Button>
+        <Button primary onClick={buyAction}>
+          BUY
+        </Button>
       </Link>
     </CardWrapper>
   );

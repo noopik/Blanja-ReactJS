@@ -11,8 +11,14 @@ import ProductCategory4 from './CT-jeans.jpg';
 import ProductCategory5 from './CT-sepatu.jpg';
 import DMNullImage from './DM_Empty.png';
 import AN_GifLoading from './loading-animation.gif';
+import BankGopay from './bank-gopay.png';
+import BankPosIndonesia from './bank-pos.png';
+import BankMastercard from './bank-master.png';
 
 export {
+  BankPosIndonesia,
+  BankMastercard,
+  BankGopay,
   ImageCarousel1,
   ProductCategory1,
   ProductCategory2,

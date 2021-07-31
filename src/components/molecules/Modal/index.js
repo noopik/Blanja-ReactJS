@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import CancelIcon from '@material-ui/icons/Cancel';
+import React from 'react';
 import styled from 'styled-components';
 import { CardWrapper } from '../../atoms';
-import CancelIcon from '@material-ui/icons/Cancel';
+import PropTypes from 'prop-types';
 
-const Modal = ({ showModal, closeModal, children }) => {
-  console.log(showModal);
+const Modal = ({ showModal, closeModal, children, title, size }) => {
   if (!showModal) return null;
 
   return (
     <>
       <ModalWrapper isShow={showModal}>
-        <ContentModal>
+        <ContentModal size={size}>
           <div className="header">
-            <h1 className="title">Modal Title</h1>
+            <h1 className="title">{title}</h1>
             <div onClick={closeModal}>
               <CancelIcon fontSize="large" className="cancel-icon" />
             </div>
@@ -27,11 +27,15 @@ const Modal = ({ showModal, closeModal, children }) => {
 
 export default Modal;
 
+Modal.defaultProps = {
+  size: 'medium',
+};
+
 const ModalWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   position: fixed;
-  z-index: 9;
+  z-index: 999;
   top: 0;
   left: 0;
   display: flex;
@@ -58,12 +62,21 @@ const BackgroundLayer = styled.div`
   }
 `;
 
+// Type Modal Size
+const sizeModal = {
+  small: 300,
+  medium: 500,
+  large: 800,
+};
+
 const ContentModal = styled(CardWrapper)`
   width: max-content;
-  z-index: 9;
+  z-index: 999;
   padding: 0;
   width: 50%;
-  max-width: 500px;
+  max-width: ${({ size }) => {
+    return sizeModal[size];
+  }}px;
   .header {
     display: flex;
     justify-content: space-between;
