@@ -1,94 +1,87 @@
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
-import Modal from '@material-ui/core/Modal';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { customMedia } from '../../Layouts';
+import { CardWrapper } from '../../atoms';
+import CancelIcon from '@material-ui/icons/Cancel';
 
-export default function TransitionsModal({ children, className, header, id }) {
-  const [open, setOpen] = useState(false);
-
-  const modalState = useSelector((state) => state.modalReducer);
-  const dispatch = useDispatch();
-  const showModal = modalState.isShow;
-  // console.log(modalState);
-
-  useEffect(() => {
-    setOpen(showModal);
-  }, [showModal]);
-
-  const handleClose = () => {
-    dispatch({ type: 'SET_MODAL', value: false });
-  };
-  // console.log('in modal', open);
+const Modal = ({ showModal, closeModal, children }) => {
+  console.log(showModal);
+  if (!showModal) return null;
 
   return (
-    <Wrapper
-      aria-labelledby="transition-modal-title"
-      aria-describedby="transition-modal-description"
-      open={open}
-      onClose={handleClose}
-      closeAfterTransition
-      BackdropComponent={Backdrop}
-      BackdropProps={{
-        timeout: 500,
-      }}
-    >
-      <Fade in={open} id={id}>
-        <div className={`paper ${className}`}>
+    <>
+      <ModalWrapper isShow={showModal}>
+        <ContentModal>
           <div className="header">
-            <h1 className="heading">{header}</h1>
+            <h1 className="title">Modal Title</h1>
+            <div onClick={closeModal}>
+              <CancelIcon fontSize="large" className="cancel-icon" />
+            </div>
           </div>
-          <div className="body">{children}</div>
-        </div>
-      </Fade>
-    </Wrapper>
+          {children}
+        </ContentModal>
+        <BackgroundLayer onClick={closeModal} />
+      </ModalWrapper>
+    </>
   );
-}
+};
 
-const Wrapper = styled(Modal)`
+export default Modal;
+
+const ModalWrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  z-index: 9;
+  top: 0;
+  left: 0;
   display: flex;
-  /* align-items: center; */
+  align-items: flex-start;
   justify-content: center;
-  .paper {
-    /* display: flex; */
-    /* justify-content: space-between; */
-    flex-direction: row;
+  margin-top: 4rem;
+`;
+
+const BackgroundLayer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background-color: #00000052;
+  left: 0;
+  top: 0;
+  padding-top: 5rem;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ContentModal = styled(CardWrapper)`
+  width: max-content;
+  z-index: 9;
+  padding: 0;
+  width: 50%;
+  max-width: 500px;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    box-shadow: 0px 0px 6px rgba(53, 50, 50, 0.25);
+    border-radius: 8px 8px 0px 0px;
+    .title {
+      font-size: 2rem;
+      margin: 0;
+    }
     align-items: center;
-    /* background-color: yellow; */
-    width: max-content;
-    height: max-content;
-    margin-top: 6rem;
-    ${customMedia.lessThan('900px')` 
-      width: 80%; 
-    `}
-    ${customMedia.lessThan('630px')` 
-      width: 90%; 
-    `}
-    background: #ffffff;
-    box-shadow: 0px 0px 8px rgba(115, 115, 115, 0.25);
-    border-radius: 10px;
-    .header {
-      box-shadow: 0px 0px 6px rgba(53, 50, 50, 0.25);
-      border-radius: 8px 8px 0px 0px;
-      padding: 22px;
-      display: flex;
-      justify-content: center;
-      .heading {
-        font-weight: 500;
-        ${customMedia.lessThan('630px')` 
-          width: 90%; 
-          font-size: 16px;
-        `}
-        font-size: 22px;
-        line-height: 22px;
-        color: #222222;
-        text-align: center;
+    .cancel-icon {
+      &:hover {
+        cursor: pointer;
       }
     }
-    .body {
-      padding: 22px;
-    }
   }
+  /* .body {
+    padding: 1rem;
+  } */
 `;

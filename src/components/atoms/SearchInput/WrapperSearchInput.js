@@ -155,7 +155,7 @@ const Wrapper = styled.div`
   /* RESULT DATA SEARCH */
   .result-data-search {
     width: 100%;
-    z-index: ${({ result }) => (Array.isArray(result) ? -999 : -1)};
+    z-index: ${({ result }) => (Array.isArray(result) ? -9 : -1)};
     /* background-color: yellow; */
     position: absolute;
 
