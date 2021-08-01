@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
   BrandLogo,
@@ -14,16 +15,31 @@ import {
   AuthForgotPassword,
   FormGroup,
 } from '../../../components/molecules';
+import { userLogin } from '../../../redux/actions';
 
 const SellerLogin = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const role = 'seller';
+
+  const [form, setForm] = useState({
+    email: '',
+    password: '',
+  });
 
   useEffect(() => {
     document.title = 'Login | Seller';
   });
-  const action = () => {
-    history.push('/admin/seller');
+  const actionLogin = () => {
+    dispatch(userLogin(form, history, role));
   };
+  const handleForm = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <AuthContainer>
       <BrandLogo />
@@ -39,11 +55,23 @@ const SellerLogin = () => {
         </ToggleItem>
       </ButtonTogller>
       <FormGroup mt={40}>
-        <FormInput type="text" placeholder="Email" />
-        <FormInput type="password" placeholder="Password" />
+        <FormInput
+          type="text"
+          placeholder="Email"
+          name="email"
+          value={form.email}
+          onChange={(e) => handleForm(e)}
+        />
+        <FormInput
+          type="password"
+          placeholder="Password"
+          name="password"
+          value={form.password}
+          onChange={(e) => handleForm(e)}
+        />
         <AuthForgotPassword />
       </FormGroup>
-      <Button primary className="btn-wrapper" onClick={action}>
+      <Button primary className="btn-wrapper" onClick={actionLogin}>
         LOGIN
       </Button>
       <AuthFooter login session="seller" />

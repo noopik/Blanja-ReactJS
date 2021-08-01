@@ -1,5 +1,6 @@
 import { Toast } from '../../components/atoms';
 import { Axios } from '../../config';
+import { typeRedux } from '../../utils';
 import { showLoading } from './loadingAction';
 
 export const userLogin = (formUser, history, role) => (dispatch) => {
@@ -8,17 +9,23 @@ export const userLogin = (formUser, history, role) => (dispatch) => {
     .then((res) => {
       dispatch(showLoading(false));
       const dataUserResponse = res.data.data;
-      console.log(dataUserResponse);
-      dispatch({ type: 'SET_USER_LOGIN', value: dataUserResponse });
-      if (dataUserResponse.role !== role) {
-        const message = 'You are not customer. Login as a Seller';
 
-        return Toast(message, 'error');
+      // console.log(dataUserResponse);
+      dispatch({ type: typeRedux.setUserLogin, value: dataUserResponse });
+      if (dataUserResponse.role !== role) {
+        switch (role) {
+          case 'customer':
+            return Toast('You are not customer. Login as a Seller', 'error');
+          case 'seller':
+            return Toast('You are not seller. Login as a customer', 'error');
+          default:
+            break;
+        }
       }
 
       if (dataUserResponse.role === role) {
         const pathByRole = { seller: '/admin/seller', customer: '/' };
-        console.log(pathByRole[role]);
+        // console.log(pathByRole[role]);
         history.push(`${pathByRole[role]}`);
       }
     })

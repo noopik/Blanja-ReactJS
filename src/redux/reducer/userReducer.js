@@ -10,6 +10,7 @@ const initialUser = {
   verified: 0,
   refresh: '',
   token: '',
+  storeName: '',
 };
 
 // REDUCER FOR REGISTER FLOW
@@ -28,6 +29,7 @@ export const userReducer = (state = { initialUser }, action) => {
       verified: action.value.verified,
       refresh: action.value.refresh,
       token: action.value.token,
+      storeName: action.value.storeName,
     };
   }
 

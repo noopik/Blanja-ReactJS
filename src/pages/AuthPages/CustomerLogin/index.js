@@ -15,7 +15,7 @@ import {
   AuthForgotPassword,
   FormGroup,
 } from '../../../components/molecules';
-import { showLoading, userLogin } from '../../../redux/actions';
+import { userLogin } from '../../../redux/actions';
 
 const CustomerLogin = () => {
   const history = useHistory();
