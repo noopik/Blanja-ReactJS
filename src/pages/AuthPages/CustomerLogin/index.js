@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
   BrandLogo,
@@ -14,10 +15,13 @@ import {
   AuthForgotPassword,
   FormGroup,
 } from '../../../components/molecules';
-import { Axios } from '../../../config';
+import { showLoading, userLogin } from '../../../redux/actions';
 
 const CustomerLogin = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
+  const role = 'customer';
+
   const [form, setForm] = useState({
     email: '',
     password: '',
@@ -28,19 +32,7 @@ const CustomerLogin = () => {
   });
 
   const actionLogin = () => {
-    console.log(form);
-    Axios.post('/users/login', form)
-      .then((res) => {
-        history.push('/');
-        //
-      })
-      .catch((err) => {
-        // console.log(err.message);
-        const error = err.message;
-        if (error === 'Request failed with status code 404') {
-          console.log('Password atau email tidak sesuai');
-        }
-      });
+    dispatch(userLogin(form, history, role));
   };
 
   const handleForm = (e) => {

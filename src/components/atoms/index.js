@@ -17,8 +17,11 @@ import BtnNewAddres from './BtnNewAddress';
 import TabItemContent from './TabItem';
 import Loader from './Loader';
 import ButtonIcon from './ButtonIcon';
+import ScreenLoading from './ScreenLoading';
+export * from './Toast';
 
 export {
+  ScreenLoading,
   IconLogo,
   BrandLogo,
   ButtonTogller,
