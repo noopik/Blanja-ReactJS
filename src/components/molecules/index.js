@@ -23,8 +23,10 @@ import Modal from './Modal';
 import ModalChooseAddress from './ModalChooseAddress';
 import UserAddressCard from './UserAddressCard';
 import ModalPayment from './ModalPayment';
+import AlertVerification from './AlertVerification/AlertVerification';
 
 export {
+  AlertVerification,
   ModalPayment,
   UserAddressCard,
   DatePicker,

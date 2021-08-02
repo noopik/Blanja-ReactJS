@@ -1,21 +1,60 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { ICVerified } from '../../assets/Icons';
 import { BrandLogo, Button } from '../../components/atoms';
 import { customMedia } from '../../components/Layouts';
+import { Axios } from '../../config';
+import { decodeJwtToken } from '../../utils';
 
 const VerifiedRegisterSuccess = () => {
+  const { token } = useParams();
+  const history = useHistory();
+
+  const [dataRequestPassword, setDataRequestPassword] = useState({
+    isExists: false,
+    data: {},
+    token: '',
+  });
+
   useEffect(() => {
-    document.title = 'Nopik | Verified Success';
+    decodeJwtToken(token).then((resultDecode) => {
+      setDataRequestPassword(resultDecode);
+      document.title = `${resultDecode.decode.name} | Verified Success`;
+
+      Axios.get(`/users/${resultDecode.decode.id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      }).then((resultGetUser) => {
+        const dataUser = resultGetUser.data.data[0];
+        const verified = {
+          ...dataUser,
+          verified: 1,
+        };
+        Axios.post(`/users/${resultDecode.decode.id}`, verified, {
+          headers: { Authorization: `Bearer ${token}` },
+        }).then((res) => {
+          console.log(res);
+        });
+      });
+    });
   }, []);
+
+  const actionButton = () => {
+    history.push('/');
+  };
+
+  if (!dataRequestPassword.isExists) {
+    return null;
+  }
+
   return (
     <Wrapper>
       <div className="content">
         <div className="body">
           <BrandLogo />
           <h1 className="title">
-            Congratulation Nopik ! <br /> Your account has been successfully
-            activated
+            Congratulation {dataRequestPassword.decode.name}! <br /> Your
+            account has been successfully activated
           </h1>
           <div className="image-wrapper">
             <img src={ICVerified} alt="success" />
@@ -26,7 +65,9 @@ const VerifiedRegisterSuccess = () => {
               below to start the adventure
             </p>
           </div>
-          <Button primary>START JOURNEY</Button>
+          <Button primary onClick={actionButton}>
+            START JOURNEY
+          </Button>
         </div>
 
         <div className="footer"></div>

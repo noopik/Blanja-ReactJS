@@ -22,6 +22,7 @@ import {
   SellerLogin,
   SellerRegister,
 } from '../../pages/AuthPages';
+import PublicRoute from './PublicRoute';
 
 const Routes = () => {
   return (
@@ -35,7 +36,7 @@ const Routes = () => {
         <Route path="/forgot-password" component={ForgotPassword} />
         <Route path="/forgot-password/:token" component={ForgotPassword} />
         {/* MAIN HOME */}
-        <Route exact path="/" component={Homepage} />
+        <PublicRoute exact path="/" component={Homepage} />
         <Route path="/categories" component={CategoryPage} />
         <Route path="/products" component={ResultProducts} />
         <Route path="/my-bag" component={MyBag} />

@@ -16,6 +16,7 @@ const Homepage = () => {
   const [newProducts, setNewProducts] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     document.title = 'Blanja | Homepage';
@@ -52,7 +53,7 @@ const Homepage = () => {
 
   return (
     <>
-      <Navbar session="public" />
+      <Navbar session={token ? 'user' : 'public'} />
       <MainContent>
         <Carousel className="carousel" />
         <SectionContent className="section">

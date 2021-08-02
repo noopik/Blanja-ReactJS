@@ -1,40 +1,35 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../../../../assets/colors';
-import { ProfileUser } from '../../../../assets/images';
+import { userLogout } from '../../../../redux/actions';
+import { Button } from '../../../atoms';
 import { customMedia } from '../../../Layouts';
 
-const Wrapper = styled.div`
-  display: flex;
-  gap: 1rem;
-  ${customMedia.lessThan('865px')`
-      /* for screen sizes less than 768px */
-      display: none;
-  `}
+const UserNav = ({ avatar }) => {
+  const [showAvatarPopup, setShowAvatarPopup] = useState(false);
+  const userState = useSelector((state) => state.userReducer);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  .icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50px;
-    /* background-color: yellow; */
-    &.user img {
-      content: '';
-      width: 35px;
-      height: 35px;
-      border-radius: 100%;
+  const handlePopup = () => {
+    showAvatarPopup ? setShowAvatarPopup(false) : setShowAvatarPopup(true);
+  };
+  const handleProfile = () => {
+    if (userState.role === 'customer') {
+      history.push('/user/setting');
     }
-  }
-  .icon:hover {
-    cursor: pointer;
-  }
-  .icon:hover svg path {
-    stroke: ${colors.primary};
-  }
-`;
+    if (userState.role === 'seller') {
+      history.push('/admin/seller');
+    }
+  };
 
-const UserNav = () => {
+  const actionLogout = () => {
+    dispatch(userLogout(history));
+    history.push('/customer-login');
+  };
+
   return (
     <Wrapper>
       <Link to="/my-bag" className="icon">
@@ -125,13 +120,81 @@ const UserNav = () => {
           />
         </svg>
       </Link>
-      <Link to="/user/setting">
+      <div className="btn-avatar" onClick={handlePopup}>
         <div className="icon user">
-          <img src={ProfileUser} alt="user" />
+          <img src={avatar} alt="user" />
         </div>
-      </Link>
+        {showAvatarPopup && (
+          <div className="popup">
+            <div className="item">
+              <a onClick={handleProfile}>My Profile</a>
+            </div>
+            <div className="item">
+              <Button primary onClick={actionLogout}>
+                Logout
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
     </Wrapper>
   );
 };
 
 export default UserNav;
+
+const Wrapper = styled.div`
+  display: flex;
+  gap: 1rem;
+  ${customMedia.lessThan('865px')`
+      /* for screen sizes less than 768px */
+      display: none;
+  `}
+
+  .icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    /* background-color: yellow; */
+    &.user img {
+      content: '';
+      width: 35px;
+      height: 35px;
+      border-radius: 100%;
+    }
+  }
+  .icon:hover {
+    cursor: pointer;
+  }
+  .icon:hover svg path {
+    stroke: ${colors.primary};
+  }
+
+  .btn-avatar {
+    position: relative;
+
+    .popup {
+      position: absolute;
+      background-color: #ffffff;
+      box-shadow: 0px 0px 14px rgba(173, 173, 173, 0.25);
+      right: 15px;
+      top: 30px;
+      width: 150px;
+      margin-top: 1rem;
+      padding: 12px;
+      padding-bottom: 5px;
+      border-radius: 15px 0 15px 15px;
+      .item {
+        margin-bottom: 1rem;
+        a {
+          color: #222222;
+          text-decoration: none;
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+`;

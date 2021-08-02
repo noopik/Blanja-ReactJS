@@ -1,3 +1,5 @@
+import { typeRedux } from '../../utils';
+
 const initialUser = {
   born: '',
   email: '',
@@ -15,23 +17,28 @@ const initialUser = {
 
 // REDUCER FOR REGISTER FLOW
 export const userReducer = (state = { initialUser }, action) => {
-  if (action.type === 'SET_USER_LOGIN') {
-    return {
-      ...state,
-      born: action.value.born,
-      email: action.value.email,
-      gender: action.value.gender,
-      idUser: action.value.idUser,
-      imageProfile: action.value.imageProfile,
-      name: action.value.name,
-      phoneNumber: action.value.phoneNumber,
-      role: action.value.role,
-      verified: action.value.verified,
-      refresh: action.value.refresh,
-      token: action.value.token,
-      storeName: action.value.storeName,
-    };
+  switch (action.type) {
+    case typeRedux.setUserLogin:
+      return {
+        ...state,
+        born: action.value.born,
+        email: action.value.email,
+        gender: action.value.gender,
+        idUser: action.value.idUser,
+        imageProfile: action.value.imageProfile,
+        name: action.value.name,
+        phoneNumber: action.value.phoneNumber,
+        role: action.value.role,
+        verified: action.value.verified,
+        refresh: action.value.refresh,
+        token: action.value.token,
+        storeName: action.value.storeName,
+      };
+    case typeRedux.setUserLogout:
+      return {
+        initialUser,
+      };
+    default:
+      return state;
   }
-
-  return state;
 };

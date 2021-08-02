@@ -18,6 +18,7 @@ const ForgotPassword = () => {
     data: {},
     token: '',
   });
+
   const jwtToken = slugJwtToken?.params.token;
 
   const dispatch = useDispatch();

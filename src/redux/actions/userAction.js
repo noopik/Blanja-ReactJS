@@ -10,7 +10,7 @@ export const userLogin = (formUser, history, role) => (dispatch) => {
       dispatch(showLoading(false));
       const dataUserResponse = res.data.data;
 
-      // console.log(dataUserResponse);
+      console.log(dataUserResponse);
       dispatch({ type: typeRedux.setUserLogin, value: dataUserResponse });
       if (dataUserResponse.role !== role) {
         switch (role) {
@@ -25,7 +25,8 @@ export const userLogin = (formUser, history, role) => (dispatch) => {
 
       if (dataUserResponse.role === role) {
         const pathByRole = { seller: '/admin/seller', customer: '/' };
-        // console.log(pathByRole[role]);
+        localStorage.setItem('token', dataUserResponse.token);
+        localStorage.setItem('refreshToken', dataUserResponse.refresh);
         history.push(`${pathByRole[role]}`);
       }
     })
@@ -36,4 +37,10 @@ export const userLogin = (formUser, history, role) => (dispatch) => {
 
       return Toast(errorMessage, 'error');
     });
+};
+
+export const userLogout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('refreshToken');
+  return { type: typeRedux.setUserLogout, value: {} };
 };
