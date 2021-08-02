@@ -2,7 +2,6 @@ import CancelIcon from '@material-ui/icons/Cancel';
 import React from 'react';
 import styled from 'styled-components';
 import { CardWrapper } from '../../atoms';
-import PropTypes from 'prop-types';
 
 const Modal = ({ showModal, closeModal, children, title, size }) => {
   if (!showModal) return null;

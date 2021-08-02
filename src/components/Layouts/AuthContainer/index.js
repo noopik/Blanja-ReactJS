@@ -14,7 +14,7 @@ const Container = styled.div`
     margin: 26px 40px;
   }
 
-  .text-warning {
+  .text-warning-custom {
     text-align: center;
     margin-top: -16px;
     margin-bottom: 24px;

@@ -13,6 +13,7 @@ import {
   UserProfileAddress,
   UserProfileOrder,
   UserProfileSetting,
+  VerifiedRegisterSuccess,
 } from '../../pages';
 import {
   CustomerLogin,
@@ -32,12 +33,17 @@ const Routes = () => {
         <Route path="/customer-register" component={CustomerRegister} />
         <Route path="/seller-register" component={SellerRegister} />
         <Route path="/forgot-password" component={ForgotPassword} />
+        <Route path="/forgot-password/:token" component={ForgotPassword} />
         {/* MAIN HOME */}
         <Route exact path="/" component={Homepage} />
         <Route path="/categories" component={CategoryPage} />
         <Route path="/products" component={ResultProducts} />
         <Route path="/my-bag" component={MyBag} />
         <Route path="/checkout" component={CheckoutPage} />
+        <Route
+          path="/users-verified/:token"
+          component={VerifiedRegisterSuccess}
+        />
         {/* USER CUSTOMER */}
         <Route path="/user/setting" component={UserProfileSetting} />
         <Route path="/user/shipping-address" component={UserProfileAddress} />
