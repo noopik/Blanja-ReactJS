@@ -1,8 +1,6 @@
-const initialLoading = {
-  isShow: false,
-};
+const isShow = true;
 
-export const loadingReducer = (state = { initialLoading }, action) => {
+export const loadingReducer = (state = { isShow }, action) => {
   if (action.type === 'SET_LOADING') {
     return {
       isShow: action.value,

@@ -12,7 +12,6 @@ const UserNav = ({ avatar }) => {
   const userState = useSelector((state) => state.userReducer);
   const history = useHistory();
   const dispatch = useDispatch();
-
   const handlePopup = () => {
     showAvatarPopup ? setShowAvatarPopup(false) : setShowAvatarPopup(true);
   };

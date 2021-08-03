@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { ICVerified } from '../../assets/Icons';
 import { BrandLogo, Button } from '../../components/atoms';
 import { customMedia } from '../../components/Layouts';
 import { Axios } from '../../config';
+import { showLoading, userSessionActive } from '../../redux/actions';
 import { decodeJwtToken } from '../../utils';
 
 const VerifiedRegisterSuccess = () => {
   const { token } = useParams();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [dataRequestPassword, setDataRequestPassword] = useState({
     isExists: false,
@@ -26,20 +29,25 @@ const VerifiedRegisterSuccess = () => {
         headers: { Authorization: `Bearer ${token}` },
       }).then((resultGetUser) => {
         const dataUser = resultGetUser.data.data[0];
+        console.log(resultGetUser);
         const verified = {
           ...dataUser,
           verified: 1,
         };
+        dispatch(showLoading(false));
+        dispatch(userSessionActive(dataUser));
         Axios.post(`/users/${resultDecode.decode.id}`, verified, {
           headers: { Authorization: `Bearer ${token}` },
         }).then((res) => {
           console.log(res);
+          dispatch(showLoading(false));
         });
       });
     });
   }, []);
 
   const actionButton = () => {
+    dispatch(showLoading(true));
     history.push('/');
   };
 

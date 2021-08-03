@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { Link } from 'react-router-dom';
-import { ANLoading } from '../../../assets/images';
+import { DMNullImage } from '../../../assets/images';
 import StarRating from '../StarRating';
 import { BodyProduct, Card } from './styled';
 
@@ -53,7 +53,7 @@ const CardProduct = ({
         <div className="image-wrapper">
           <img
             className="image-product"
-            src={image ? image : ANLoading}
+            src={image ? image : DMNullImage}
             alt={title}
           />
         </div>

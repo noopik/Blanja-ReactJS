@@ -8,7 +8,9 @@ import { Axios } from '../../../config';
 import { showLoading } from '../../../redux/actions';
 import { useRouteMatch } from 'react-router-dom';
 import VerifiedPassword from './VerifiedPassword';
-import { decodeJwtToken } from '../../../utils';
+import { decodeJwtToken, regexEmailVadidationType } from '../../../utils';
+import Alert from '@material-ui/lab/Alert';
+import { useForm } from 'react-hook-form';
 
 const ForgotPassword = () => {
   const slugJwtToken = useRouteMatch('/forgot-password/:token');
@@ -22,31 +24,16 @@ const ForgotPassword = () => {
   const jwtToken = slugJwtToken?.params.token;
 
   const dispatch = useDispatch();
-  const [form, setForm] = useState({
-    email: '',
-  });
 
-  useEffect(() => {
-    document.title = 'Reset Password';
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    decodeJwtToken(jwtToken).then((res) => {
-      const resDecode = { ...res, token: jwtToken };
-      setDataRequestPassword(resDecode);
-    });
-  }, []);
-
-  // console.log(dataRequestPassword);
-
-  const handleForm = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const actionButton = () => {
+  const onSubmit = (data) => {
     dispatch(showLoading(true));
-    Axios.post(`/users/change-password/${form.email}`)
+    Axios.post(`/users/change-password/${data.email}`)
       .then((res) => {
         dispatch(showLoading(false));
         if (res.status === 200) {
@@ -64,11 +51,16 @@ const ForgotPassword = () => {
           return Toast(errorMessage, 'error');
         }
       });
-    setForm({
-      email: '',
-    });
   };
 
+  useEffect(() => {
+    document.title = 'Reset Password';
+
+    decodeJwtToken(jwtToken).then((res) => {
+      const resDecode = { ...res, token: jwtToken };
+      setDataRequestPassword(resDecode);
+    });
+  }, []);
   return (
     <AuthContainer>
       <BrandLogo />
@@ -80,18 +72,18 @@ const ForgotPassword = () => {
       )}
       {!dataRequestPassword.isExists && (
         <>
-          <FormGroup mt={0}>
+          <FormGroup mt={0} onSubmit={handleSubmit(onSubmit)}>
             <FormInput
               type="text"
               placeholder="Email"
               name="email"
-              value={form.email}
-              onChange={(e) => handleForm(e)}
+              {...register('email', { pattern: regexEmailVadidationType })}
             />
+            {errors.email && <Alert severity="warning">Email invalid!</Alert>}
+            <Button primary className="btn-wrapper">
+              <input type="submit" value="REQUEST NOW" />
+            </Button>
           </FormGroup>
-          <Button primary className="btn-wrapper" onClick={actionButton}>
-            REQUEST NOW
-          </Button>
         </>
       )}
 

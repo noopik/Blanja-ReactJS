@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { customMedia } from '../../Layouts';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { customMedia } from '../../Layouts';
 
 const AlertVerification = () => {
   const [closeAlert, setCloseAlert] = useState(false);

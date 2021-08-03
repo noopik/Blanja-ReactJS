@@ -21,6 +21,7 @@ export const userRegister = (formUser, history, role) => (dispatch) => {
       dispatch(showLoading(false));
     })
     .catch((err) => {
+      console.log(err.response);
       dispatch(showLoading(false));
       // const statusCode = err.response.data.statusCode;
       const errMessageResponse = err.response.data.message;

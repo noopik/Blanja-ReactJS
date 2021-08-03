@@ -11,43 +11,48 @@ import Footer from '../../components/molecules/Footer';
 import { Item } from '../../components/molecules/CardGrouping/styled';
 import { CardProduct } from '../../components/atoms';
 import { Axios } from '../../../src/config';
+import { useDispatch, useSelector } from 'react-redux';
+import { typeRedux } from '../../utils';
+import { getAllProducts, showLoading } from '../../redux/actions';
 
 const Homepage = () => {
-  const [newProducts, setNewProducts] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
   const token = localStorage.getItem('token');
+  const dispatch = useDispatch();
+  const allProductsState = useSelector((state) => state.allProductReducer);
+  const { isShow: loadingState } = useSelector((state) => state.loadingReducer);
 
   useEffect(() => {
     document.title = 'Blanja | Homepage';
   });
 
+  // CHECK IS USER LOGIN EXIST OR NOT
+  useEffect(() => {
+    Axios.get(`/users/verify-token`, {
+      headers: { Authorization: `Bearer ${token}` },
+    }).then((result) => {
+      const dataResult = result.data.data;
+      dispatch({ type: typeRedux.setUserLogin, value: dataResult });
+    });
+  }, []);
+
   // DATA FOR NEW PRODUCTS SECTION
   useEffect(() => {
-    setIsLoading(true);
-    Axios.get('/products?limit=10')
-      .then((result) => {
-        const resData = result.data.data;
-        setNewProducts(resData);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setIsLoading(false);
-      });
+    dispatch(getAllProducts(10));
   }, []);
+
   // DATA FOR POPULAR PRODUCTS SECTION
   useEffect(() => {
-    setIsLoading(true);
+    dispatch(showLoading(true));
     Axios.get('/products?page=2&limit=10')
       .then((result) => {
         const resData = result.data.data;
         setPopularProducts(resData);
-        setIsLoading(false);
+        dispatch(showLoading(false));
       })
       .catch((err) => {
         console.log(err);
-        setIsLoading(false);
+        dispatch(showLoading(false));
       });
   }, []);
 
@@ -66,8 +71,8 @@ const Homepage = () => {
         <SectionContent className="section">
           <HeaderSection title="New" subTitle="You’ve never seen it before!" />
           <CardGrouping>
-            {!isLoading &&
-              newProducts.map((item) => (
+            {!loadingState &&
+              allProductsState?.data.map((item) => (
                 <Item key={item.id}>
                   <CardProduct
                     title={item.nameProduct}
@@ -78,7 +83,7 @@ const Homepage = () => {
                   />
                 </Item>
               ))}
-            {isLoading && <p>Loading</p>}
+            {loadingState && <p>Loading</p>}
           </CardGrouping>
         </SectionContent>
         <SectionContent className="section">
@@ -87,7 +92,7 @@ const Homepage = () => {
             subTitle="Find clothes that are trending recently"
           />
           <CardGrouping>
-            {!isLoading &&
+            {!loadingState &&
               popularProducts.map((item) => (
                 <Item key={item.id}>
                   <CardProduct
@@ -99,7 +104,7 @@ const Homepage = () => {
                   />
                 </Item>
               ))}
-            {isLoading && <p>Loading</p>}
+            {loadingState && <p>Loading</p>}
           </CardGrouping>
         </SectionContent>
       </MainContent>

@@ -7,8 +7,10 @@ import { FormGroup } from '../../../components/molecules';
 import { Axios } from '../../../config';
 import { showLoading } from '../../../redux/actions';
 import { typeRedux } from '../../../utils';
+import Alert from '@material-ui/lab/Alert';
+import { useForm } from 'react-hook-form';
 
-const VerifiedPassword = ({ onClick, data }) => {
+const VerifiedPassword = ({ onClick, data: userData }) => {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const history = useHistory();
@@ -18,9 +20,15 @@ const VerifiedPassword = ({ onClick, data }) => {
     confirmNewPassword: '',
   });
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   useEffect(() => {
-    Axios.get(`users/${data.decode.id}`, {
-      headers: { Authorization: `Bearer ${data.token}` },
+    Axios.get(`users/${userData.decode.id}`, {
+      headers: { Authorization: `Bearer ${userData.token}` },
     })
       .then((res) => {
         const dataRes = res.data.data[0];
@@ -31,20 +39,13 @@ const VerifiedPassword = ({ onClick, data }) => {
       });
   }, []);
 
-  const handleForm = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const actionButton = () => {
+  const onSubmit = (data) => {
     // Matching password
-    if (!form.password && !form.confirmNewPassword) {
+    if (!data.password && !data.confirmationPassword) {
       return null;
     }
-    const password = form.password;
-    const isMatch = password.localeCompare(form.confirmNewPassword); // return 0 for match - Include Case Sensitive
+    const password = data.password;
+    const isMatch = password.localeCompare(data.confirmationPassword); // return 0 for match - Include Case Sensitive
 
     if (isMatch !== 0) {
       return Toast(`New password must be match. Try again`, 'error');
@@ -53,23 +54,21 @@ const VerifiedPassword = ({ onClick, data }) => {
     dispatch(showLoading(true));
     const userUpdate = {
       ...userState,
-      ...form,
+      ...data,
     };
-    Axios.post(`/users/${data.decode.id}`, userUpdate, {
-      headers: { Authorization: `Bearer ${data.token}` },
+    console.log(userUpdate);
+
+    const pathPost = `/users/${userData.decode.id}`;
+    Axios.post(pathPost, userUpdate, {
+      headers: { Authorization: `Bearer ${userData.token}` },
     })
       .then((res) => {
         dispatch(showLoading(false));
         history.push('/customer-login');
         return Toast('Password Successfully Update. Please login', 'success');
-
-        // console.log(1, res);
       })
       .catch((err) => {
         dispatch(showLoading(false));
-        // console.log(2, err);
-        // const errorMessage = err.response.data.error;
-        // return Toast(errorMessage, 'error');
       });
   };
 
@@ -78,25 +77,34 @@ const VerifiedPassword = ({ onClick, data }) => {
       <Text color="primary" className="text-warning-custom">
         You need to change your password to activate your account
       </Text>
-      <FormGroup>
+      <FormGroup onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           type="password"
           name="password"
           placeholder="Password"
-          value={form.password}
-          onChange={(e) => handleForm(e)}
+          {...register('password', { required: true, minLength: 6 })}
         />
+        {errors.password && (
+          <Alert severity="warning">
+            Password Required and minimal 6 character
+          </Alert>
+        )}
         <FormInput
           type="password"
-          name="confirmNewPassword"
+          name="confirmationPassword"
           placeholder="Confirmation New Password"
-          value={form.confirmNewPassword}
-          onChange={(e) => handleForm(e)}
+          {...register('confirmationPassword', {
+            required: true,
+            minLength: 6,
+          })}
         />
+        {errors.confirmationPassword && (
+          <Alert severity="warning">Password Required and Match</Alert>
+        )}
+        <Button primary className="btn-wrapper">
+          <input type="submit" value="Submit" />
+        </Button>
       </FormGroup>
-      <Button primary className="btn-wrapper" onClick={actionButton}>
-        Submit
-      </Button>
     </>
   );
 };

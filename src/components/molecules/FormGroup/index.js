@@ -2,17 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import { ContentWrapper } from '../../atoms/styled';
 
-const Form = styled.form`
-  width: 400px;
-  /* display: ${(flex) => flex}; */
-  /* justify-content: ${({ justifyContent }) => justifyContent}; */
-  /* align-items: ${({ alignItems }) => alignItems}; */
-  /* gap: ${({ gap }) => gap || 10}px; */
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
 const FormGroup = ({
   mt,
   mr,
@@ -27,6 +16,7 @@ const FormGroup = ({
   justifyContent,
   alignItems,
   gap,
+  onSubmit,
 }) => {
   return (
     <ContentWrapper
@@ -44,6 +34,7 @@ const FormGroup = ({
         justifyContent={justifyContent}
         alignItems={alignItems}
         gap={gap}
+        onSubmit={onSubmit}
       >
         {children}
       </Form>
@@ -52,3 +43,19 @@ const FormGroup = ({
 };
 
 export default FormGroup;
+
+const Form = styled.form`
+  width: 400px;
+  /* display: ${(flex) => flex}; */
+  /* justify-content: ${({ justifyContent }) => justifyContent}; */
+  /* align-items: ${({ alignItems }) => alignItems}; */
+  /* gap: ${({ gap }) => gap || 10}px; */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  input[type='submit'] {
+    background-color: transparent;
+    border: 0;
+    color: white;
+  }
+`;

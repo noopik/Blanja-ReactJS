@@ -30,14 +30,17 @@ const Routes = () => {
     <Router>
       <Switch>
         {/* AUTH */}
-        <Route path="/customer-login" component={CustomerLogin} />
-        <Route path="/seller-login" component={SellerLogin} />
-        <Route path="/customer-register" component={CustomerRegister} />
-        <Route path="/seller-register" component={SellerRegister} />
-        <Route path="/forgot-password" component={ForgotPassword} />
-        <Route path="/forgot-password/:token" component={ForgotPassword} />
+        <PublicRoute path="/customer-login" component={CustomerLogin} />
+        <PublicRoute path="/seller-login" component={SellerLogin} />
+        <PublicRoute path="/customer-register" component={CustomerRegister} />
+        <PublicRoute path="/seller-register" component={SellerRegister} />
+        <PublicRoute path="/forgot-password" component={ForgotPassword} />
+        <PublicRoute
+          path="/forgot-password/:token"
+          component={ForgotPassword}
+        />
         {/* MAIN HOME */}
-        <PublicRoute exact path="/" component={Homepage} />
+        <Route exact path="/" component={Homepage} />
         <PrivateRoute path="/categories" component={CategoryPage} />
         <PrivateRoute path="/products" component={ResultProducts} />
         <PrivateRoute path="/my-bag" component={MyBag} />

@@ -44,11 +44,7 @@ const NavbarComponent = ({ onChange, value, session }) => {
           actionSearch={actionSearch}
         />
         {session === 'public' && <PublicNav />}
-        {session !== 'public' && (
-          <UserNav
-            avatar={`${process.env.REACT_APP_API_SERVER}/files/${userState.imageProfile}`}
-          />
-        )}
+        {session !== 'public' && <UserNav avatar={userState.image} />}
         <ButtonIcon onClick={handleShowNavCollapes} />
         <NavbarCollapse />
       </Wrapper>

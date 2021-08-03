@@ -7,10 +7,8 @@ export const userLogin = (formUser, history, role) => (dispatch) => {
   dispatch(showLoading(true));
   Axios.post('/users/login', formUser)
     .then((res) => {
-      dispatch(showLoading(false));
+      dispatch(showLoading(true));
       const dataUserResponse = res.data.data;
-
-      console.log(dataUserResponse);
       dispatch({ type: typeRedux.setUserLogin, value: dataUserResponse });
       if (dataUserResponse.role !== role) {
         switch (role) {
@@ -43,4 +41,8 @@ export const userLogout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem('refreshToken');
   return { type: typeRedux.setUserLogout, value: {} };
+};
+
+export const userSessionActive = (data) => {
+  return { type: typeRedux.setUserLogin, value: data };
 };

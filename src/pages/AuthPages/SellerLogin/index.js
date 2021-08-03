@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import {
   BrandLogo,
   Button,
@@ -16,29 +17,28 @@ import {
   FormGroup,
 } from '../../../components/molecules';
 import { userLogin } from '../../../redux/actions';
+import { regexEmailVadidationType } from '../../../utils';
+import Alert from '@material-ui/lab/Alert';
 
 const SellerLogin = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const role = 'seller';
 
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-  });
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    dispatch(userLogin(data, history, role));
+  };
 
   useEffect(() => {
     document.title = 'Login | Seller';
   });
-  const actionLogin = () => {
-    dispatch(userLogin(form, history, role));
-  };
-  const handleForm = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   return (
     <AuthContainer>
@@ -54,26 +54,28 @@ const SellerLogin = () => {
           Seller
         </ToggleItem>
       </ButtonTogller>
-      <FormGroup mt={40}>
+      <FormGroup mt={40} onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           type="text"
           placeholder="Email"
           name="email"
-          value={form.email}
-          onChange={(e) => handleForm(e)}
+          {...register('email', { pattern: regexEmailVadidationType })}
         />
+        {errors.email && <Alert severity="warning">Email invalid!</Alert>}
         <FormInput
           type="password"
           placeholder="Password"
           name="password"
-          value={form.password}
-          onChange={(e) => handleForm(e)}
+          {...register('password', { required: true })}
         />
+        {errors.password && (
+          <Alert severity="warning">Password Required!</Alert>
+        )}
         <AuthForgotPassword />
+        <Button primary className="btn-wrapper">
+          <input type="submit" value="LOGIN" />
+        </Button>
       </FormGroup>
-      <Button primary className="btn-wrapper" onClick={actionLogin}>
-        LOGIN
-      </Button>
       <AuthFooter login session="seller" />
     </AuthContainer>
   );

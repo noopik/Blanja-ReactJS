@@ -12,38 +12,57 @@ import { Heading } from '../../../components/atoms/Typography';
 import { AuthContainer } from '../../../components/Layouts';
 import { AuthFooter, FormGroup } from '../../../components/molecules';
 import { userRegister } from '../../../redux/actions';
+import Alert from '@material-ui/lab/Alert';
+import { useForm } from 'react-hook-form';
+import { regexEmailVadidationType } from '../../../utils';
 
 const SellerRegister = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const role = 'seller';
 
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    password: '',
-    role,
-    phoneNumber: '',
-    storeName: '',
-    gender: null,
-    born: null,
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    const dataSend = {
+      ...data,
+      role,
+    };
+    console.log(dataSend);
+
+    dispatch(userRegister(dataSend, history, role));
+  };
+
+  // const [form, setForm] = useState({
+  //   name:
+  // email:
+  //   password:
+  //   role,
+  //   phoneNumber: '',
+  //   storeName: '',
+  //   gender: null,
+  //   born: null,
+  // });
 
   useEffect(() => {
     document.title = 'Register | Seller';
   });
 
-  const handleForm = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
+  // const handleForm = (e) => {
+  //   setForm({
+  //     ...form,
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
 
-  const actionRegister = () => {
-    console.log(form);
-    dispatch(userRegister(form, history, role));
-  };
+  // const actionRegister = () => {
+  //   console.log(form);
+  //   dispatch(userRegister(form, history, role));
+  // };
 
   return (
     <AuthContainer>
@@ -59,46 +78,58 @@ const SellerRegister = () => {
           Seller
         </ToggleItem>
       </ButtonTogller>
-      <FormGroup mt={40}>
+      <FormGroup mt={40} onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           type="text"
           placeholder="Name"
           name="name"
-          value={form.name}
-          onChange={(e) => handleForm(e)}
+          {...register('name', { required: true })}
         />
+        {errors.name && <Alert severity="warning">Name Required!</Alert>}
         <FormInput
           type="text"
           placeholder="Email"
           name="email"
-          value={form.email}
-          onChange={(e) => handleForm(e)}
+          {...register('email', { pattern: regexEmailVadidationType })}
         />
+        {errors.email && <Alert severity="warning">Email invalid!</Alert>}
+
         <FormInput
           type="text"
           placeholder="Phone Number"
           name="phoneNumber"
-          value={form.phoneNumber}
-          onChange={(e) => handleForm(e)}
+          {...register('phoneNumber', { required: true, minLength: 11 })}
         />
+        {errors.phoneNumber && (
+          <Alert severity="warning">
+            Phone Number Required and minimal 11 character
+          </Alert>
+        )}
         <FormInput
           type="text"
           placeholder="Store Name"
           name="storeName"
-          value={form.storeName}
-          onChange={(e) => handleForm(e)}
+          {...register('storeName', { required: true })}
         />
+        {errors.storeName && (
+          <Alert severity="warning">Store Name Required</Alert>
+        )}
         <FormInput
           type="password"
           placeholder="Password"
           name="password"
-          value={form.password}
-          onChange={(e) => handleForm(e)}
+          {...register('password', { required: true, minLength: 6 })}
         />
+        {errors.password && (
+          <Alert severity="warning">
+            Password Required and minimal 6 character
+          </Alert>
+        )}
+        <Button primary className="btn-wrapper">
+          <input type="submit" value="SIGN UP" />
+        </Button>
       </FormGroup>
-      <Button primary className="btn-wrapper" onClick={actionRegister}>
-        SIGN UP
-      </Button>
+
       <AuthFooter register session="customer" />
     </AuthContainer>
   );

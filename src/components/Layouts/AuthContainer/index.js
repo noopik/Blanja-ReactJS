@@ -11,7 +11,7 @@ const Container = styled.div`
   width: 400px;
 
   .btn-wrapper {
-    margin: 26px 40px;
+    margin-bottom: 1rem;
   }
 
   .text-warning-custom {

@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import Alert from '@material-ui/lab/Alert';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
@@ -12,37 +14,30 @@ import { Heading } from '../../../components/atoms/Typography';
 import { AuthContainer } from '../../../components/Layouts';
 import { AuthFooter, FormGroup } from '../../../components/molecules';
 import { userRegister } from '../../../redux/actions';
+import { regexEmailVadidationType } from '../../../utils';
 
 const CustomerRegister = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const role = 'customer';
 
-  const [form, setForm] = useState({
-    name: '',
-    email: '',
-    password: '',
-    role,
-    phoneNumber: 0,
-    gender: null,
-    born: null,
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    const dataSend = {
+      ...data,
+      role,
+    };
+    dispatch(userRegister(dataSend, history, role));
+  };
 
   useEffect(() => {
     document.title = 'Register | Customer';
   });
-
-  const handleForm = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const actionRegister = () => {
-    console.log(form);
-    dispatch(userRegister(form, history, role));
-  };
 
   return (
     <AuthContainer>
@@ -58,32 +53,37 @@ const CustomerRegister = () => {
           Seller
         </ToggleItem>
       </ButtonTogller>
-      <FormGroup mt={40}>
+      <FormGroup mt={40} onSubmit={handleSubmit(onSubmit)}>
         <FormInput
           type="text"
           placeholder="Name"
           name="name"
-          value={form.name}
-          onChange={(e) => handleForm(e)}
+          {...register('name', { required: true })}
         />
+        {errors.name && <Alert severity="warning">Name Required!</Alert>}
         <FormInput
           type="text"
           placeholder="Email"
           name="email"
-          value={form.email}
-          onChange={(e) => handleForm(e)}
+          {...register('email', { pattern: regexEmailVadidationType })}
         />
+        {errors.email && <Alert severity="warning">Email invalid!</Alert>}
         <FormInput
           type="password"
           placeholder="Password"
           name="password"
-          value={form.password}
-          onChange={(e) => handleForm(e)}
+          {...register('password', { required: true, minLength: 6 })}
         />
+        {errors.password && (
+          <Alert severity="warning">
+            Password Required and minimal 6 character
+          </Alert>
+        )}
+        <Button primary className="btn-wrapper">
+          <input type="submit" value="SIGN UP" />
+        </Button>
       </FormGroup>
-      <Button primary className="btn-wrapper" onClick={actionRegister}>
-        SIGN UP
-      </Button>
+
       <AuthFooter register session="customer" />
     </AuthContainer>
   );
