@@ -1,6 +1,7 @@
 import FilterListIcon from '@material-ui/icons/FilterList';
 import PageviewIcon from '@material-ui/icons/Pageview';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { CardProduct } from '../../components/atoms';
@@ -13,57 +14,54 @@ import {
 } from '../../components/molecules';
 import { Item } from '../../components/molecules/CardGrouping/styled';
 import { Axios } from '../../config';
+import { typeRedux } from '../../utils';
 
 const ResultProducts = () => {
-  const [dataProducts, setdataProducts] = useState([{}]);
-  const [metaDataProducts, setMetaDataProducts] = useState();
-  // const [isLoading, setIsLoading] = useState(false);
   const [sortPrice, setSortPrice] = useState('ASC');
-  // const params = useParams();
   const history = useHistory();
   const searchKeyword = history.location.state;
-  const querySearch = `${history.location.pathname}${history.location.search}&limit=10`;
-  // console.log(history);
-  // const { src } = params;
-  // console.log(location);
 
-  // State Manegement
+  const dispatch = useDispatch();
+  const searchState = useSelector((state) => state.searchReducer);
+  console.log(searchState);
 
   useEffect(() => {
     document.title = 'Result Product';
-    Axios.get(querySearch)
-      .then((res) => {
-        const response = res.data;
-        // console.log('response', response);
-        const resData = response.data;
-        setdataProducts(resData);
-        setMetaDataProducts(response);
-        console.log(resData);
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
   }, []);
 
-  // console.log('dataProducts', dataProducts);
-  console.log('metaDataProducts', metaDataProducts);
-
   // FILTER BUTTON PRICE
-  console.log(`${querySearch}=field=price&sort=ASC`);
+  // console.log(`${querySearch}=field=price&sort=ASC`);
   const handleFilter = () => {
     let sortBy = sortPrice === 'ASC' ? 'DESC' : 'ASC';
     setSortPrice(sortBy);
     // console.log('filter run');
-    Axios.get(`${querySearch}&field=price&sort=${sortBy}`)
+    Axios.get(`/products?src=${searchState.keyword}&field=price&sort=${sortBy}`)
       .then((res) => {
-        const response = res.data;
-        setMetaDataProducts(response);
-        const resData = response.data;
-        setdataProducts(resData);
-        // console.log(resData);
+        if (res.data.statusCode === 200) {
+          const sendState = {
+            exist: true,
+            keyword: searchState.keyword,
+            result: {
+              data: res.data.data,
+              meta: res.data.meta,
+            },
+          };
+          dispatch({ type: typeRedux.setSearching, value: sendState });
+        }
+        // setMetaDataProducts(response);
+        // const resData = response.data;
+        // setdataProducts(resData);
       })
       .catch((err) => {
-        console.log(err.message);
+        // console.log(err.response);
+        if (err.response.data.statusCode === 404) {
+          const sendState = {
+            exist: false,
+            keyword: searchState.keyword,
+            message: err.response.data.error,
+          };
+          dispatch({ type: typeRedux.setSearching, value: sendState });
+        }
       });
   };
 
@@ -71,31 +69,29 @@ const ResultProducts = () => {
     <>
       <Navbar session="user" />
       <MainContent className="category-page">
-        <SectionContent>
-          <HeaderSection
-            title={`Menampilkan hasil pencarian: ${searchKeyword}`}
-          />
-          <InfoResult>
-            <div className="item-info">
-              <PageviewIcon color="disabled" />
-              {metaDataProducts && (
+        {searchState.exist && (
+          <SectionContent>
+            <HeaderSection
+              title={`Menampilkan hasil pencarian: ${searchKeyword}`}
+            />
+            <InfoResult>
+              <div className="item-info">
+                <PageviewIcon color="disabled" />
                 <p>
-                  Menampilkan {metaDataProducts.meta.limit} hasil pencarian (
-                  {metaDataProducts.meta.totalData} total data)
+                  Menampilkan {searchState.result.meta.limit} hasil pencarian (
+                  {searchState.result.meta.totalData} total data)
                 </p>
-              )}
-            </div>
-            <div className="item-info sort" onClick={handleFilter}>
-              <FilterListIcon
-                className={sortPrice === 'ASC' ? 'icon-filter' : ''}
-                color="disabled"
-              />
-              <p>Harga Terendah</p>
-            </div>
-          </InfoResult>
-          <CardGrouping>
-            {dataProducts &&
-              dataProducts.map((item) => {
+              </div>
+              <div className="item-info sort" onClick={handleFilter}>
+                <FilterListIcon
+                  className={sortPrice === 'ASC' ? 'icon-filter' : ''}
+                  color="disabled"
+                />
+                <p>Harga Terendah</p>
+              </div>
+            </InfoResult>
+            <CardGrouping>
+              {searchState.result.data.map((item) => {
                 return (
                   <Item>
                     <CardProduct
@@ -108,9 +104,9 @@ const ResultProducts = () => {
                   </Item>
                 );
               })}
-          </CardGrouping>
-          {/* <Pagination count={10} shape="rounded" /> */}
-          {/* <PaginationWrapper>
+            </CardGrouping>
+            {/* <Pagination count={10} shape="rounded" /> */}
+            {/* <PaginationWrapper>
             <Pagination>
               <Pagination.First />
               <Pagination.Prev />
@@ -129,7 +125,9 @@ const ResultProducts = () => {
               <Pagination.Last />
             </Pagination>
           </PaginationWrapper> */}
-        </SectionContent>
+          </SectionContent>
+        )}
+        {!searchState.exist && <h1>Not found</h1>}
       </MainContent>
       <Footer />
     </>

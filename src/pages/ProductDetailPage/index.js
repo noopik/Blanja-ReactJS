@@ -1,41 +1,73 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { CardProduct, Loader } from '../../components/atoms';
 import { MainContent, SectionContent } from '../../components/Layouts';
-import { Breadcrumbs, Navbar } from '../../components/molecules';
-import { Axios } from '../../config';
+import {
+  Breadcrumbs,
+  CardGrouping,
+  Footer,
+  HeaderSection,
+  Navbar,
+} from '../../components/molecules';
+import { Item } from '../../components/molecules/CardGrouping/styled';
+import { getItemProduct } from '../../redux/actions';
+import { typeRedux } from '../../utils';
 import { DetailProduct, HeaderProductPage } from './styled';
 
 const ProductDetail = () => {
   let { id } = useParams();
-  const [dataProduct, setDataProduct] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-  console.log(isLoading);
-  useEffect(() => {
-    setIsLoading(true);
-    Axios.get(`/products/${id}`)
-      .then((result) => {
-        const resdata = result.data.data;
-        console.log(2525, resdata);
-        setDataProduct(resdata[0]);
-        document.title = resdata[0].nameProduct;
-        setIsLoading(false);
-      })
-      .catch((err) => err);
-    setIsLoading(false);
-  }, [id]);
+  const { exist, data } = useSelector((state) => state.productItemReducer);
+  const token = localStorage.getItem('token');
+  const allProductsState = useSelector((state) => state.allProductReducer);
 
-  console.log(1111, dataProduct);
+  const dispatch = useDispatch();
+  // console.log('itemProductState', data);
+
+  useEffect(() => {
+    // dispatch(getItemProduct(id));
+    // dispatch({
+    //   type: typeRedux.setChooseProductId,
+    //   value: id,
+    // });
+  }, []);
 
   return (
     <>
-      <Navbar />
+      <Navbar session={token ? 'user' : 'public'} />
       <MainContent>
-        <SectionContent>
-          <Breadcrumbs data={dataProduct} title={dataProduct.id_category} />
-          <HeaderProductPage data={dataProduct} />
-          <DetailProduct data={dataProduct} />
+        {exist && (
+          <SectionContent>
+            <Breadcrumbs data={data} title={data.id_category} />
+            <HeaderProductPage data={data} />
+            <DetailProduct data={data} />
+          </SectionContent>
+        )}
+        {!exist && (
+          <>
+            <Loader line />
+          </>
+        )}
+        <SectionContent className="section">
+          <HeaderSection title="New" subTitle="You’ve never seen it before!" />
+          <CardGrouping>
+            {allProductsState.exist &&
+              allProductsState?.data.map((item) => (
+                <Item key={item.id}>
+                  <CardProduct
+                    title={item.nameProduct}
+                    image={item.imageProduct}
+                    price={item.price}
+                    store="Zalora"
+                    idProduct={item.id}
+                  />
+                </Item>
+              ))}
+            {!allProductsState.exist && <Loader line />}
+          </CardGrouping>
         </SectionContent>
       </MainContent>
+      <Footer />
     </>
   );
 };

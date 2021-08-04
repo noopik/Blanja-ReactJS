@@ -38,6 +38,11 @@ export const userReducer = (state = { initialUser }, action) => {
       return {
         initialUser,
       };
+    case typeRedux.setUserAvatar:
+      return {
+        ...state,
+        image: action.value,
+      };
     default:
       return state;
   }

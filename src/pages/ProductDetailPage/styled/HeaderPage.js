@@ -1,16 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import NumberFormat from 'react-number-format';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
 import { Heading, Text } from '../../../components/atoms/Typography';
 import { customMedia } from '../../../components/Layouts';
 import { ImageGaleryProduct } from '../../../components/molecules';
+import { typeRedux } from '../../../utils';
 
 const HeaderPage = ({ data }) => {
   const [dataProduct, setDataProduct] = useState({});
   const history = useHistory();
+  const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userReducer);
+  const chooseProductReducer = useSelector(
+    (state) => state.chooseProductReducer
+  );
+
+  // const [color, setColor] = useState({
+  //   red: false,
+  //   checkedB: false,
+  //   checkedF: false,
+  //   checkedG: false,
+  // });
 
   useEffect(() => {
     setDataProduct(data);
@@ -18,6 +32,41 @@ const HeaderPage = ({ data }) => {
 
   const handleActionBuy = () => {
     history.push('/checkout');
+  };
+
+  const counterSize = (value) => {
+    // console.log(value);
+    dispatch({
+      type: typeRedux.setChooseProductSize,
+      value: value,
+    });
+  };
+  const counterTotal = (value) => {
+    // console.log(value);
+    const sendData = {
+      price: 10000,
+      total: value,
+    };
+    dispatch({
+      type: typeRedux.setChooseProductCount,
+      value: sendData,
+    });
+  };
+
+  // // Handle Selected Color
+  // const handleColors = (e, change) => {};
+
+  // Action Add Bag
+  const addProductToCart = () => {
+    // console.log('userState', userState);
+    // console.log('chooseProductReducer', chooseProductReducer);
+    const sendToState = {
+      user: { ...userState },
+      productChoose: [{ ...chooseProductReducer }],
+      metaData: {},
+    };
+    dispatch({ type: typeRedux.setCartProducts, value: sendToState });
+    history.push('/my-bag');
   };
 
   return (
@@ -83,18 +132,20 @@ const HeaderPage = ({ data }) => {
             <Text as="lg" font="medium">
               Size
             </Text>
-            <Counter />
+            <Counter size counterValue={counterSize} />
           </div>
           <div>
             <Text as="lg" font="medium">
               Jumlah
             </Text>
-            <Counter />
+            <Counter counterValue={counterTotal} />
           </div>
         </div>
         <div className="d-flex">
           <Button className="btn-mini">Chat</Button>
-          <Button className="btn-mini">Add Bag</Button>
+          <Button className="btn-mini" onClick={addProductToCart}>
+            Add Bag
+          </Button>
           <Button primary className="btn-main" onClick={handleActionBuy}>
             Buy Now
           </Button>

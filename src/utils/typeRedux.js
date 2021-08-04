@@ -1,7 +1,16 @@
 export const typeRedux = {
   setUserLogin: 'SET_USER_LOGIN',
   setUserLogout: 'SET_USER_LOGOUT',
+  setUserAvatar: 'SET_USER_AVATAR',
   setAllProduct: 'SET_PRODUCTS_COLLECTION',
   setProductItem: 'SET_PRODUCT_ITEM',
   setCartProducts: 'SET_CART_PRODUCTS',
+  setProductToCart: 'SET_PRODUCT_TO_CART',
+  removeProductToCart: 'REMOVE_PRODUCT_FROM_CART',
+  setSearching: 'SET_SEARCHING',
+  setChooseProductId: 'SET_CHOOSE_PRODUCT_ID',
+  setChooseProductCount: 'SET_CHOOSE_PRODUCT_Price',
+  setChooseProductColor: 'SET_CHOOSE_PRODUCT_Color',
+  setChooseProductSize: 'SET_CHOOSE_PRODUCT_Size',
+  setChooseProductTotal: 'SET_CHOOSE_PRODUCT_Total',
 };

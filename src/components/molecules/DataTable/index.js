@@ -285,7 +285,7 @@ export default function EnhancedTable(props) {
         setDataProduct(resData);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }, []);
 
@@ -297,7 +297,7 @@ export default function EnhancedTable(props) {
   }
   // console.log(rows);
   const deleteHandle = () => {
-    console.log(selected);
+    // console.log(selected);
     Axios.delete(`/products/${selected[0]}`)
       .then((res) => {
         // console.log(res)

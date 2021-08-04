@@ -9,11 +9,11 @@ import WrapperSearchInput from './WrapperSearchInput';
 
 const SearchInput = ({
   onChange,
-  value,
   className,
   placeholder,
   session,
   actionSearch,
+  onSubmit,
 }) => {
   const [showModal, setShowModal] = useState(false);
 
@@ -93,9 +93,8 @@ const SearchInput = ({
           <div className="wrapper">
             <WrapperSearchInput
               onChange={onChange}
-              value={value}
               placeholder={placeholder}
-              actionSearch={actionSearch}
+              onSubmit={onSubmit}
             />
             <div className="icon-filter" onClick={handleShowModal}>
               <svg

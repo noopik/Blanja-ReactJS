@@ -1,25 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ProductCategory1 } from '../../../assets/images';
 import { Counter } from '../../atoms';
 import { Text } from '../../atoms/Typography';
 
-const Body = ({ price, checkout }) => {
+const Body = ({ nameProduct, store, total, checkout, counterTotal, image }) => {
   return (
     <BodyWrapper className="content">
       <div className="product">
-        <img src={ProductCategory1} alt="img" />
+        <img src={image} alt="img" />
         <div className="desc">
           <Text as="lg" className="">
-            Men's formal suit - Black
+            {nameProduct}
           </Text>
           <Text color="secondary" className="store">
-            Zalora
+            {store}
           </Text>
         </div>
       </div>
-      {!checkout && <Counter />}
-      <p className="price">200</p>
+      {!checkout && <Counter counterValue={counterTotal} />}
+      <p className="price">{total}</p>
     </BodyWrapper>
   );
 };

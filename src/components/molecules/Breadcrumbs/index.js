@@ -6,10 +6,13 @@ import { Axios } from '../../../config';
 const Breadcrumbs = ({ className, data, active, title }) => {
   const [dataBreadcrumb, setDataBreadcrumb] = useState();
   const [category, setCategory] = useState('');
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     setDataBreadcrumb(data);
-    Axios.get(`/category/${data.id_category ? data.id_category : data.id}`)
+    Axios.get(`/category/${data.id_category ? data.id_category : data.id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((res) => {
         const resData = res.data;
         console.log(resData);
@@ -20,7 +23,7 @@ const Breadcrumbs = ({ className, data, active, title }) => {
         console.log(err);
       });
   }, [data]);
-  console.log('data', data);
+  // console.log('data', data);
 
   return (
     <Wrapper className={className}>

@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999 !important;
   .animation {
     width: 500px;
     img {

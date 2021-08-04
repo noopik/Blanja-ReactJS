@@ -2,6 +2,7 @@ import { typeRedux } from '../../utils';
 
 // ====== FOR GET ALL  PRODUCT
 const initialAllProductReducer = {
+  exist: false,
   data: [],
   meta: {},
 };
@@ -14,6 +15,7 @@ export const allProductReducer = (
     case typeRedux.setAllProduct:
       return {
         ...state,
+        exist: action.value.exist,
         data: action.value.data,
         meta: action.value.meta,
       };
@@ -25,7 +27,7 @@ export const allProductReducer = (
 
 // ======= FOR CART COLLECTION
 const initialCartReducer = {
-  author: {},
+  user: {},
   productChoose: [],
   metaData: {},
 };
@@ -35,13 +37,91 @@ export const cartProductReducer = (state = { initialCartReducer }, action) => {
     case typeRedux.setCartProducts:
       return {
         ...state,
-        author: action.value.author,
+        user: action.value.user,
         productChoose: action.value.productChoose,
         metaData: {
           totalProducts: initialCartReducer.productChoose.length,
         },
       };
+    // case typeRedux.removeProductToCart:
+    //   return {
+    //     ...state,
+    //     productChoose: state.productChoose.push(action.value.productChoose),
+    //   };
+    case typeRedux.setProductToCart:
+      return {
+        ...state,
+        productChoose: state.productChoose.push(action.value.productChoose),
+      };
     default:
       return state;
   }
+};
+
+// ========= Product Detail
+const initialProductItem = {
+  exist: false,
+  data: {},
+};
+
+export const productItemReducer = (state = initialProductItem, action) => {
+  if (action.type === typeRedux.setProductItem) {
+    return {
+      ...state,
+      exist: action.value.exist,
+      data: action.value.data,
+    };
+  }
+
+  return state;
+};
+
+// ========= Choose Product
+const initialChooseProduct = {
+  idProduct: '',
+  price: '',
+  color: '',
+  size: '',
+  total: '',
+  image: '',
+  name: '',
+  store: '',
+};
+
+export const chooseProductReducer = (state = initialChooseProduct, action) => {
+  switch (action.type) {
+    case typeRedux.setChooseProductId:
+      return {
+        ...state,
+        idProduct: action.value.idProduct,
+        image: action.value.image,
+        name: action.value.name,
+        store: action.value.store,
+      };
+    case typeRedux.setChooseProductColor:
+      return {
+        ...state,
+        color: action.value,
+      };
+    case typeRedux.setChooseProductSize:
+      return {
+        ...state,
+        size: action.value,
+      };
+    // case typeRedux.setChooseProductTotal:
+    //   return {
+    //     ...state,
+    //     total: action.value,
+    //   };
+    case typeRedux.setChooseProductCount:
+      return {
+        ...state,
+        price: action.value.price * action.value.total,
+        total: action.value.total,
+      };
+    default:
+      break;
+  }
+
+  return state;
 };

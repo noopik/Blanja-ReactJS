@@ -1,33 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const Counter = ({ price }) => {
+const Counter = ({ size, counterValue }) => {
   const [count, setCount] = useState(1);
-  // const [totalPrice, setTotalPrice] = useState(price);
-  // let price = 100;
+  const [sizeValue, setSizeValue] = useState('XS');
+  const [sizeStart, setSizeStart] = useState(0);
 
-  useEffect(() => {
-    // let multiple = count * price;
-    // setTotalPrice(multiple);
-  }, [count]);
+  const typeSize = ['XS', 'S', 'M', 'L', 'XL'];
 
   const increase = () => {
-    const min = 1;
-    let counting = count + min;
-
-    setCount(counting);
+    const plus = count + 1;
+    counterValue(plus);
+    setCount(plus);
   };
 
   const decrease = () => {
-    const min = 1;
-    let counting = count - min;
+    const minus = count - 1;
+    counterValue(minus);
 
-    if (counting < 2) {
-      setCount(min);
+    if (minus < 2) {
+      setCount(1);
     } else {
-      setCount(counting);
+      setCount(minus);
     }
   };
+
+  const sizeIncrease = () => {
+    const plus = sizeStart + 1;
+    if (plus === typeSize.length - 1) {
+      return setSizeValue(typeSize[typeSize.length - 1]);
+    }
+    const plusSize = typeSize[plus];
+    counterValue(plusSize);
+    setSizeValue(plusSize);
+    setSizeStart(plus);
+  };
+
+  const sizeDecrease = () => {
+    const minus = sizeStart - 1;
+    if (minus === 0) {
+      return setSizeValue(typeSize[0]);
+    }
+    const minusSize = typeSize[minus];
+    counterValue(minusSize);
+    setSizeValue(typeSize[minus]);
+    setSizeStart(minus);
+  };
+
+  if (size) {
+    return (
+      <Wrapper>
+        <div className="btn-circle minus" onClick={sizeDecrease} />
+        <p>{sizeValue}</p>
+        <div className="btn-circle plus" onClick={sizeIncrease} />
+      </Wrapper>
+    );
+  }
 
   return (
     <Wrapper>

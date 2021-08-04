@@ -7,27 +7,34 @@ import {
   HeaderSection,
   Navbar,
 } from '../../components/molecules';
-import { CardProduct } from '../../components/atoms';
+import { CardProduct, Loader } from '../../components/atoms';
 import { Item } from '../../components/molecules/CardGrouping/styled';
 import { Axios } from '../../../src/config';
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { showLoading } from '../../redux/actions';
 
 const CategoryPage = () => {
   const [dataProducts, setdataProducts] = useState([{}]);
   const [isLoading, setIsLoading] = useState(false);
   const [categoryItem, setCategoryItem] = useState([]);
+  const token = localStorage.getItem('token');
 
   const history = useHistory();
+  const dispatch = useDispatch();
   const pathname = history.location.pathname;
   const categoryId = pathname.split('/').pop();
 
   useEffect(() => {
     document.title = 'Blanja | T-Shirt';
   });
+
   // DATA FOR NEW PRODUCTS SECTION
   useEffect(() => {
-    setIsLoading(true);
-    Axios.get(`/category/${categoryId}`)
+    dispatch(showLoading(true));
+    Axios.get(`/category/${categoryId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((res) => {
         const resData = res.data.data[0];
         console.log(resData);
@@ -37,11 +44,11 @@ const CategoryPage = () => {
           .then((result) => {
             const resData = result.data.data;
             setdataProducts(resData);
-            setIsLoading(false);
+            dispatch(showLoading(false));
           })
           .catch((err) => {
             console.log(err);
-            setIsLoading(false);
+            dispatch(showLoading(false));
           });
       })
       .catch((err) => {
@@ -72,7 +79,7 @@ const CategoryPage = () => {
                   />
                 </Item>
               ))}
-            {isLoading && <p>Loading</p>}
+            {isLoading && <Loader line />}
           </CardGrouping>
         </SectionContent>
       </MainContent>

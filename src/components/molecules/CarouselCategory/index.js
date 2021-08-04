@@ -96,7 +96,7 @@ export default class MultipleItems extends Component {
         });
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   }
 

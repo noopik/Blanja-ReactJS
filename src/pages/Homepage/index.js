@@ -9,7 +9,7 @@ import {
 import { MainContent, SectionContent } from '../../components/Layouts';
 import Footer from '../../components/molecules/Footer';
 import { Item } from '../../components/molecules/CardGrouping/styled';
-import { CardProduct } from '../../components/atoms';
+import { CardProduct, Loader } from '../../components/atoms';
 import { Axios } from '../../../src/config';
 import { useDispatch, useSelector } from 'react-redux';
 import { typeRedux } from '../../utils';
@@ -21,7 +21,7 @@ const Homepage = () => {
   const dispatch = useDispatch();
   const allProductsState = useSelector((state) => state.allProductReducer);
   const { isShow: loadingState } = useSelector((state) => state.loadingReducer);
-
+  console.log(allProductsState);
   useEffect(() => {
     document.title = 'Blanja | Homepage';
   });
@@ -71,7 +71,7 @@ const Homepage = () => {
         <SectionContent className="section">
           <HeaderSection title="New" subTitle="You’ve never seen it before!" />
           <CardGrouping>
-            {!loadingState &&
+            {allProductsState.exist &&
               allProductsState?.data.map((item) => (
                 <Item key={item.id}>
                   <CardProduct
@@ -83,7 +83,7 @@ const Homepage = () => {
                   />
                 </Item>
               ))}
-            {loadingState && <p>Loading</p>}
+            {!allProductsState.exist && <Loader line />}
           </CardGrouping>
         </SectionContent>
         <SectionContent className="section">

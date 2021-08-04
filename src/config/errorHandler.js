@@ -1,4 +1,5 @@
 export default function errorHandler(error) {
+  console.log(error);
   if (error) {
     let message;
     if (error.response) {

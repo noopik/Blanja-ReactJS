@@ -8,14 +8,14 @@ import {
   NavSellerAside,
 } from '../../../components/molecules';
 
-const Aside = ({ active, session }) => {
+const Aside = ({ active, session, username, imageProfile }) => {
   return (
     <Wrapper>
       <div className="content">
         <div className="user-profile-wrapper">
-          <img className="avatar" src={ProfileUser} alt="johanness " />
+          <img className="avatar" src={imageProfile} alt={username} />
           <div className="username-wrapper">
-            <h3>Johannes Mikael</h3>
+            <h3>{username}</h3>
             <Link to={``} className="anchor">
               <div className="edit-profile-wrapper">
                 <svg
@@ -78,6 +78,7 @@ const Wrapper = styled.aside`
       width: max-content;
       margin-bottom: 2rem;
       .avatar {
+        border-radius: 100%;
         width: 60px;
         height: 60px;
       }
