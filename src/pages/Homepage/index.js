@@ -21,20 +21,20 @@ const Homepage = () => {
   const dispatch = useDispatch();
   const allProductsState = useSelector((state) => state.allProductReducer);
   const { isShow: loadingState } = useSelector((state) => state.loadingReducer);
-  console.log(allProductsState);
+
   useEffect(() => {
     document.title = 'Blanja | Homepage';
   });
 
   // CHECK IS USER LOGIN EXIST OR NOT
-  useEffect(() => {
-    Axios.get(`/users/verify-token`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((result) => {
-      const dataResult = result.data.data;
-      dispatch({ type: typeRedux.setUserLogin, value: dataResult });
-    });
-  }, []);
+  Axios.get(`/users/verify-token`, {
+    headers: { Authorization: `Bearer ${token}` },
+  }).then((result) => {
+    const dataResult = result.data.data;
+    dispatch({ type: typeRedux.setUserLogin, value: dataResult });
+  });
+
+  useEffect(() => {}, []);
 
   // DATA FOR NEW PRODUCTS SECTION
   useEffect(() => {

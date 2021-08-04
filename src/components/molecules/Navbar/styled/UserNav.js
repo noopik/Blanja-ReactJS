@@ -121,7 +121,7 @@ const UserNav = ({ avatar }) => {
       </Link>
       <div className="btn-avatar" onClick={handlePopup}>
         <div className="icon user">
-          <img src={avatar} alt="user" />
+          <img src={userState.image} alt="user" />
         </div>
         {showAvatarPopup && (
           <div className="popup">

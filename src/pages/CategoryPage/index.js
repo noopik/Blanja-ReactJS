@@ -37,7 +37,7 @@ const CategoryPage = () => {
     })
       .then((res) => {
         const resData = res.data.data[0];
-        console.log(resData);
+        // console.log(resData);
 
         setCategoryItem(resData);
         Axios.get(`/products?category=${resData.nameCategory}`)

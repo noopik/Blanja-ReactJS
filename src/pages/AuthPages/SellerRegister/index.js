@@ -32,7 +32,7 @@ const SellerRegister = () => {
       ...data,
       role,
     };
-    console.log(dataSend);
+    // console.log(dataSend);
 
     dispatch(userRegister(dataSend, history, role));
   };

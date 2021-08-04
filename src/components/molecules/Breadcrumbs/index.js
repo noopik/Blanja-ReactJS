@@ -15,7 +15,7 @@ const Breadcrumbs = ({ className, data, active, title }) => {
     })
       .then((res) => {
         const resData = res.data;
-        console.log(resData);
+        // console.log(resData);
 
         setCategory(resData.data[0].nameCategory);
       })

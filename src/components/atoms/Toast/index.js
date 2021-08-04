@@ -1,7 +1,6 @@
 import { toast } from 'react-toastify';
 
 export const Toast = (message, type) => {
-  console.log(type);
   switch (type) {
     case 'error':
       toast.error(message, {

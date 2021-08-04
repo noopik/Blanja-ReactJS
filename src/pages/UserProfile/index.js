@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Navbar, NavbarAsideProfileCollapse } from '../../components/molecules';
 import { Aside, Container, MainAside } from './styled';
 
-const UserProfile = ({ username, children, active, session, imageProfile }) => {
-  useEffect(() => {
-    document.title = username + ' | Blanja.com';
-  });
+const UserProfile = ({ children, active, session }) => {
+  const userState = useSelector((state) => state.userReducer);
 
   return (
     <>
@@ -14,8 +13,8 @@ const UserProfile = ({ username, children, active, session, imageProfile }) => {
         <Aside
           active={active}
           session={session}
-          username={username}
-          imageProfile={imageProfile}
+          username={userState.name}
+          imageProfile={userState.image}
         />
         <MainAside>{children}</MainAside>
         <NavbarAsideProfileCollapse session={session} />

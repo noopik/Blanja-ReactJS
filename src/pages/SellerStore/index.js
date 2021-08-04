@@ -7,30 +7,20 @@ import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 
 const SellerStore = () => {
-  let session = 'seller';
   let active = 'account';
   const dispatch = useDispatch();
 
-  const userReducer = useSelector((state) => state.userReducer);
+  const userState = useSelector((state) => state.userReducer);
 
-  if (userReducer.name) {
+  if (userState.name) {
     dispatch(showLoading(false));
   }
+
   return (
     <>
-      <UserProfilePage
-        username={userReducer.storeName}
-        imageProfile={userReducer.image}
-        active={active}
-        session={session}
-      >
+      <UserProfilePage active={active} session={userState.role}>
         <Main heading="My Profile Store">
-          <UserFormSetting
-            session={session}
-            username={userReducer.storeName}
-            imageProfile={userReducer.image}
-            {...userReducer}
-          />
+          <UserFormSetting session={userState.role} data={userState} />
         </Main>
       </UserProfilePage>
     </>

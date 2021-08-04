@@ -16,7 +16,7 @@ const Aside = ({ active, session, username, imageProfile }) => {
           <img className="avatar" src={imageProfile} alt={username} />
           <div className="username-wrapper">
             <h3>{username}</h3>
-            <Link to={``} className="anchor">
+            <Link to="/admin/seller" className="anchor">
               <div className="edit-profile-wrapper">
                 <svg
                   width=" 16 "

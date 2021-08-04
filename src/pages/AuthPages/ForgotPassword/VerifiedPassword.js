@@ -56,7 +56,7 @@ const VerifiedPassword = ({ onClick, data: userData }) => {
       ...userState,
       ...data,
     };
-    console.log(userUpdate);
+    // console.log(userUpdate);
 
     const pathPost = `/users/${userData.decode.id}`;
     Axios.post(pathPost, userUpdate, {

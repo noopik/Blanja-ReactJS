@@ -7,7 +7,7 @@ export const userLogin = (formUser, history, role) => (dispatch) => {
   dispatch(showLoading(true));
   Axios.post('/users/login', formUser)
     .then((res) => {
-      dispatch(showLoading(true));
+      dispatch(showLoading(false));
       const dataUserResponse = res.data.data;
       dispatch({ type: typeRedux.setUserLogin, value: dataUserResponse });
       if (dataUserResponse.role !== role) {
@@ -45,4 +45,23 @@ export const userLogout = () => {
 
 export const userSessionActive = (data) => {
   return { type: typeRedux.setUserLogin, value: data };
+};
+
+export const userUpdateProfile = (id, token) => (dispatch) => {
+  dispatch(showLoading(true));
+  Axios.get(`/users/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => {
+      const data = res.data.data;
+      console.log(12121, data);
+      dispatch({ type: typeRedux.setUserLogin, value: data });
+      dispatch(showLoading(false));
+    })
+    .catch((err) => {
+      console.log(err.response);
+      dispatch(showLoading(false));
+    });
 };

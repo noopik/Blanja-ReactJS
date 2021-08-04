@@ -13,6 +13,7 @@ const PublicRoute = ({ component: Component, ...rest }) => {
 
   // CHECK IS USER LOGIN EXIST OR NOT
   useEffect(() => {
+    dispatch(showLoading(true));
     Axios.get(`/users/verify-token`, {
       headers: { Authorization: `Bearer ${token}` },
     })

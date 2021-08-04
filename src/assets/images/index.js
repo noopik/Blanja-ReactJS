@@ -14,6 +14,7 @@ import ANLoading from './loading-animation.gif';
 import BankGopay from './bank-gopay.png';
 import BankPosIndonesia from './bank-pos.png';
 import BankMastercard from './bank-master.png';
+import AvatarDefault from './user-default.png';
 
 export {
   BankPosIndonesia,
@@ -32,4 +33,5 @@ export {
   DMCarousel4,
   DMNullImage,
   ANLoading,
+  AvatarDefault,
 };

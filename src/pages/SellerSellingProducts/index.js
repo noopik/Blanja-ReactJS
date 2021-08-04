@@ -1,58 +1,55 @@
+import FormControl from '@material-ui/core/FormControl';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import Alert from '@material-ui/lab/Alert';
 import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import { Axios } from '../../../src/config';
 import { ICImgNull } from '../../assets/Icons';
-import { Button, Divider, FormInput } from '../../components/atoms';
+import { Button, Divider, FormInput, Toast } from '../../components/atoms';
 import { Text } from '../../components/atoms/Typography';
-import { Modal, TextEditor } from '../../components/molecules';
+import { customMedia } from '../../components/Layouts';
+import { patternNumber } from '../../utils';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
-import { Axios } from '../../../src/config';
-import { useHistory, useParams } from 'react-router-dom';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import { useDispatch } from 'react-redux';
-import { customMedia } from '../../components/Layouts';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { showLoading } from '../../redux/actions';
 
 const SellerSellingProducts = () => {
-  // const [isLoading, seIsLoading] = useState(false);
   const [category, setCategory] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
-  // Upload Image
-  const [uploadImage, setUploadImage] = useState('');
+  const userState = useSelector((state) => state.userReducer);
+  const [description, setDescription] = useState('');
+  const token = localStorage.getItem('token');
+
+  // HANDLE FORM
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    getValues,
+  } = useForm();
 
   const { slug } = useParams();
-  const [form, setForm] = useState({
-    nameProduct: '',
-    price: '',
-    id_category: '',
-    stock: '',
-    imageProduct: '',
-    description: '',
-  });
 
-  const initialForm = {
-    nameProduct: '',
-    price: '',
-    stock: '',
-    imageProduct: '',
-    description: '',
-  };
-
-  // console.log(slug);
   useEffect(() => {
-    if (slug) {
-      Axios.get(`/products/${slug}`)
-        .then((res) => {
-          const resData = res.data.data[0];
-          // console.log('resData', resData);
-          setForm(resData);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    // if (slug) {
+    //   Axios.get(`/products/${slug}`)
+    //     .then((res) => {
+    //       const resData = res.data.data[0];
+    //       // console.log('resData', resData);
+    //       // setForm(resData);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // }
     Axios.get(`/category`)
       .then((res) => {
         const resData = res.data.data;
@@ -63,217 +60,304 @@ const SellerSellingProducts = () => {
         console.log(err);
       });
   }, []);
-  // console.log(category);
-  // console.log('form', form);
 
-  const handleForm = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+  // Upload Image
+  const [uploadImage, setUploadImage] = useState([]);
+  const [previewAvatar, setPreviewAvatar] = useState([]);
+
+  const handleInputImageProduct = async () => {
+    try {
+      const getImage = getValues('productImage');
+      setUploadImage(getImage);
+    } catch (error) {
+      // console.log(error);
+    }
   };
-  const handlePhoto = (e) => {
-    setUploadImage(e.target.value);
-    setForm({
-      ...form,
-      imageProduct: e.target.value,
-    });
+  const handlePreview = () => {
+    if (uploadImage.length > 0) {
+      let tmp = [];
+      for (let i = 0; i < uploadImage.length; i++) {
+        const process = URL.createObjectURL(uploadImage[i]);
+        tmp.push(process);
+      }
+      setPreviewAvatar(tmp);
+    }
   };
 
-  const sendData = () => {
-    console.log('form', form);
-    // seIsLoading(true);
-    Axios.post('/products/add', form)
+  useEffect(() => {
+    handleInputImageProduct();
+    handlePreview();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch('productImage'), uploadImage]);
+
+  // SELECT COLOR
+  const [size, setSize] = useState({
+    red: false,
+    blue: false,
+    orange: false,
+    pink: false,
+    yellow: false,
+  });
+  const [selectedColor, setSelectedColor] = useState();
+
+  const handleColors = (change) => {
+    const resetSize = {
+      red: false,
+      blue: false,
+      orange: false,
+      pink: false,
+      yellow: false,
+    };
+    setSize({
+      ...resetSize,
+      [change.value]: size[change.value] === true ? false : true,
+    });
+    setSelectedColor(change.value);
+  };
+
+  const onSubmit = (data) => {
+    const formData = new FormData();
+    formData.append('owner', userState.name);
+    formData.append('description', description);
+    formData.append('color', selectedColor);
+    formData.append('image', uploadImage);
+    formData.append('id_category', data.category);
+    formData.append('nameProduct', data.nameProduct);
+    formData.append('stock', data.stock);
+    formData.append('image', data.productImage);
+    formData.append('price', data.price);
+
+    dispatch(showLoading(true));
+    Axios.post(`/products`, formData, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
       .then((res) => {
-        console.log(form);
-        console.log('Upload success');
-        setForm({ ...initialForm });
-        setUploadImage('');
-        // seIsLoading(false);
+        Toast('Success products Added', 'success');
+        console.log(res);
+        dispatch(showLoading(false));
         history.push('/admin/seller/products');
       })
       .catch((err) => {
-        // seIsLoading(false);
+        console.log(err.response);
+        dispatch(showLoading(false));
+        return Toast('Error', 'error');
       });
   };
-
-  const updateData = () => {
-    // seIsLoading(true);
-    Axios.post(`/products/${slug}`, form)
-      .then((res) => {
-        console.log(form);
-        console.log('Upload success');
-        setForm({ ...initialForm });
-        // seIsLoading(false);
-      })
-      .catch((err) => {
-        // seIsLoading(false);
-      });
-  };
-
-  // UPLOAD FOTO
-  const showModalUploadPhoto = () => {
-    dispatch({ type: 'SET_MODAL', value: true });
-  };
-  const uploadImageAction = () => {
-    dispatch({ type: 'SET_MODAL', value: false });
-    // setForm({ imageProduct: uploadImage });
-  };
-  // console.log('uploadImage', uploadImage);
 
   return (
     <>
-      <UserProfilePage
-        userName="Seller Diana | Selling Products"
-        session="seller"
-      >
-        <Main heading="Inventory" className="inventory-wrapper">
-          <div className="form-wrapper">
-            <label htmlFor="name-product">
-              <Text color="secondary" as="lg">
-                Name of goods
-              </Text>
-            </label>
-            <div className="input-wrapper">
-              <FormInput
-                type="text"
-                name="nameProduct"
-                onChange={(e) => handleForm(e)}
-                value={form.nameProduct}
-                className="input"
-              />
+      <UserProfilePage session="seller" dataUser={userState}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Main heading="Inventory" className="inventory-wrapper">
+            <div className="form-wrapper">
+              <label htmlFor="name-product">
+                <Text color="secondary" as="lg">
+                  Name of goods
+                </Text>
+              </label>
+              <div className="input-wrapper">
+                <FormInput
+                  type="text"
+                  name="nameProduct"
+                  className="input"
+                  defaultValue=""
+                  {...register('nameProduct', { required: true })}
+                />
+              </div>
             </div>
-          </div>
-        </Main>
-        <Main heading="Item Details" className="item-details">
-          <div className="form-wrapper">
-            <label htmlFor="price">
-              <Text color="secondary" as="lg">
-                Unit price
-              </Text>
-            </label>
-            <div className="input-wrapper">
-              <FormInput
-                type="text"
-                name="price"
-                onChange={(e) => handleForm(e)}
-                value={form.price}
-                className="input"
-              />
+            {errors.nameProduct && (
+              <Alert severity="warning">Name Product Required!</Alert>
+            )}
+          </Main>
+          <Main heading="Item Details" className="item-details">
+            <div className="form-wrapper">
+              <label htmlFor="price">
+                <Text color="secondary" as="lg">
+                  Unit price
+                </Text>
+              </label>
+              <div className="input-wrapper">
+                <FormInput
+                  type="text"
+                  name="price"
+                  className="input"
+                  defaultValue=""
+                  {...register('price', {
+                    required: true,
+                    pattern: {
+                      value: patternNumber,
+                    },
+                  })}
+                />
+              </div>
+              {errors.price && (
+                <Alert severity="warning">Value must be numbers!</Alert>
+              )}
             </div>
-          </div>
-          <div className="form-wrapper">
-            <label htmlFor="quantity">
-              <Text color="secondary" as="lg">
-                Stock
-              </Text>
-            </label>
-            <div className="input-wrapper">
-              <FormInput
-                type="text"
-                name="stock"
-                onChange={(e) => handleForm(e)}
-                value={form.stock}
-                className="input"
-              />
+            <div className="form-wrapper">
+              <label htmlFor="quantity">
+                <Text color="secondary" as="lg">
+                  Stock
+                </Text>
+              </label>
+              <div className="input-wrapper">
+                <FormInput
+                  type="text"
+                  name="stock"
+                  className="input"
+                  defaultValue=""
+                  {...register('stock', {
+                    required: true,
+                    pattern: {
+                      value: patternNumber,
+                    },
+                  })}
+                />
+              </div>
+              {errors.stock && (
+                <Alert severity="warning">Value must be numbers!</Alert>
+              )}
             </div>
-          </div>
-          <div className="form-wrapper">
-            <label htmlFor="quantity">
-              <Text color="secondary" as="lg">
-                Category
-              </Text>
-            </label>
-            <div className="input-wrapper">
-              <FormControl variant="outlined" className="form-select">
-                <Select
-                  labelId="demo-simple-select-outlined-label"
-                  id="demo-simple-select-outlined"
-                  name="id_category"
-                  value={form.id_category}
-                  onChange={(e) => handleForm(e)}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  {category &&
-                    category.map((item) => {
-                      return (
-                        <MenuItem value={item.id}>{item.nameCategory}</MenuItem>
-                      );
+            <div className="form-wrapper">
+              <label htmlFor="quantity">
+                <Text color="secondary" as="lg">
+                  Category
+                </Text>
+              </label>
+              <div className="input-wrapper">
+                <FormControl variant="outlined" className="form-select">
+                  <Select
+                    labelId="demo-simple-select-outlined-label"
+                    id="demo-simple-select-outlined"
+                    name="id_category"
+                    {...register('category', {
+                      required: true,
                     })}
-                </Select>
-              </FormControl>
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {category &&
+                      category.map((item) => {
+                        return (
+                          <MenuItem value={item.id}>
+                            {item.nameCategory}
+                          </MenuItem>
+                        );
+                      })}
+                  </Select>
+                </FormControl>
+              </div>
+              {errors.category && (
+                <Alert severity="warning">Choose minimal one category!</Alert>
+              )}
             </div>
-          </div>
 
-          <div className="form-wrapper selected">
-            <label htmlFor="quantity">
-              <Text color="secondary" as="lg">
-                Stock
-              </Text>
-            </label>
-            <div className="radio-wrapper">
-              <div className="item-radio">
-                <input type="radio" name="new" />
-                <label htmlFor="new">Baru</label>
-              </div>
-              <div className="item-radio">
-                <input type="radio" name="bekas" />
-                <label htmlFor="bekas">Bekas</label>
-              </div>
+            <div className="form-wrapper selected">
+              <label htmlFor="quantity">
+                <Text color="secondary" as="lg">
+                  Color
+                </Text>
+              </label>
+              <ChooseColor>
+                <div
+                  className={`box red ${size.red && 'selected'}`}
+                  onClick={(e) => handleColors({ value: 'red' })}
+                >
+                  <p>red</p>
+                </div>
+                <div
+                  className={`box blue ${size.blue && 'selected'}`}
+                  onClick={(e) => handleColors({ value: 'blue' })}
+                >
+                  <p>blue</p>
+                </div>
+                <div
+                  className={`box orange ${size.orange && 'selected'}`}
+                  onClick={(e) => handleColors({ value: 'orange' })}
+                >
+                  <p>orange</p>
+                </div>
+                <div
+                  className={`box pink ${size.pink && 'selected'}`}
+                  onClick={(e) => handleColors({ value: 'pink' })}
+                >
+                  <p>pink</p>
+                </div>
+                <div
+                  className={`box yellow ${size.yellow && 'selected'}`}
+                  onClick={(e) => handleColors({ value: 'yellow' })}
+                >
+                  <p>yellow</p>
+                </div>
+              </ChooseColor>
             </div>
-          </div>
-        </Main>
-        <Main heading="Photo of Goods" className="photos">
-          <div className="photo-wrapper">
-            <div className="photo">
-              <img src={uploadImage ? uploadImage : ICImgNull} alt="goods" />
+          </Main>
+          <Main heading="Photo of Goods" className="photos">
+            <div className="photo-wrapper">
+              {previewAvatar.length > 0 &&
+                previewAvatar.map((image) => (
+                  <>
+                    <div className="photo">
+                      <img src={image} alt="goods" />
+                    </div>
+                  </>
+                ))}
+              {!previewAvatar.length && (
+                <>
+                  <div className="photo">
+                    <img src={ICImgNull} alt="goods" />
+                  </div>
+                </>
+              )}
             </div>
-          </div>
-          <Divider className="divider" />
-          <div className="btn-wrapper">
-            <Button className="btn" onClick={showModalUploadPhoto}>
-              Upload Photo
-            </Button>
-          </div>
-          <Modal header="Input URL Photo">
-            {/* Internal Styling : input url photo */}
-            <InputUrlPhoto>
-              <FormInput
-                className="input"
-                name="imageProduct"
-                onChange={(e) => handlePhoto(e)}
-                value={uploadImage}
-              />
-              <Button primary className="btn" onClick={uploadImageAction}>
-                Upload
+            <Divider className="divider" />
+            <InputImageProduct className="btn-wrapper">
+              <div className="btn">
+                <div className="btn-input">Upload Photo</div>
+                <input
+                  type="file"
+                  multiple
+                  onChange={handleInputImageProduct}
+                  {...register('productImage')}
+                />
+              </div>
+            </InputImageProduct>
+          </Main>
+          <Main heading="Description">
+            <CKEditor
+              editor={ClassicEditor}
+              data=""
+              onReady={(editor) => {
+                // You can store the "editor" and use when it is needed.
+                // console.log('Editor is ready to use!', editor);
+              }}
+              onChange={(event, editor) => {
+                const data = editor.getData();
+                setDescription(data);
+              }}
+              onBlur={(event, editor) => {
+                // console.log('Blur.', editor);
+              }}
+              onFocus={(event, editor) => {
+                // console.log('Focus.', editor);
+              }}
+            />
+          </Main>
+          <ButtonWrapper>
+            {!slug && (
+              <Button className="btn" primary type="submit">
+                Jual
               </Button>
-            </InputUrlPhoto>
-          </Modal>
-        </Main>
-        <Main heading="Description">
-          <TextEditor />
-          {/* <FormInput
-            type="text"
-            name="description"
-            onChange={(e) => handleForm(e)}
-            value={form.description}
-            className="input"
-          /> */}
-        </Main>
-        <ButtonWrapper>
-          {!slug && (
-            <Button className="btn" primary onClick={sendData}>
-              Jual
-            </Button>
-          )}
-          {slug && (
-            <Button className="btn" primary onClick={updateData}>
-              UPDATE
-            </Button>
-          )}
-        </ButtonWrapper>
+            )}
+            {slug && (
+              <Button className="btn" primary type="submit">
+                UPDATE
+              </Button>
+            )}
+          </ButtonWrapper>
+        </form>
       </UserProfilePage>
     </>
   );
@@ -299,45 +383,60 @@ const ButtonWrapper = styled.div`
 `;
 
 // Internal Styling : input url photo
-const InputUrlPhoto = styled.div`
-  /* background-color: yellow; */
-  width: 100%;
-  .input {
-    width: 100%;
-  }
+const InputImageProduct = styled.div`
   .btn {
-    width: 100%;
-    margin-top: 1rem;
+    position: relative;
+    max-width: 250px;
+    input {
+      display: flex;
+      width: 150px;
+      height: 150px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      opacity: 0;
+    }
   }
 `;
 
-// const UploadMultipleImage = (
-//   <div className="content-upload">
-//     <div className="img-wrapper">
-//       <div className="img-item">
-//         <div className="img">
-//           <img src={ICImgNull} />
-//         </div>
-//         <Text>Foto Utama</Text>
-//       </div>
-//       <div className="img-item">
-//         <div className="img">
-//           <img src={ICImgNull} />
-//         </div>
-//         <Text>Foto Utama</Text>
-//       </div>
-//       <div className="img-item">
-//         <div className="img">
-//           <img src={ICImgNull} />
-//         </div>
-//         <Text>Foto Utama</Text>
-//       </div>
-//       <div className="img-item">
-//         <div className="img">
-//           <img src={ICImgNull} />
-//         </div>
-//         <Text>Foto Utama</Text>
-//       </div>
-//     </div>
-//   </div>
-// );
+const ChooseColor = styled.div`
+  display: flex;
+  gap: 1rem;
+  .box {
+    border: 1px solid #9b9b9b;
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      display: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+      border: 0;
+    }
+    &.selected {
+      border: 2px solid #222222;
+    }
+  }
+
+  .red {
+    background-color: red;
+  }
+  .blue {
+    background-color: blue;
+  }
+  .orange {
+    background-color: orange;
+  }
+  .pink {
+    background-color: pink;
+  }
+  .yellow {
+    background-color: yellow;
+  }
+`;

@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
 
 const FormInput = ({
   type,
@@ -9,6 +8,7 @@ const FormInput = ({
   onChange,
   value,
   className,
+  defaultValue,
   ...props
 }) => {
   return (
@@ -19,6 +19,7 @@ const FormInput = ({
       onChange={onChange}
       value={value}
       className={className}
+      defaultValue={defaultValue}
       {...props}
     />
   );

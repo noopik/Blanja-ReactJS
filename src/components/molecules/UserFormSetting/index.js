@@ -11,10 +11,11 @@ import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import { useDispatch, useSelector } from 'react-redux';
 import { Axios } from '../../../config';
-import { showLoading } from '../../../redux/actions';
+import { showLoading, userUpdateProfile } from '../../../redux/actions';
 
-const UserFormSetting = ({ session, username, imageProfile, ...props }) => {
-  const { name, email, phoneNumber, storeName } = props;
+const UserFormSetting = ({ session, ...props }) => {
+  const { name, email, phoneNumber, image } = props.data;
+
   const [previewAvatar, setPreviewAvatar] = useState();
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
@@ -30,33 +31,46 @@ const UserFormSetting = ({ session, username, imageProfile, ...props }) => {
 
   useEffect(() => {
     handleInputAvatar();
-  }, [watch('avatar')]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [watch('avatar'), watch('name')]);
 
   const onSubmit = (data) => {
     delete data.avatar;
     const changeAvatar = getValues('avatar')[0];
     dispatch(showLoading(true));
     Axios.get(`/users/${userState.idUser}`, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'content-Type': 'multipart/form-data',
+      },
     })
       .then((res) => {
         const dataOld = res.data.data[0];
-        const dataUpdate = {
-          ...dataOld,
-          ...data,
-          image: changeAvatar,
-        };
-        Axios.post(`/users/${userState.idUser}`, dataUpdate, {
-          headers: { Authorization: `Bearer ${token}` },
+        const formData = new FormData();
+        formData.append('email', dataOld.email);
+        formData.append('password', dataOld.password);
+        formData.append('name', data.name);
+        formData.append('role', dataOld.role);
+        formData.append('verified', dataOld.verified);
+        formData.append('phoneNumber', data.phoneNumber);
+        formData.append('storeName', dataOld.storeName);
+        formData.append('image', changeAvatar ? changeAvatar : dataOld.image);
+        Axios.post(`/users/${userState.idUser}`, formData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         })
           .then((res) => {
             dispatch(showLoading(false));
+            dispatch({ type: typeRedux.setUserName, value: data.name });
+
+            // dispatch(userUpdateProfile(userState.idUser, token));
+
             return Toast('Success Update Profile', 'success');
           })
           .catch((err) => {
             dispatch(showLoading(false));
-
-            console.log('err.response', err);
+            console.log('err.response', err.response);
             return Toast('Failed updated profile', 'error');
           });
       })
@@ -68,10 +82,10 @@ const UserFormSetting = ({ session, username, imageProfile, ...props }) => {
   const handleInputAvatar = () => {
     try {
       const changeAvatar = getValues('avatar')[0];
-      const send = URL.createObjectURL(changeAvatar);
-      console.log(changeAvatar);
-      dispatch({ type: typeRedux.setUserAvatar, value: send });
-      setPreviewAvatar(send);
+      const URLImage = URL.createObjectURL(changeAvatar);
+
+      setPreviewAvatar(URLImage);
+      dispatch({ type: typeRedux.setUserAvatar, value: URLImage });
     } catch (error) {
       // console.log(error);
     }
@@ -106,6 +120,7 @@ const UserFormSetting = ({ session, username, imageProfile, ...props }) => {
                 name="email"
                 className="input"
                 value={email}
+                // defaultValue={email}
               />
             </div>
           </div>
@@ -144,8 +159,8 @@ const UserFormSetting = ({ session, username, imageProfile, ...props }) => {
           <div className="image-wrapper">
             <div className="avatar-wrapper">
               <img
-                src={previewAvatar ? previewAvatar : imageProfile}
-                alt={username}
+                src={previewAvatar ? previewAvatar : image}
+                alt={name}
                 className="avatar"
               />
             </div>

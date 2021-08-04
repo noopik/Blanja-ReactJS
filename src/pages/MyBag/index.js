@@ -16,7 +16,7 @@ import {
 
 const MyBag = () => {
   const cartReducer = useSelector((state) => state.cartProductReducer);
-  console.log('cartReducer', cartReducer.productChoose.length);
+  // console.log('cartReducer', cartReducer.productChoose.length);
   useEffect(() => {
     document.title = 'Blanja | My Bag';
   });

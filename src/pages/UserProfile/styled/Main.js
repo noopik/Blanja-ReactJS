@@ -126,7 +126,9 @@ const Wrapper = styled.div`
     margin-bottom: 2rem;
     .photo-wrapper {
       display: flex;
-      justify-content: center;
+      flex-flow: wrap;
+      gap: 1rem;
+      /* justify-content: center; */
       .photo {
         /* background-color: yellow; */
         height: 200px;
@@ -171,6 +173,16 @@ const Wrapper = styled.div`
         display: flex;
         justify-content: center;
         .btn {
+          .btn-input {
+            padding: 8px 12px;
+            border-radius: 10px;
+            border: 1px solid #9b9b9b;
+            &:hover {
+              opacity: 0.5;
+            }
+          }
+          input {
+          }
           width: 50%;
         }
       }

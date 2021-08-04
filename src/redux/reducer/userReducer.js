@@ -26,6 +26,7 @@ export const userReducer = (state = { initialUser }, action) => {
         gender: action.value.gender,
         idUser: action.value.idUser,
         image: action.value.image,
+        password: action.value.password,
         name: action.value.name,
         phoneNumber: action.value.phoneNumber,
         role: action.value.role,
@@ -42,6 +43,11 @@ export const userReducer = (state = { initialUser }, action) => {
       return {
         ...state,
         image: action.value,
+      };
+    case typeRedux.setUserName:
+      return {
+        ...state,
+        name: action.value,
       };
     default:
       return state;

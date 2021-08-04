@@ -345,7 +345,7 @@ export default function EnhancedTable(props) {
     setSelected(newSelected);
   };
 
-  console.log('mendapatkan satu state', selected);
+  // console.log('mendapatkan satu state', selected);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

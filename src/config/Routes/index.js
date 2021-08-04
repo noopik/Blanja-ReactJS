@@ -42,7 +42,12 @@ const Routes = () => {
         {/* MAIN HOME */}
         <Route exact path="/" component={Homepage} />
         <PrivateRoute path="/categories" component={CategoryPage} />
-        <PrivateRoute path="/products" component={ResultProducts} />
+        <PrivateRoute
+          exact
+          path="/product:name-:id"
+          component={ProductDetailPage}
+        />
+        {/* <PrivateRoute path="/products" component={ResultProducts} /> */}
         <PrivateRoute path="/my-bag" component={MyBag} />
         <PrivateRoute path="/checkout" component={CheckoutPage} />
         <Route
@@ -74,7 +79,6 @@ const Routes = () => {
         />
         <PrivateRoute path="/admin/seller/orders" />
         <PrivateRoute path="/admin/seller#cancel" />
-        <PrivateRoute path="/product/:name-:id" component={ProductDetailPage} />
       </Switch>
     </Router>
   );

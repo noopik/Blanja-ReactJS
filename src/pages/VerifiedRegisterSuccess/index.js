@@ -29,7 +29,7 @@ const VerifiedRegisterSuccess = () => {
         headers: { Authorization: `Bearer ${token}` },
       }).then((resultGetUser) => {
         const dataUser = resultGetUser.data.data[0];
-        console.log(resultGetUser);
+        // console.log(resultGetUser);
         const verified = {
           ...dataUser,
           verified: 1,
@@ -39,7 +39,7 @@ const VerifiedRegisterSuccess = () => {
         Axios.post(`/users/${resultDecode.decode.id}`, verified, {
           headers: { Authorization: `Bearer ${token}` },
         }).then((res) => {
-          console.log(res);
+          // console.log(res);
           dispatch(showLoading(false));
         });
       });

@@ -5,17 +5,14 @@ import TabContent from '../../components/atoms/TabItem';
 import { DataTable } from '../../components/molecules';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
+import { useSelector } from 'react-redux';
 
 const SellerProductPage = () => {
-  // console.log(dataProduct);
+  const userState = useSelector((state) => state.userReducer);
 
   return (
     <>
-      <UserProfilePage
-        userName="Seller Diana | Produk"
-        active="account"
-        session="seller"
-      >
+      <UserProfilePage active="account" session={userState.role}>
         <Main heading="My Products">
           <TabsWrapper defaultActiveKey="all-items">
             <Tab eventKey="all-items" title="All Items">
