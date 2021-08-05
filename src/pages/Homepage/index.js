@@ -63,11 +63,6 @@ const Homepage = () => {
   }, []);
 
   // Action Card Choose
-  const actionCard = (id) => {
-    // console.log(1213, id);
-    dispatch(getItemProduct(id, token));
-    history.push(`/products/${id}`);
-  };
 
   return (
     <>
@@ -93,7 +88,6 @@ const Homepage = () => {
                     price={item.price}
                     store="Zalora"
                     idProduct={item.id}
-                    onClick={() => actionCard(item.id)}
                   />
                 </Item>
               ))}
@@ -115,7 +109,6 @@ const Homepage = () => {
                     price={item.price}
                     idProduct={item.id}
                     store="Zalora"
-                    onClick={() => actionCard(item.id)}
                   />
                 </Item>
               ))}

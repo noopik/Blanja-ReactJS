@@ -6,7 +6,7 @@ export const GridContainer = styled.div`
   display: grid;
   grid-template-columns: auto auto auto auto auto;
   grid-template-rows: auto;
-  gap: 25px;
+  gap: 20px;
   padding: 0;
   /* background-color: yellow; */
   ${customMedia.lessThan('1165px')`
@@ -29,4 +29,7 @@ export const GridContainer = styled.div`
 
 export const Item = styled.div`
   /* background-color: #070707; */
+  /* width: 250px; */
+  /* width: auto; */
+  max-width: 280px;
 `;

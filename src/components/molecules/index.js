@@ -25,8 +25,10 @@ import UserAddressCard from './UserAddressCard';
 import ModalPayment from './ModalPayment';
 import AlertVerification from './AlertVerification/AlertVerification';
 import ProductTables from './ProductTables';
+import PaginationRange from './PaginationRange';
 
 export {
+  PaginationRange,
   ProductTables,
   AlertVerification,
   ModalPayment,

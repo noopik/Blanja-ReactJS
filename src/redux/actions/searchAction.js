@@ -2,11 +2,12 @@ import { Axios } from '../../config';
 import { typeRedux } from '../../utils';
 import { showLoading } from './loadingAction';
 
-export const searchAction = (keyword) => (dispatch) => {
+export const searchAction = (keyword, page) => (dispatch) => {
   // console.log(12, keyword);
   dispatch(showLoading(true));
-  Axios.get(`/products?src=${keyword}&limit=10`)
+  Axios.get(`/products?src=${keyword}&limit=10&page=${page ? page : 1}`)
     .then((res) => {
+      console.log(123, res);
       dispatch(showLoading(false));
       if (res.data.statusCode === 200) {
         const sendState = {
@@ -28,7 +29,7 @@ export const searchAction = (keyword) => (dispatch) => {
           keyword,
           message: err.response.data.error,
         };
-        dispatch({ type: typeRedux.setSearching, value: sendState });
+        // dispatch({ type: typeRedux.setSearching, value: sendState });
       }
     });
 };

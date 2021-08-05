@@ -15,12 +15,13 @@ const CardProduct = ({
   store,
   image,
   idProduct,
-  onClick,
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [slug, setSlug] = useState('');
   const [titleProduct, setTitleProduct] = useState('');
+  const token = localStorage.getItem('token');
+
   const slugUrl = () => {
     let slug = title;
     const split = slug.split(' ');
@@ -51,8 +52,14 @@ const CardProduct = ({
     }
   }, [title]);
 
+  const actionCard = () => {
+    // console.log(1213, id);
+    dispatch(getItemProduct(idProduct, token));
+    history.push(`/products/${idProduct}`);
+  };
+
   return (
-    <div className="anchor" onClick={onClick}>
+    <div onClick={actionCard}>
       <Card className={className}>
         <div className="image-wrapper">
           <img

@@ -11,6 +11,7 @@ import {
   Footer,
   HeaderSection,
   Navbar,
+  PaginationRange,
 } from '../../components/molecules';
 import { Item } from '../../components/molecules/CardGrouping/styled';
 import { Axios } from '../../config';
@@ -22,14 +23,33 @@ const ResultProducts = () => {
   const history = useHistory();
   const searchKeyword = history.location.state;
   const token = localStorage.getItem('token');
+  // const [resultSearching, setResultSearching] = useState([]);
 
   const dispatch = useDispatch();
   const searchState = useSelector((state) => state.searchReducer);
-  console.log(searchState);
+  // console.log('resultSearching', resultSearching);
 
   useEffect(() => {
     document.title = 'Result Product';
   }, []);
+
+  // useEffect(() => {
+  //   Axios.get(`${pathname}${search}&limit=10`, {
+  //     headers: { Authorization: `Bearer ${token}` },
+  //   })
+  //     .then((res) => {
+  //       // console.log(res);
+  //       const data = res.data;
+
+  //       setResultSearching(data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.response);
+  //       if (err.response.status === 404) {
+  //         // Page not found
+  //       }
+  //     });
+  // }, [search]);
 
   // FILTER BUTTON PRICE
   // console.log(`${querySearch}=field=price&sort=ASC`);
@@ -73,7 +93,7 @@ const ResultProducts = () => {
     dispatch(getItemProduct(id, token));
     history.push(`/products/${id}`);
   };
-
+  console.log(history);
   return (
     <>
       <Navbar session="user" />
@@ -84,19 +104,29 @@ const ResultProducts = () => {
               title={`Menampilkan hasil pencarian: ${searchKeyword}`}
             />
             <InfoResult>
-              <div className="item-info">
-                <PageviewIcon color="disabled" />
-                <p>
-                  Menampilkan {searchState.result.meta.limit} hasil pencarian (
-                  {searchState.result.meta.totalData} total data)
-                </p>
+              <div className="left">
+                <div className="item-info">
+                  <PageviewIcon color="disabled" />
+                  <p>
+                    Menampilkan {searchState.result.meta.limit} hasil pencarian
+                    ({searchState.result.meta.totalData} total data)
+                  </p>
+                </div>
+                <div className="item-info sort" onClick={handleFilter}>
+                  <FilterListIcon
+                    className={sortPrice === 'ASC' ? 'icon-filter' : ''}
+                    color="disabled"
+                  />
+                  <p>Harga Terendah</p>
+                </div>
               </div>
-              <div className="item-info sort" onClick={handleFilter}>
-                <FilterListIcon
-                  className={sortPrice === 'ASC' ? 'icon-filter' : ''}
-                  color="disabled"
-                />
-                <p>Harga Terendah</p>
+              <div className="pagination">
+                <PaginationRange keyword={searchKeyword} />
+                {/* <div className="btn-pagination ">First</div>
+                <div className="btn-pagination">-</div>
+                <div className="btn-pagination active">3</div>
+                <div className="btn-pagination">+</div>
+                <div className="btn-pagination">Last</div> */}
               </div>
             </InfoResult>
             <CardGrouping>
@@ -109,35 +139,35 @@ const ResultProducts = () => {
                       price={item.price}
                       store="Zalora"
                       idProduct={item.id}
-                      onClick={() => actionCard(item.id)}
                     />
                   </Item>
                 );
               })}
             </CardGrouping>
-            {/* <Pagination count={10} shape="rounded" /> */}
-            {/* <PaginationWrapper>
-            <Pagination>
-              <Pagination.First />
-              <Pagination.Prev />
-              <Pagination.Item>{1}</Pagination.Item>
-              <Pagination.Ellipsis />
-
-              <Pagination.Item>{10}</Pagination.Item>
-              <Pagination.Item>{11}</Pagination.Item>
-              <Pagination.Item active>{12}</Pagination.Item>
-              <Pagination.Item>{13}</Pagination.Item>
-              <Pagination.Item disabled>{14}</Pagination.Item>
-
-              <Pagination.Ellipsis />
-              <Pagination.Item>{20}</Pagination.Item>
-              <Pagination.Next />
-              <Pagination.Last />
-            </Pagination>
-          </PaginationWrapper> */}
           </SectionContent>
         )}
-        {!searchState.exist && <h1>Not found</h1>}
+
+        {!searchState.exist && (
+          <SectionContent>
+            <HeaderSection
+              title={`Menampilkan hasil pencarian: ${searchKeyword}`}
+            />
+            <InfoResult>
+              <div className="left">
+                <div className="item-info">
+                  <PageviewIcon color="disabled" />
+                  <p>Menampilkan 0 hasil pencarian</p>
+                </div>
+              </div>
+              <div className="pagination">
+                <PaginationRange keyword={searchKeyword} />
+              </div>
+            </InfoResult>
+            <CardGrouping>
+              <h1>Kosong</h1>
+            </CardGrouping>
+          </SectionContent>
+        )}
       </MainContent>
       <Footer />
     </>
@@ -148,7 +178,11 @@ export default ResultProducts;
 
 const InfoResult = styled.div`
   display: flex;
-  gap: 2rem;
+  justify-content: space-between;
+  .left {
+    display: flex;
+    gap: 2rem;
+  }
   .item-info {
     display: flex;
     gap: 1rem;
@@ -167,10 +201,34 @@ const InfoResult = styled.div`
       }
     }
   }
+  .pagination {
+    display: flex;
+    gap: 1rem;
+    .btn-pagination {
+      width: 32px;
+      border: 1px solid #9b9b9b;
+      color: #9b9b9b;
+      padding: 2px 4px;
+      box-sizing: content-box;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:hover {
+        cursor: pointer;
+        border: 1px solid #222222;
+        color: #222222;
+      }
+      &.active {
+        background-color: red;
+        color: white;
+        border: 0;
+      }
+    }
+  }
 `;
 
 // const PaginationWrapper = styled.div`
-//   background-color: yellow;
 //   margin-top: 5rem;
 //   display: flex;
 //   justify-content: center;

@@ -2,6 +2,7 @@ import { typeRedux } from '../../utils';
 import { showLoading } from './loadingAction';
 import { Axios } from '../../config';
 import { Toast } from '../../components/atoms';
+const token = localStorage.getItem('token');
 
 export const getAllProducts = (limit) => (dispatch) => {
   dispatch(showLoading(true));
@@ -48,4 +49,16 @@ export const insertProductToCart = (oldData, newItem) => {
     productChoose: [{ ...data }],
   };
   return { type: typeRedux.setProductToCart, value: sendData };
+};
+
+export const searchProduct = (keyword) => (dispatch) => {
+  Axios.get(`/products`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+    .then((res) => {
+      console.log(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
