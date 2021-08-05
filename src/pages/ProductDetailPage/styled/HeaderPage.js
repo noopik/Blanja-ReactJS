@@ -8,6 +8,7 @@ import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
 import { Heading, Text } from '../../../components/atoms/Typography';
 import { customMedia } from '../../../components/Layouts';
 import { ImageGaleryProduct } from '../../../components/molecules';
+import { insertProductToCart } from '../../../redux/actions';
 import { typeRedux } from '../../../utils';
 
 const HeaderPage = ({ data }) => {
@@ -15,9 +16,11 @@ const HeaderPage = ({ data }) => {
   const history = useHistory();
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
+  const productItemState = useSelector((state) => state.productItemReducer);
   const chooseProductReducer = useSelector(
     (state) => state.chooseProductReducer
   );
+  const cartProductState = useSelector((state) => state.cartProductReducer);
 
   // const [color, setColor] = useState({
   //   red: false,
@@ -44,9 +47,11 @@ const HeaderPage = ({ data }) => {
   const counterTotal = (value) => {
     // console.log(value);
     const sendData = {
-      price: 10000,
+      price: productItemState.data.price,
       total: value,
     };
+    console.log(123, sendData);
+
     dispatch({
       type: typeRedux.setChooseProductCount,
       value: sendData,
@@ -57,15 +62,22 @@ const HeaderPage = ({ data }) => {
   // const handleColors = (e, change) => {};
 
   // Action Add Bag
+  // console.log('productItemState', productItemState);
   const addProductToCart = () => {
-    // console.log('userState', userState);
-    // console.log('chooseProductReducer', chooseProductReducer);
-    const sendToState = {
-      user: { ...userState },
-      productChoose: [{ ...chooseProductReducer }],
-      metaData: {},
+    const chooseProduct = {
+      ...chooseProductReducer,
+      ...productItemState.data,
     };
-    dispatch({ type: typeRedux.setCartProducts, value: sendToState });
+    // console.log('chooseProduct', chooseProduct);
+
+    const sendData = {
+      productChoose: [{ ...chooseProduct }],
+    };
+
+    // const oldData = cartProductState.productChoose;
+    // console.log(sendData);
+    dispatch({ type: typeRedux.setProductToCart, value: sendData });
+    // dispatch(insertProductToCart(oldData, sendData));
     history.push('/my-bag');
   };
 

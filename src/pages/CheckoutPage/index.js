@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
   AsideLeft,
   AsideRight,
@@ -24,6 +25,7 @@ import {
 const CheckoutPage = () => {
   const [showModalAddress, setShowModalAddress] = useState(false);
   const [showModalBuy, setShowModalBuy] = useState(false);
+  const { productChoose } = useSelector((state) => state.cartProductReducer);
 
   useEffect(() => {
     document.title = 'Blanja | Checkout';
@@ -55,8 +57,17 @@ const CheckoutPage = () => {
                   </Button>
                 </div>
               </CardWrapper>
-              <CheckoutDetail body checkout />
-              <CheckoutDetail body checkout />
+              {productChoose.length > 0 &&
+                productChoose.map((product) => (
+                  <CheckoutDetail
+                    body
+                    nameProduct={product.nameProduct}
+                    store="IStanbul"
+                    total={product.price}
+                    image={product.imageProduct[0]}
+                    checkout
+                  />
+                ))}
             </AsideLeft>
             <AsideRight className="right">
               <CardCheckout checkout buyAction={() => setShowModalBuy(true)} />

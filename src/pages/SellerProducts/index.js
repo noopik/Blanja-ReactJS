@@ -2,7 +2,7 @@ import React from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import styled from 'styled-components';
 import TabContent from '../../components/atoms/TabItem';
-import { DataTable } from '../../components/molecules';
+import { DataTable, ProductTables } from '../../components/molecules';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 import { useSelector } from 'react-redux';
@@ -17,7 +17,8 @@ const SellerProductPage = () => {
           <TabsWrapper defaultActiveKey="all-items">
             <Tab eventKey="all-items" title="All Items">
               <TabContent title="Sold out">
-                <DataTable />
+                {/* <DataTable /> */}
+                <ProductTables dataSeller={userState} />
               </TabContent>
             </Tab>
             <Tab eventKey="sold-out" title="Sold out">

@@ -54,13 +54,13 @@ const Wrapper = styled.div`
     flex-direction: column;
     .input-wrapper {
       .form-select {
-        /* background-color: cyan; */
         width: 400px;
         ${customMedia.lessThan('1300px')`
           width: 100%;
-        `}
+          `}
       }
       .input {
+        /* background-color: cyan; */
         /* background-color: yellow; */
         ${customMedia.lessThan('1300px')`
           width: 100%;
@@ -135,8 +135,17 @@ const Wrapper = styled.div`
         width: 200px;
         border-radius: 25px;
         display: flex;
+        position: relative;
+        .remove-image {
+          position: absolute;
+          right: 0;
+          &:hover {
+            opacity: 0.5;
+          }
+        }
         img {
           width: 100%;
+          border-radius: 15px;
           height: 100%;
           object-fit: fill;
         }

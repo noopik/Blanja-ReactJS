@@ -1,7 +1,6 @@
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import Alert from '@material-ui/lab/Alert';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +8,13 @@ import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Axios } from '../../../src/config';
 import { ICImgNull } from '../../assets/Icons';
-import { Button, Divider, FormInput, Toast } from '../../components/atoms';
+import {
+  AlertValidationForm,
+  Button,
+  Divider,
+  FormInput,
+  Toast,
+} from '../../components/atoms';
 import { Text } from '../../components/atoms/Typography';
 import { customMedia } from '../../components/Layouts';
 import { patternNumber } from '../../utils';
@@ -17,7 +22,8 @@ import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { showLoading } from '../../redux/actions';
+import { getItemProduct, showLoading } from '../../redux/actions';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const SellerSellingProducts = () => {
   const [category, setCategory] = useState([]);
@@ -26,6 +32,12 @@ const SellerSellingProducts = () => {
   const userState = useSelector((state) => state.userReducer);
   const [description, setDescription] = useState('');
   const token = localStorage.getItem('token');
+  const { exist, data: currentValue } = useSelector(
+    (state) => state.productItemReducer
+  );
+  // UPDATE PRODUCTS
+  const idProductUpdate = history.location.state?.id;
+  // console.log(idProductUpdate);
 
   // HANDLE FORM
   const {
@@ -39,17 +51,9 @@ const SellerSellingProducts = () => {
   const { slug } = useParams();
 
   useEffect(() => {
-    // if (slug) {
-    //   Axios.get(`/products/${slug}`)
-    //     .then((res) => {
-    //       const resData = res.data.data[0];
-    //       // console.log('resData', resData);
-    //       // setForm(resData);
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // }
+    if (idProductUpdate) {
+      dispatch(getItemProduct(idProductUpdate, token));
+    }
     Axios.get(`/category`)
       .then((res) => {
         const resData = res.data.data;
@@ -59,7 +63,7 @@ const SellerSellingProducts = () => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [idProductUpdate]);
 
   // Upload Image
   const [uploadImage, setUploadImage] = useState([]);
@@ -115,34 +119,53 @@ const SellerSellingProducts = () => {
     });
     setSelectedColor(change.value);
   };
-
   const onSubmit = (data) => {
     const formData = new FormData();
-    formData.append('owner', userState.name);
+    formData.append('owner', userState.idUser);
     formData.append('description', description);
     formData.append('color', selectedColor);
     formData.append('image', uploadImage);
     formData.append('id_category', data.category);
     formData.append('nameProduct', data.nameProduct);
     formData.append('stock', data.stock);
-    formData.append('image', data.productImage);
+    Array.from(data.productImage).forEach((image) => {
+      formData.append('image', image);
+    });
     formData.append('price', data.price);
 
     dispatch(showLoading(true));
-    Axios.post(`/products`, formData, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => {
-        Toast('Success products Added', 'success');
-        console.log(res);
-        dispatch(showLoading(false));
-        history.push('/admin/seller/products');
+    if (idProductUpdate) {
+      Axios.post(`/products/${idProductUpdate}`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
       })
-      .catch((err) => {
-        console.log(err.response);
-        dispatch(showLoading(false));
-        return Toast('Error', 'error');
-      });
+        .then((res) => {
+          Toast('Success products updated', 'success');
+          console.log(res);
+          dispatch(showLoading(false));
+          history.push('/admin/seller/products');
+          return;
+        })
+        .catch((err) => {
+          console.log(err.response);
+          dispatch(showLoading(false));
+          return Toast('Error', 'error');
+        });
+    } else {
+      Axios.post(`/products`, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          Toast('Success products Added', 'success');
+          console.log(res);
+          dispatch(showLoading(false));
+          history.push('/admin/seller/products');
+        })
+        .catch((err) => {
+          console.log(err.response);
+          dispatch(showLoading(false));
+          return Toast('Error', 'error');
+        });
+    }
   };
 
   return (
@@ -160,15 +183,19 @@ const SellerSellingProducts = () => {
                 <FormInput
                   type="text"
                   name="nameProduct"
+                  placeholder="Product Name"
                   className="input"
-                  defaultValue=""
+                  defaultValue={currentValue.nameProduct}
                   {...register('nameProduct', { required: true })}
                 />
+                {errors.nameProduct && (
+                  <AlertValidationForm
+                    className="input"
+                    message="Required name"
+                  />
+                )}
               </div>
             </div>
-            {errors.nameProduct && (
-              <Alert severity="warning">Name Product Required!</Alert>
-            )}
           </Main>
           <Main heading="Item Details" className="item-details">
             <div className="form-wrapper">
@@ -182,7 +209,8 @@ const SellerSellingProducts = () => {
                   type="text"
                   name="price"
                   className="input"
-                  defaultValue=""
+                  placeholder="Price"
+                  defaultValue={currentValue.price}
                   {...register('price', {
                     required: true,
                     pattern: {
@@ -192,7 +220,10 @@ const SellerSellingProducts = () => {
                 />
               </div>
               {errors.price && (
-                <Alert severity="warning">Value must be numbers!</Alert>
+                <AlertValidationForm
+                  className="input"
+                  message="Value must be numbers!"
+                />
               )}
             </div>
             <div className="form-wrapper">
@@ -206,7 +237,7 @@ const SellerSellingProducts = () => {
                   type="text"
                   name="stock"
                   className="input"
-                  defaultValue=""
+                  defaultValue={currentValue.stock}
                   {...register('stock', {
                     required: true,
                     pattern: {
@@ -216,7 +247,10 @@ const SellerSellingProducts = () => {
                 />
               </div>
               {errors.stock && (
-                <Alert severity="warning">Value must be numbers!</Alert>
+                <AlertValidationForm
+                  className="input"
+                  message="Value must be numbers!"
+                />
               )}
             </div>
             <div className="form-wrapper">
@@ -250,7 +284,10 @@ const SellerSellingProducts = () => {
                 </FormControl>
               </div>
               {errors.category && (
-                <Alert severity="warning">Choose minimal one category!</Alert>
+                <AlertValidationForm
+                  className="input"
+                  message="Choose minimal one category!"
+                />
               )}
             </div>
 
@@ -300,6 +337,9 @@ const SellerSellingProducts = () => {
                 previewAvatar.map((image) => (
                   <>
                     <div className="photo">
+                      <div className="remove-image">
+                        <CancelIcon />
+                      </div>
                       <img src={image} alt="goods" />
                     </div>
                   </>
@@ -328,7 +368,7 @@ const SellerSellingProducts = () => {
           <Main heading="Description">
             <CKEditor
               editor={ClassicEditor}
-              data=""
+              data={currentValue.description}
               onReady={(editor) => {
                 // You can store the "editor" and use when it is needed.
                 // console.log('Editor is ready to use!', editor);
@@ -346,12 +386,12 @@ const SellerSellingProducts = () => {
             />
           </Main>
           <ButtonWrapper>
-            {!slug && (
+            {!idProductUpdate && (
               <Button className="btn" primary type="submit">
                 Jual
               </Button>
             )}
-            {slug && (
+            {idProductUpdate && (
               <Button className="btn" primary type="submit">
                 UPDATE
               </Button>

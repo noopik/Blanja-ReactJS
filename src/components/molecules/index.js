@@ -24,8 +24,10 @@ import ModalChooseAddress from './ModalChooseAddress';
 import UserAddressCard from './UserAddressCard';
 import ModalPayment from './ModalPayment';
 import AlertVerification from './AlertVerification/AlertVerification';
+import ProductTables from './ProductTables';
 
 export {
+  ProductTables,
   AlertVerification,
   ModalPayment,
   UserAddressCard,

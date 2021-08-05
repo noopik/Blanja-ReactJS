@@ -16,38 +16,34 @@ import { typeRedux } from '../../utils';
 import { DetailProduct, HeaderProductPage } from './styled';
 
 const ProductDetail = () => {
+  const dispatch = useDispatch();
+
   let { id } = useParams();
+
   const { exist, data } = useSelector((state) => state.productItemReducer);
   const token = localStorage.getItem('token');
   const allProductsState = useSelector((state) => state.allProductReducer);
 
-  const dispatch = useDispatch();
   // console.log('itemProductState', data);
 
-  useEffect(() => {
-    // dispatch(getItemProduct(id));
-    // dispatch({
-    //   type: typeRedux.setChooseProductId,
-    //   value: id,
-    // });
-  }, []);
-
+  // useEffect(() => {
+  //   dispatch(getItemProduct(id));
+  // }, [id]);
+  // console.log(id);
   return (
     <>
       <Navbar session={token ? 'user' : 'public'} />
       <MainContent>
         {exist && (
-          <SectionContent>
-            <Breadcrumbs data={data} title={data.id_category} />
-            <HeaderProductPage data={data} />
-            <DetailProduct data={data} />
-          </SectionContent>
-        )}
-        {!exist && (
           <>
-            <Loader line />
+            <SectionContent>
+              <Breadcrumbs data={data} title={data.id_category} />
+              <HeaderProductPage data={data} />
+              <DetailProduct data={data} />
+            </SectionContent>
           </>
         )}
+
         <SectionContent className="section">
           <HeaderSection title="New" subTitle="You’ve never seen it before!" />
           <CardGrouping>

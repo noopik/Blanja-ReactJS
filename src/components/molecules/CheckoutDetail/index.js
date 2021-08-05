@@ -14,11 +14,12 @@ const CheckoutDetail = ({
   total,
   counterTotal,
   image,
+  totalProduct,
 }) => {
   return (
     <Wrapper checkout={checkout}>
       {!checkout && <InputCheck className="input" onClick={onClick} />}
-      {heading && <HeadingCard />}
+      {heading && <HeadingCard totalProduct={totalProduct} />}
       {body && (
         <Body
           nameProduct={nameProduct}

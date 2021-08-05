@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { useForm } from 'react-hook-form';
-import Alert from '@material-ui/lab/Alert';
-import { regexEmailVadidationType, typeRedux } from '../../../utils';
-import { ProfileUser } from '../../../assets/images';
-import { Button, Divider, FormInput, Toast } from '../../atoms';
-import { customMedia } from '../../Layouts';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import Alert from '@material-ui/lab/Alert';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import { AvatarDefault } from '../../../assets/images';
 import { Axios } from '../../../config';
-import { showLoading, userUpdateProfile } from '../../../redux/actions';
+import { showLoading } from '../../../redux/actions';
+import { typeRedux } from '../../../utils';
+import { Button, Divider, FormInput, Toast } from '../../atoms';
+import { customMedia } from '../../Layouts';
 
 const UserFormSetting = ({ session, ...props }) => {
   const { name, email, phoneNumber, image } = props.data;
 
-  const [previewAvatar, setPreviewAvatar] = useState();
+  const [previewAvatar, setPreviewAvatar] = useState(AvatarDefault);
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
   const userState = useSelector((state) => state.userReducer);
@@ -159,7 +159,7 @@ const UserFormSetting = ({ session, ...props }) => {
           <div className="image-wrapper">
             <div className="avatar-wrapper">
               <img
-                src={previewAvatar ? previewAvatar : image}
+                src={image ? image : previewAvatar}
                 alt={name}
                 className="avatar"
               />

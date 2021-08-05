@@ -44,10 +44,10 @@ const Routes = () => {
         <PrivateRoute path="/categories" component={CategoryPage} />
         <PrivateRoute
           exact
-          path="/product:name-:id"
+          path="/products/:id"
           component={ProductDetailPage}
         />
-        {/* <PrivateRoute path="/products" component={ResultProducts} /> */}
+        <PrivateRoute path="/products" component={ResultProducts} />
         <PrivateRoute path="/my-bag" component={MyBag} />
         <PrivateRoute path="/checkout" component={CheckoutPage} />
         <Route

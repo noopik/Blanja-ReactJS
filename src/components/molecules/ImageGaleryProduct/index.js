@@ -1,34 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { DMNullImage } from '../../../assets/images';
 import { customMedia } from '../../Layouts';
 
 const ImageProducts = ({ images }) => {
+  const [multipleImage, setMultipleImage] = useState();
+
   return (
     <ImageWrapper>
-      <div className="image-main-wrapper">
-        <img
-          className="main-image"
-          src={images ? images : DMNullImage}
-          alt="1"
-        />
-      </div>
+      {images && (
+        <div className="image-main-wrapper">
+          <img
+            className="main-image"
+            src={images[0] ? images[0] : DMNullImage}
+            alt="1"
+          />
+        </div>
+      )}
       <div className="tumb-wrapper">
-        <div className="mini-img">
-          <img className="mini-img" src={DMNullImage} alt="2" />
-        </div>
-        <div className="mini-img">
-          <img className="mini-img" src={DMNullImage} alt="3" />
-        </div>
-        <div className="mini-img">
-          <img className="mini-img" src={DMNullImage} alt="4" />
-        </div>
-        <div className="mini-img">
-          <img className="mini-img" src={DMNullImage} alt="5" />{' '}
-        </div>
-        <div className="mini-img">
-          <img className="mini-img" src={DMNullImage} alt="6" />
-        </div>
+        {images &&
+          images.map((image) => (
+            <div className="mini-img">
+              <img
+                className="mini-img"
+                src={images[0] ? images[0] : DMNullImage}
+                alt="2"
+              />
+            </div>
+          ))}
       </div>
     </ImageWrapper>
   );
@@ -88,7 +87,7 @@ const ImageWrapper = styled.div`
     .mini-img {
       display: flex;
       /* background-color: blue; */
-      width: 100%;
+      width: 100px;
       ${customMedia.lessThan('872px')` 
         width: 60px;
       `}

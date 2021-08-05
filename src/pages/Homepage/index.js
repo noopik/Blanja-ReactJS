@@ -13,11 +13,17 @@ import { CardProduct, Loader } from '../../components/atoms';
 import { Axios } from '../../../src/config';
 import { useDispatch, useSelector } from 'react-redux';
 import { typeRedux } from '../../utils';
-import { getAllProducts, showLoading } from '../../redux/actions';
+import {
+  getAllProducts,
+  getItemProduct,
+  showLoading,
+} from '../../redux/actions';
+import { useHistory } from 'react-router-dom';
 
 const Homepage = () => {
   const [popularProducts, setPopularProducts] = useState([]);
   const token = localStorage.getItem('token');
+  const history = useHistory();
   const dispatch = useDispatch();
   const allProductsState = useSelector((state) => state.allProductReducer);
   const { isShow: loadingState } = useSelector((state) => state.loadingReducer);
@@ -56,6 +62,13 @@ const Homepage = () => {
       });
   }, []);
 
+  // Action Card Choose
+  const actionCard = (id) => {
+    // console.log(1213, id);
+    dispatch(getItemProduct(id, token));
+    history.push(`/products/${id}`);
+  };
+
   return (
     <>
       <Navbar session={token ? 'user' : 'public'} />
@@ -80,6 +93,7 @@ const Homepage = () => {
                     price={item.price}
                     store="Zalora"
                     idProduct={item.id}
+                    onClick={() => actionCard(item.id)}
                   />
                 </Item>
               ))}
@@ -101,6 +115,7 @@ const Homepage = () => {
                     price={item.price}
                     idProduct={item.id}
                     store="Zalora"
+                    onClick={() => actionCard(item.id)}
                   />
                 </Item>
               ))}

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../../../../assets/colors';
+import { AvatarDefault, DMNullImage } from '../../../../assets/images';
 import { userLogout } from '../../../../redux/actions';
 import { Button } from '../../../atoms';
 import { customMedia } from '../../../Layouts';
@@ -121,7 +122,10 @@ const UserNav = ({ avatar }) => {
       </Link>
       <div className="btn-avatar" onClick={handlePopup}>
         <div className="icon user">
-          <img src={userState.image} alt="user" />
+          <img
+            src={userState.image ? userState.image : AvatarDefault}
+            alt="user"
+          />
         </div>
         {showAvatarPopup && (
           <div className="popup">

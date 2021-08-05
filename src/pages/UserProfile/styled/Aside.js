@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { ProfileUser } from '../../../assets/images';
+import { AvatarDefault, ProfileUser } from '../../../assets/images';
 import { customMedia } from '../../../components/Layouts';
 import {
   NavCustomerAside,
@@ -13,7 +13,11 @@ const Aside = ({ active, session, username, imageProfile }) => {
     <Wrapper>
       <div className="content">
         <div className="user-profile-wrapper">
-          <img className="avatar" src={imageProfile} alt={username} />
+          <img
+            className="avatar"
+            src={imageProfile ? imageProfile : AvatarDefault}
+            alt={username}
+          />
           <div className="username-wrapper">
             <h3>{username}</h3>
             <Link to="/admin/seller" className="anchor">

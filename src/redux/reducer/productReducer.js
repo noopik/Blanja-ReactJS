@@ -29,7 +29,6 @@ export const allProductReducer = (
 const initialCartReducer = {
   user: {},
   productChoose: [],
-  metaData: {},
 };
 
 export const cartProductReducer = (state = { initialCartReducer }, action) => {
@@ -39,9 +38,6 @@ export const cartProductReducer = (state = { initialCartReducer }, action) => {
         ...state,
         user: action.value.user,
         productChoose: action.value.productChoose,
-        metaData: {
-          totalProducts: initialCartReducer.productChoose.length,
-        },
       };
     // case typeRedux.removeProductToCart:
     //   return {
@@ -51,7 +47,7 @@ export const cartProductReducer = (state = { initialCartReducer }, action) => {
     case typeRedux.setProductToCart:
       return {
         ...state,
-        productChoose: state.productChoose.push(action.value.productChoose),
+        productChoose: action.value.productChoose,
       };
     default:
       return state;
@@ -84,7 +80,7 @@ const initialChooseProduct = {
   size: '',
   total: '',
   image: '',
-  name: '',
+  nameProduct: '',
   store: '',
 };
 
@@ -95,7 +91,7 @@ export const chooseProductReducer = (state = initialChooseProduct, action) => {
         ...state,
         idProduct: action.value.idProduct,
         image: action.value.image,
-        name: action.value.name,
+        nameProduct: action.value.nameProduct,
         store: action.value.store,
       };
     case typeRedux.setChooseProductColor:

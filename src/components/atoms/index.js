@@ -18,9 +18,11 @@ import TabItemContent from './TabItem';
 import Loader from './Loader';
 import ButtonIcon from './ButtonIcon';
 import ScreenLoading from './ScreenLoading';
+import AlertValidationForm from './AlertValidationForm';
 export * from './Toast';
 
 export {
+  AlertValidationForm,
   ScreenLoading,
   IconLogo,
   BrandLogo,

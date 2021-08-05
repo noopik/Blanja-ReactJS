@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import NumberFormat from 'react-number-format';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import { DMNullImage } from '../../../assets/images';
+import { getItemProduct } from '../../../redux/actions';
 import StarRating from '../StarRating';
 import { BodyProduct, Card } from './styled';
 
@@ -13,10 +15,12 @@ const CardProduct = ({
   store,
   image,
   idProduct,
+  onClick,
 }) => {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [slug, setSlug] = useState('');
   const [titleProduct, setTitleProduct] = useState('');
-
   const slugUrl = () => {
     let slug = title;
     const split = slug.split(' ');
@@ -48,7 +52,7 @@ const CardProduct = ({
   }, [title]);
 
   return (
-    <Link to={`/product/${slug}`} className="anchor">
+    <div className="anchor" onClick={onClick}>
       <Card className={className}>
         <div className="image-wrapper">
           <img
@@ -70,7 +74,7 @@ const CardProduct = ({
           <StarRating />
         </BodyProduct>
       </Card>
-    </Link>
+    </div>
   );
 };
 
