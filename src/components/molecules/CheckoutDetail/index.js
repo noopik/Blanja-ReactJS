@@ -15,11 +15,15 @@ const CheckoutDetail = ({
   counterTotal,
   image,
   totalProduct,
+  defaultValue,
+  clickDelete,
 }) => {
   return (
     <Wrapper checkout={checkout}>
       {!checkout && <InputCheck className="input" onClick={onClick} />}
-      {heading && <HeadingCard totalProduct={totalProduct} />}
+      {heading && (
+        <HeadingCard totalProduct={totalProduct} onClick={clickDelete} />
+      )}
       {body && (
         <Body
           nameProduct={nameProduct}
@@ -28,6 +32,7 @@ const CheckoutDetail = ({
           checkout={checkout}
           counterTotal={counterTotal}
           image={image}
+          defaultValue={defaultValue}
         />
       )}
     </Wrapper>

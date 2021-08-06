@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const Counter = ({ size, counterValue }) => {
+const Counter = ({ size, counterValue, defaultValue }) => {
   const [count, setCount] = useState(1);
   const [sizeValue, setSizeValue] = useState('XS');
   const [sizeStart, setSizeStart] = useState(0);
 
   const typeSize = ['XS', 'S', 'M', 'L', 'XL'];
-
+  // console.log(defaultValue, 'defaultValue');
   const increase = () => {
     const plus = count + 1;
     counterValue(plus);
@@ -66,6 +66,9 @@ const Counter = ({ size, counterValue }) => {
   );
 };
 
+Counter.defaultProps = {
+  defaultValue: 1,
+};
 export default Counter;
 
 const Wrapper = styled.div`

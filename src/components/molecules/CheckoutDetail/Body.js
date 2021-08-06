@@ -3,7 +3,15 @@ import styled from 'styled-components';
 import { Counter } from '../../atoms';
 import { Text } from '../../atoms/Typography';
 
-const Body = ({ nameProduct, store, total, checkout, counterTotal, image }) => {
+const Body = ({
+  nameProduct,
+  store,
+  total,
+  checkout,
+  counterTotal,
+  image,
+  defaultValue,
+}) => {
   return (
     <BodyWrapper className="content">
       <div className="product">
@@ -17,7 +25,9 @@ const Body = ({ nameProduct, store, total, checkout, counterTotal, image }) => {
           </Text>
         </div>
       </div>
-      {!checkout && <Counter counterValue={counterTotal} />}
+      {!checkout && (
+        <Counter counterValue={counterTotal} defaultValue={defaultValue} />
+      )}
       <p className="price">{total}</p>
     </BodyWrapper>
   );

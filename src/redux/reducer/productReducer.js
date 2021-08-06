@@ -44,6 +44,11 @@ export const cartProductReducer = (state = { initialCartReducer }, action) => {
     //     ...state,
     //     productChoose: state.productChoose.push(action.value.productChoose),
     //   };
+    // case 'SET_ITEM_CART_PRODUCT':
+    //   return {
+    //     ...state,
+    //     productChoose: []
+    //   }
     case typeRedux.setProductToCart:
       return {
         ...state,
@@ -74,12 +79,12 @@ export const productItemReducer = (state = initialProductItem, action) => {
 
 // ========= Choose Product
 const initialChooseProduct = {
-  idProduct: '',
+  id: '',
   price: '',
   color: '',
   size: '',
-  total: '',
-  image: '',
+  totalChoose: '',
+  imageProduct: '',
   nameProduct: '',
   store: '',
 };
@@ -89,10 +94,7 @@ export const chooseProductReducer = (state = initialChooseProduct, action) => {
     case typeRedux.setChooseProductId:
       return {
         ...state,
-        idProduct: action.value.idProduct,
-        image: action.value.image,
-        nameProduct: action.value.nameProduct,
-        store: action.value.store,
+        ...action.value,
       };
     case typeRedux.setChooseProductColor:
       return {
@@ -112,8 +114,8 @@ export const chooseProductReducer = (state = initialChooseProduct, action) => {
     case typeRedux.setChooseProductCount:
       return {
         ...state,
-        price: action.value.price * action.value.total,
-        total: action.value.total,
+        price: action.value.price * action.value.totalChoose,
+        totalChoose: action.value.totalChoose,
       };
     default:
       break;

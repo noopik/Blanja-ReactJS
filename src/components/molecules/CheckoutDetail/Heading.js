@@ -2,7 +2,7 @@ import React from 'react';
 import { Button } from '../../atoms';
 import { Heading, Text } from '../../atoms/Typography';
 
-const HeadingCard = ({ totalProduct }) => {
+const HeadingCard = ({ totalProduct, onClick }) => {
   return (
     <div className="content">
       <div className="d-flex">
@@ -13,7 +13,7 @@ const HeadingCard = ({ totalProduct }) => {
           ( {totalProduct} items selected)
         </Text>
       </div>
-      <Button type="link" primary className="btn">
+      <Button type="link" primary className="btn" onClick={onClick}>
         Delete
       </Button>
     </div>

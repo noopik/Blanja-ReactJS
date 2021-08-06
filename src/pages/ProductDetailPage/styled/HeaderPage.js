@@ -31,6 +31,24 @@ const HeaderPage = ({ data }) => {
 
   useEffect(() => {
     setDataProduct(data);
+    dispatch({
+      type: typeRedux.setChooseProductId,
+      value: data,
+    });
+
+    const pricing = {
+      price: productItemState.data.price,
+      totalChoose: 1,
+    };
+
+    dispatch({
+      type: typeRedux.setChooseProductSize,
+      value: 'XS',
+    });
+    dispatch({
+      type: typeRedux.setChooseProductCount,
+      value: pricing,
+    });
   }, [data]);
 
   const handleActionBuy = () => {
@@ -45,16 +63,15 @@ const HeaderPage = ({ data }) => {
     });
   };
   const counterTotal = (value) => {
-    // console.log(value);
-    const sendData = {
+    const pricing = {
       price: productItemState.data.price,
-      total: value,
+      totalChoose: value,
     };
-    console.log(123, sendData);
+    // console.log(123, pricing);
 
     dispatch({
       type: typeRedux.setChooseProductCount,
-      value: sendData,
+      value: pricing,
     });
   };
 
@@ -64,21 +81,31 @@ const HeaderPage = ({ data }) => {
   // Action Add Bag
   // console.log('productItemState', productItemState);
   const addProductToCart = () => {
-    const chooseProduct = {
-      ...chooseProductReducer,
-      ...productItemState.data,
-    };
-    // console.log('chooseProduct', chooseProduct);
+    const oldCart = cartProductState.productChoose;
+    let chooseProduct;
+    let insertToCart;
+    if (oldCart) {
+      chooseProduct = {
+        ...chooseProductReducer,
+      };
+      oldCart.push({ ...chooseProduct });
+      insertToCart = {
+        productChoose: oldCart,
+      };
+      dispatch({ type: typeRedux.setProductToCart, value: insertToCart });
+      history.push('/my-bag');
+    } else {
+      chooseProduct = {
+        ...chooseProductReducer,
+      };
 
-    const sendData = {
-      productChoose: [{ ...chooseProduct }],
-    };
+      insertToCart = {
+        productChoose: [{ ...chooseProduct }],
+      };
 
-    // const oldData = cartProductState.productChoose;
-    // console.log(sendData);
-    dispatch({ type: typeRedux.setProductToCart, value: sendData });
-    // dispatch(insertProductToCart(oldData, sendData));
-    history.push('/my-bag');
+      dispatch({ type: typeRedux.setProductToCart, value: insertToCart });
+      history.push('/my-bag');
+    }
   };
 
   return (

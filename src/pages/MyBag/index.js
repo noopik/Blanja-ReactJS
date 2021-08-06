@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ProductCategory1 } from '../../assets/images';
 import { AsideLeft, AsideRight } from '../../components/atoms';
@@ -17,15 +17,20 @@ import { typeRedux } from '../../utils';
 
 const MyBag = () => {
   const { productChoose } = useSelector((state) => state.cartProductReducer);
+  const cartProductState = useSelector((state) => state.cartProductReducer);
+  const [selected, setSelected] = useState({
+    idProduct: '',
+    isChecked: false,
+  });
+  const [dataSelected, setDataSelected] = useState([]);
+
   const dispatch = useDispatch();
 
-  // console.log('cartReducer', productChoose);
   useEffect(() => {
     document.title = 'Blanja | My Bag';
   });
 
   const counterTotal = (value) => {
-    // console.log(value);
     const sendData = {
       price: productChoose.price,
       total: value,
@@ -37,17 +42,44 @@ const MyBag = () => {
     });
   };
 
+  // console.log(cartProductState);
+  const actionItemProduct = (id) => {
+    // let status;
+    // if (dataSelected) {
+    //   status = dataSelected.find((item) => item.isChecked === id);
+    //   setSelected({
+    //     idProduct: status,
+    //     isChecked: false,
+    //   });
+    // } else {
+    //   setSelected({
+    //     idProduct: id,
+    //     isChecked: true,
+    //   });
+    // }
+  };
+  console.log('dataSelected', dataSelected);
+
+  const actionDelete = () => {
+    console.log(selected);
+  };
+  console.log('selected', selected);
+
   return (
     <>
       <Navbar session="user" />
       <MainContent>
-        {productChoose.length > 0 &&
-          productChoose.map((product) => (
-            <SectionContent>
-              <HeaderSection title="My Bag" />
-              <AsideContent>
-                <AsideLeft className="left">
-                  <CheckoutDetail heading totalProduct={productChoose.length} />
+        <SectionContent>
+          <HeaderSection title="My Bag" />
+          <AsideContent>
+            <AsideLeft className="left">
+              <CheckoutDetail
+                heading
+                totalProduct={productChoose ? productChoose.length : 0}
+                clickDelete={actionDelete}
+              />
+              {productChoose &&
+                productChoose.map((product, index) => (
                   <CheckoutDetail
                     body
                     nameProduct={product.nameProduct}
@@ -55,15 +87,16 @@ const MyBag = () => {
                     total={product.price}
                     counterTotal={counterTotal}
                     image={product.imageProduct[0]}
+                    defaultValue={product.totalChoose}
+                    onClick={() => actionItemProduct(product.id)}
                   />
-                </AsideLeft>
-                <AsideRight className="right">
-                  <CardCheckout myBag />
-                </AsideRight>
-              </AsideContent>
-            </SectionContent>
-          ))}
-        {!productChoose.length && <h1>Null</h1>}
+                ))}
+            </AsideLeft>
+            <AsideRight className="right">
+              <CardCheckout myBag />
+            </AsideRight>
+          </AsideContent>
+        </SectionContent>
       </MainContent>
     </>
   );
