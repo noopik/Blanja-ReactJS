@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import Alert from '@material-ui/lab/Alert';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {
@@ -12,8 +14,6 @@ import { Heading } from '../../../components/atoms/Typography';
 import { AuthContainer } from '../../../components/Layouts';
 import { AuthFooter, FormGroup } from '../../../components/molecules';
 import { userRegister } from '../../../redux/actions';
-import Alert from '@material-ui/lab/Alert';
-import { useForm } from 'react-hook-form';
 import { regexEmailVadidationType } from '../../../utils';
 
 const SellerRegister = () => {

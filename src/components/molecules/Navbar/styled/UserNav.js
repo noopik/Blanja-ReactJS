@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { colors } from '../../../../assets/colors';
-import { AvatarDefault, DMNullImage } from '../../../../assets/images';
+import { AvatarDefault } from '../../../../assets/images';
 import { userLogout } from '../../../../redux/actions';
 import { Button } from '../../../atoms';
 import { customMedia } from '../../../Layouts';
@@ -130,7 +130,9 @@ const UserNav = ({ avatar }) => {
         {showAvatarPopup && (
           <div className="popup">
             <div className="item">
-              <a onClick={handleProfile}>My Profile</a>
+              <a href="/profile" onClick={handleProfile}>
+                My Profile
+              </a>
             </div>
             <div className="item">
               <Button primary onClick={actionLogout}>

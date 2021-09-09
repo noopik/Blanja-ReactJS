@@ -1,6 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const ButtonTogller = ({ children, className }) => {
+  return <Wrapper className={className}>{children}</Wrapper>;
+};
+
+export default ButtonTogller;
+
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
@@ -19,9 +25,3 @@ const Wrapper = styled.div`
     filter: drop-shadow(0px 1px 8px rgba(0, 0, 0, 0.05));
   }
 `;
-
-const ButtonTogller = ({ children, className }) => {
-  return <Wrapper className={className}>{children}</Wrapper>;
-};
-
-export default ButtonTogller;

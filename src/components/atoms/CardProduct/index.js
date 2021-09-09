@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import NumberFormat from 'react-number-format';
 import { useDispatch } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { DMNullImage } from '../../../assets/images';
 import { getItemProduct } from '../../../redux/actions';
 import StarRating from '../StarRating';
@@ -18,17 +19,17 @@ const CardProduct = ({
 }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [slug, setSlug] = useState('');
+  // const [slug, setSlug] = useState('');
   const [titleProduct, setTitleProduct] = useState('');
   const token = localStorage.getItem('token');
 
   const slugUrl = () => {
-    let slug = title;
-    const split = slug.split(' ');
-    const stringNameProduct = split.join('').toLowerCase();
-    const urlDetail = `${stringNameProduct}-${idProduct}`;
+    // let slug = title;
+    // const split = slug.split(' ');
+    // const stringNameProduct = split.join('').toLowerCase();
+    // const urlDetail = `${stringNameProduct}-${idProduct}`;
     // id to string
-    setSlug(urlDetail);
+    // setSlug(urlDetail);
   };
 
   const headingCard = () => {

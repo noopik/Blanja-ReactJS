@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ProductCategory1 } from '../../assets/images';
 import { AsideLeft, AsideRight } from '../../components/atoms';
 import {
   AsideContent,
@@ -17,12 +16,12 @@ import { typeRedux } from '../../utils';
 
 const MyBag = () => {
   const { productChoose } = useSelector((state) => state.cartProductReducer);
-  const cartProductState = useSelector((state) => state.cartProductReducer);
-  const [selected, setSelected] = useState({
-    idProduct: '',
-    isChecked: false,
-  });
-  const [dataSelected, setDataSelected] = useState([]);
+  // const cartProductState = useSelector((state) => state.cartProductReducer);
+  // const [selected, setSelected] = useState({
+  //   idProduct: '',
+  //   isChecked: false,
+  // });
+  // const [dataSelected, setDataSelected] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -58,12 +57,12 @@ const MyBag = () => {
     //   });
     // }
   };
-  console.log('dataSelected', dataSelected);
+  // console.log('dataSelected', dataSelected);
 
   const actionDelete = () => {
-    console.log(selected);
+    // console.log(selected);
   };
-  console.log('selected', selected);
+  // console.log('selected', selected);
 
   return (
     <>

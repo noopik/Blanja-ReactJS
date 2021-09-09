@@ -15,14 +15,14 @@ import {
 } from '../../components/molecules';
 import { Item } from '../../components/molecules/CardGrouping/styled';
 import { Axios } from '../../config';
-import { getItemProduct } from '../../redux/actions';
+// import { getItemProduct } from '../../redux/actions';
 import { typeRedux } from '../../utils';
 
 const ResultProducts = () => {
   const [sortPrice, setSortPrice] = useState('ASC');
   const history = useHistory();
   const searchKeyword = history.location.state;
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
   // const [resultSearching, setResultSearching] = useState([]);
 
   const dispatch = useDispatch();
@@ -88,12 +88,12 @@ const ResultProducts = () => {
   };
 
   // Action Card Choose
-  const actionCard = (id) => {
-    // console.log(1213, id);
-    dispatch(getItemProduct(id, token));
-    history.push(`/products/${id}`);
-  };
-  console.log(history);
+  // const actionCard = (id) => {
+  //   // console.log(1213, id);
+  //   dispatch(getItemProduct(id, token));
+  //   history.push(`/products/${id}`);
+  // };
+  // console.log(history);
   return (
     <>
       <Navbar session="user" />

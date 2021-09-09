@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { DMNullImage } from '../../../assets/images';
 import { customMedia } from '../../Layouts';
 
 const ImageProducts = ({ images }) => {
-  const [multipleImage, setMultipleImage] = useState();
+  // const [multipleImage, setMultipleImage] = useState();
 
   return (
     <ImageWrapper>

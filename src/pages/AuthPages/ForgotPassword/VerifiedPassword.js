@@ -1,4 +1,7 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import Alert from '@material-ui/lab/Alert';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, FormInput, Toast } from '../../../components/atoms';
@@ -7,18 +10,16 @@ import { FormGroup } from '../../../components/molecules';
 import { Axios } from '../../../config';
 import { showLoading } from '../../../redux/actions';
 import { typeRedux } from '../../../utils';
-import Alert from '@material-ui/lab/Alert';
-import { useForm } from 'react-hook-form';
 
 const VerifiedPassword = ({ onClick, data: userData }) => {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const history = useHistory();
 
-  const [form, setForm] = useState({
-    password: '',
-    confirmNewPassword: '',
-  });
+  // const [form, setForm] = useState({
+  //   password: '',
+  //   confirmNewPassword: '',
+  // });
 
   const {
     register,

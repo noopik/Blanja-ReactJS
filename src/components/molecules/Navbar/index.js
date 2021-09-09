@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useLocation } from 'react-router-dom';
-import { AvatarDefault } from '../../../assets/images';
-import { searchAction } from '../../../redux/actions/searchAction';
 import { BrandLogo, ButtonIcon, SearchInput } from '../../atoms';
 import {} from '../../atoms/Typography';
 import {} from '../../molecules';
@@ -14,12 +11,12 @@ import UserNav from './styled/UserNav';
 
 const NavbarComponent = ({ onChange, value, session }) => {
   const dispatch = useDispatch();
-  const location = useLocation();
-  const history = useHistory();
-  const userState = useSelector((state) => state.userReducer);
+  // const location = useLocation();
+  // const history = useHistory();
+  // const userState = useSelector((state) => state.userReducer);
   const { isShow: loadingState } = useSelector((state) => state.loadingReducer);
 
-  const global = useSelector((state) => state);
+  // const global = useSelector((state) => state);
   console.log(loadingState);
 
   // const handleSearch = (e) => {

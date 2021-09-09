@@ -1,11 +1,11 @@
 import React from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import TabContent from '../../components/atoms/TabItem';
-import { DataTable, ProductTables } from '../../components/molecules';
+import { ProductTables } from '../../components/molecules';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
-import { useSelector } from 'react-redux';
 
 const SellerProductPage = () => {
   const userState = useSelector((state) => state.userReducer);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { AvatarDefault, ProfileUser } from '../../../assets/images';
+import { AvatarDefault } from '../../../assets/images';
 import { customMedia } from '../../../components/Layouts';
 import {
   NavCustomerAside,

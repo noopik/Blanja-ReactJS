@@ -1,10 +1,14 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
+import CancelIcon from '@material-ui/icons/Cancel';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Axios } from '../../../src/config';
 import { ICImgNull } from '../../assets/Icons';
@@ -17,13 +21,10 @@ import {
 } from '../../components/atoms';
 import { Text } from '../../components/atoms/Typography';
 import { customMedia } from '../../components/Layouts';
+import { getItemProduct, showLoading } from '../../redux/actions';
 import { patternNumber } from '../../utils';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { getItemProduct, showLoading } from '../../redux/actions';
-import CancelIcon from '@material-ui/icons/Cancel';
 
 const SellerSellingProducts = () => {
   const [category, setCategory] = useState([]);
@@ -35,6 +36,7 @@ const SellerSellingProducts = () => {
   const { exist, data: currentValue } = useSelector(
     (state) => state.productItemReducer
   );
+  console.log(exist);
   // UPDATE PRODUCTS
   const idProductUpdate = history.location.state?.id;
   // console.log(idProductUpdate);
@@ -48,7 +50,7 @@ const SellerSellingProducts = () => {
     getValues,
   } = useForm();
 
-  const { slug } = useParams();
+  // const { slug } = useParams();
 
   useEffect(() => {
     if (idProductUpdate) {
