@@ -1,4 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Axios } from '../../../src/config';
+import { CardProduct, Loader } from '../../components/atoms';
+import { MainContent, SectionContent } from '../../components/Layouts';
 import {
   CardGrouping,
   Carousel,
@@ -6,24 +11,15 @@ import {
   HeaderSection,
   Navbar,
 } from '../../components/molecules';
-import { MainContent, SectionContent } from '../../components/Layouts';
-import Footer from '../../components/molecules/Footer';
 import { Item } from '../../components/molecules/CardGrouping/styled';
-import { Button, CardProduct, Loader } from '../../components/atoms';
-import { Axios } from '../../../src/config';
-import { useDispatch, useSelector } from 'react-redux';
+import Footer from '../../components/molecules/Footer';
+import { getAllProducts, showLoading } from '../../redux/actions';
 import { typeRedux } from '../../utils';
-import {
-  getAllProducts,
-  getItemProduct,
-  showLoading,
-} from '../../redux/actions';
-import { useHistory } from 'react-router-dom';
 
 const Homepage = () => {
   const [popularProducts, setPopularProducts] = useState([]);
   const token = localStorage.getItem('token');
-  const history = useHistory();
+  // const history = useHistory();
   const dispatch = useDispatch();
   const allProductsState = useSelector((state) => state.allProductReducer);
   const { isShow: loadingState } = useSelector((state) => state.loadingReducer);

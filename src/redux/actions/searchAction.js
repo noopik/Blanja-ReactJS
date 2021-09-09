@@ -24,11 +24,11 @@ export const searchAction = (keyword, page) => (dispatch) => {
     .catch((err) => {
       dispatch(showLoading(false));
       if (err.response.data.statusCode === 404) {
-        const sendState = {
-          exist: false,
-          keyword,
-          message: err.response.data.error,
-        };
+        // const sendState = {
+        //   exist: false,
+        //   keyword,
+        //   message: err.response.data.error,
+        // };
         // dispatch({ type: typeRedux.setSearching, value: sendState });
       }
     });

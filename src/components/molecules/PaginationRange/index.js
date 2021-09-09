@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { MemoryRouter, Route } from 'react-router';
-import { Link, useHistory } from 'react-router-dom';
 import Pagination from '@material-ui/lab/Pagination';
 import PaginationItem from '@material-ui/lab/PaginationItem';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { MemoryRouter, Route } from 'react-router';
+import { Link, useHistory } from 'react-router-dom';
 import { searchAction } from '../../../redux/actions/searchAction';
 
 export default function PaginationRange({ keyword }) {

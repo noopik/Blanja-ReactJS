@@ -28,7 +28,7 @@ const CustomerLogin = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    // watch,
     formState: { errors },
   } = useForm();
   // console.log('watch', watch('email'));

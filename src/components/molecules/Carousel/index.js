@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
 import styled from 'styled-components';
-import { ImageCard } from './styled';
-// import './styled/carousel.css';
-import ButtonArrow from './styled/ButtonArrow';
 import {
   DMCarousel1,
   DMCarousel2,
   DMCarousel3,
   DMCarousel4,
 } from '../../../assets/images';
+import { ImageCard } from './styled';
+// import './styled/carousel.css';
+import ButtonArrow from './styled/ButtonArrow';
 
 function SampleNextArrow(props) {
   const { className, onClick } = props;

@@ -1,7 +1,6 @@
+import { Axios } from '../../config';
 import { typeRedux } from '../../utils';
 import { showLoading } from './loadingAction';
-import { Axios } from '../../config';
-import { Toast } from '../../components/atoms';
 const token = localStorage.getItem('token');
 
 export const getAllProducts = (limit) => (dispatch) => {

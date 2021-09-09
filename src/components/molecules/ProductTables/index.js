@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { Heading } from '../../atoms/Typography';
-import EditIcon from '@material-ui/icons/Edit';
+/* eslint-disable react-hooks/exhaustive-deps */
 import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import { Axios } from '../../../config';
-import Modal from '../Modal';
-import { Button, Toast } from '../../atoms';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { Axios } from '../../../config';
 import { showLoading } from '../../../redux/actions';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Button, Toast } from '../../atoms';
+import { Heading } from '../../atoms/Typography';
+import Modal from '../Modal';
 
 const ProductTables = ({ dataSeller }) => {
   const history = useHistory();
-  const location = useLocation();
+  // const location = useLocation();
   const [sortPrice, setSortPrice] = useState(false);
   const [sortStock, setSortStcok] = useState(false);
   const [showData, setShowData] = useState([]);

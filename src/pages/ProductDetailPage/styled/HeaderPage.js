@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import NumberFormat from 'react-number-format';
@@ -8,14 +9,13 @@ import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
 import { Heading, Text } from '../../../components/atoms/Typography';
 import { customMedia } from '../../../components/Layouts';
 import { ImageGaleryProduct } from '../../../components/molecules';
-import { insertProductToCart } from '../../../redux/actions';
 import { typeRedux } from '../../../utils';
 
 const HeaderPage = ({ data }) => {
   const [dataProduct, setDataProduct] = useState({});
   const history = useHistory();
   const dispatch = useDispatch();
-  const userState = useSelector((state) => state.userReducer);
+  // const userState = useSelector((state) => state.userReducer);
   const productItemState = useSelector((state) => state.productItemReducer);
   const chooseProductReducer = useSelector(
     (state) => state.chooseProductReducer

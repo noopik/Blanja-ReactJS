@@ -1,4 +1,3 @@
-import { AvatarDefault } from '../../assets/images';
 import { typeRedux } from '../../utils';
 
 const initialUser = {

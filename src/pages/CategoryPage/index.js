@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { MainContent, SectionContent } from '../../components/Layouts';
 import {
@@ -17,6 +18,7 @@ import { showLoading } from '../../redux/actions';
 const CategoryPage = () => {
   const [dataProducts, setdataProducts] = useState([{}]);
   const [isLoading, setIsLoading] = useState(false);
+  console.log(setIsLoading);
   const [categoryItem, setCategoryItem] = useState([]);
   const token = localStorage.getItem('token');
 

@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import { colors } from '../../../assets/colors';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 // import CardWrapper from '../CardWrapper';
 // import { Heading } from '../Typography';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
+import { colors } from '../../../assets/colors';
+import { searchAction } from '../../../redux/actions/searchAction';
 // import { Axios } from '../../../config';
 // import NumberFormat from 'react-number-format';
 // import { Button } from '../../../components/atoms';
 import { customMedia } from '../../Layouts';
-import { useForm } from 'react-hook-form';
-import { searchAction } from '../../../redux/actions/searchAction';
 
 const WrapperSearchInput = ({ placeholder }) => {
   // const searchState = useSelector((state) => state.searchReducer);
@@ -23,7 +23,7 @@ const WrapperSearchInput = ({ placeholder }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    // formState: { errors },
     // getValues,
   } = useForm();
 

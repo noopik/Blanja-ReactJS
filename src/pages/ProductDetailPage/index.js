@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { CardProduct, Loader } from '../../components/atoms';
 import { MainContent, SectionContent } from '../../components/Layouts';
 import {
@@ -11,14 +10,12 @@ import {
   Navbar,
 } from '../../components/molecules';
 import { Item } from '../../components/molecules/CardGrouping/styled';
-import { getItemProduct } from '../../redux/actions';
-import { typeRedux } from '../../utils';
 import { DetailProduct, HeaderProductPage } from './styled';
 
 const ProductDetail = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  let { id } = useParams();
+  // let { id } = useParams();
 
   const { exist, data } = useSelector((state) => state.productItemReducer);
   const token = localStorage.getItem('token');

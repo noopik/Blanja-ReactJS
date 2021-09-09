@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import Alert from '@material-ui/lab/Alert';
+import React, { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
 import {
   BrandLogo,
   Button,
@@ -18,7 +19,6 @@ import {
 } from '../../../components/molecules';
 import { userLogin } from '../../../redux/actions';
 import { regexEmailVadidationType } from '../../../utils';
-import Alert from '@material-ui/lab/Alert';
 
 const SellerLogin = () => {
   const history = useHistory();
@@ -28,7 +28,7 @@ const SellerLogin = () => {
   const {
     register,
     handleSubmit,
-    watch,
+    // watch,
     formState: { errors },
   } = useForm();
 
