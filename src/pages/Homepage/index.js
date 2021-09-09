@@ -9,7 +9,7 @@ import {
 import { MainContent, SectionContent } from '../../components/Layouts';
 import Footer from '../../components/molecules/Footer';
 import { Item } from '../../components/molecules/CardGrouping/styled';
-import { CardProduct, Loader } from '../../components/atoms';
+import { Button, CardProduct, Loader } from '../../components/atoms';
 import { Axios } from '../../../src/config';
 import { useDispatch, useSelector } from 'react-redux';
 import { typeRedux } from '../../utils';
