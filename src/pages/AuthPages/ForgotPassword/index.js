@@ -1,38 +1,38 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { BrandLogo, Button, FormInput, Toast } from '../../../components/atoms';
+import { useRouteMatch } from 'react-router-dom';
+import * as yup from 'yup';
+import {
+  AlertValidationForm,
+  BrandLogo,
+  Button,
+  FormInput,
+  Toast,
+} from '../../../components/atoms';
 import { Heading } from '../../../components/atoms/Typography';
 import { AuthContainer } from '../../../components/Layouts';
 import { AuthFooter, FormGroup } from '../../../components/molecules';
 import { Axios } from '../../../config';
 import { showLoading } from '../../../redux/actions';
-import { useRouteMatch } from 'react-router-dom';
+import { decodeJwtToken } from '../../../utils';
 import VerifiedPassword from './VerifiedPassword';
-import { decodeJwtToken, regexEmailVadidationType } from '../../../utils';
-import Alert from '@material-ui/lab/Alert';
-import { useForm } from 'react-hook-form';
 
 const ForgotPassword = () => {
   const slugJwtToken = useRouteMatch('/forgot-password/:token');
-
   const [dataRequestPassword, setDataRequestPassword] = useState({
     isExists: false,
     data: {},
     token: '',
   });
-
   const jwtToken = slugJwtToken?.params.token;
-
   const dispatch = useDispatch();
+  const validationForm = yup.object({
+    email: yup.string().email('Email is invalid').required('Email is required'),
+  });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data) => {
+  const actionSubmitForm = (data) => {
     dispatch(showLoading(true));
     Axios.post(`/users/change-password/${data.email}`)
       .then((res) => {
@@ -44,8 +44,11 @@ const ForgotPassword = () => {
       })
       .catch((err) => {
         dispatch(showLoading(false));
-        if (err.message) {
-          return Toast(err.message, 'error');
+        console.log(err.response);
+
+        if (err.response.status === 404) {
+          const errorMessage = 'Email user not found';
+          return Toast(errorMessage, 'error');
         }
         if (err.response) {
           const errorMessage = err.response.data.error;
@@ -72,20 +75,53 @@ const ForgotPassword = () => {
         <VerifiedPassword data={dataRequestPassword} />
       )}
       {!dataRequestPassword.isExists && (
-        <>
-          <FormGroup mt={0} onSubmit={handleSubmit(onSubmit)}>
-            <FormInput
-              type="text"
-              placeholder="Email"
-              name="email"
-              {...register('email', { pattern: regexEmailVadidationType })}
-            />
-            {errors.email && <Alert severity="warning">Email invalid!</Alert>}
-            <Button primary className="btn-wrapper">
-              <input type="submit" value="REQUEST NOW" />
-            </Button>
-          </FormGroup>
-        </>
+        <Formik
+          initialValues={{
+            email: '',
+          }}
+          validationSchema={validationForm}
+          onSubmit={(values) => {
+            console.log(values);
+            actionSubmitForm(values);
+          }}
+        >
+          {({
+            values,
+            errors,
+            touched,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            isValid,
+          }) => (
+            <FormGroup mt={0} onSubmit={handleSubmit}>
+              <div>
+                <FormInput
+                  type="text"
+                  placeholder="Email"
+                  name="email"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.email}
+                />
+                {errors.email && touched.email && errors.email && (
+                  <AlertValidationForm message={errors.email} />
+                )}
+              </div>
+              <Button
+                primary
+                className="btn-wrapper"
+                disabled={
+                  !isValid ||
+                  (Object.keys(touched).length === 0 &&
+                    touched.constructor === Object)
+                }
+              >
+                REQUEST NOW
+              </Button>
+            </FormGroup>
+          )}
+        </Formik>
       )}
 
       <AuthFooter register session="customer" />

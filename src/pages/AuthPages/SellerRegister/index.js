@@ -1,9 +1,10 @@
-import Alert from '@material-ui/lab/Alert';
+import { Formik } from 'formik';
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import * as yup from 'yup';
 import {
+  AlertValidationForm,
   BrandLogo,
   Button,
   ButtonTogller,
@@ -14,55 +15,39 @@ import { Heading } from '../../../components/atoms/Typography';
 import { AuthContainer } from '../../../components/Layouts';
 import { AuthFooter, FormGroup } from '../../../components/molecules';
 import { userRegister } from '../../../redux/actions';
-import { regexEmailVadidationType } from '../../../utils';
+import { phoneRegExp } from '../../../utils';
 
 const SellerRegister = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const role = 'seller';
+  const validationForm = yup.object({
+    name: yup.string().required('Name is required'),
+    email: yup.string().email('Email is invalid').required('Email is required'),
+    phone: yup
+      .string()
+      .matches(phoneRegExp, 'Phone number is not valid')
+      .required('Phone number is required')
+      .min(11, 'Password must be at least 11 charaters')
+      .max(13, 'Password must be less than 13 charaters'),
+    store: yup.string().required('Name is required'),
+    password: yup
+      .string()
+      .min(8, 'Password must be at least 8 charaters')
+      .required('Password is required'),
+  });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data) => {
+  const actionSubmitForm = (data) => {
     const dataSend = {
       ...data,
       role,
     };
-    // console.log(dataSend);
-
     dispatch(userRegister(dataSend, history, role));
   };
-
-  // const [form, setForm] = useState({
-  //   name:
-  // email:
-  //   password:
-  //   role,
-  //   phoneNumber: '',
-  //   storeName: '',
-  //   gender: null,
-  //   born: null,
-  // });
 
   useEffect(() => {
     document.title = 'Register | Seller';
   });
-
-  // const handleForm = (e) => {
-  //   setForm({
-  //     ...form,
-  //     [e.target.name]: e.target.value,
-  //   });
-  // };
-
-  // const actionRegister = () => {
-  //   console.log(form);
-  //   dispatch(userRegister(form, history, role));
-  // };
 
   return (
     <AuthContainer>
@@ -78,58 +63,106 @@ const SellerRegister = () => {
           Seller
         </ToggleItem>
       </ButtonTogller>
-      <FormGroup mt={40} onSubmit={handleSubmit(onSubmit)}>
-        <FormInput
-          type="text"
-          placeholder="Name"
-          name="name"
-          {...register('name', { required: true })}
-        />
-        {errors.name && <Alert severity="warning">Name Required!</Alert>}
-        <FormInput
-          type="text"
-          placeholder="Email"
-          name="email"
-          {...register('email', { pattern: regexEmailVadidationType })}
-        />
-        {errors.email && <Alert severity="warning">Email invalid!</Alert>}
-
-        <FormInput
-          type="text"
-          placeholder="Phone Number"
-          name="phoneNumber"
-          {...register('phoneNumber', { required: true, minLength: 11 })}
-        />
-        {errors.phoneNumber && (
-          <Alert severity="warning">
-            Phone Number Required and minimal 11 character
-          </Alert>
+      <Formik
+        initialValues={{
+          name: '',
+          email: '',
+        }}
+        validationSchema={validationForm}
+        onSubmit={(values) => {
+          // console.log(values);
+          actionSubmitForm(values);
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isValid,
+        }) => (
+          <FormGroup mt={40} onSubmit={handleSubmit}>
+            <div>
+              <FormInput
+                type="text"
+                placeholder="Name"
+                name="name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.name}
+              />
+              {errors.name && touched.name && errors.name && (
+                <AlertValidationForm message={errors.name} />
+              )}
+            </div>
+            <div>
+              <FormInput
+                type="text"
+                placeholder="Email"
+                name="email"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.email}
+              />
+              {errors.email && touched.email && errors.email && (
+                <AlertValidationForm message={errors.email} />
+              )}
+            </div>
+            <div>
+              <FormInput
+                type="text"
+                placeholder="Phone Number"
+                name="phone"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.phone}
+              />
+              {errors.phone && touched.phone && errors.phone && (
+                <AlertValidationForm message={errors.phone} />
+              )}
+            </div>
+            <div>
+              <FormInput
+                type="text"
+                placeholder="Store Name"
+                name="store"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.store}
+              />
+              {errors.store && touched.store && errors.store && (
+                <AlertValidationForm message={errors.store} />
+              )}
+            </div>
+            <div>
+              <FormInput
+                type="password"
+                placeholder="Password"
+                name="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+              />
+              {errors.password && touched.password && errors.password && (
+                <AlertValidationForm message={errors.password} />
+              )}
+            </div>
+            <Button
+              primary
+              className="btn-wrapper"
+              disabled={
+                !isValid ||
+                (Object.keys(touched).length === 0 &&
+                  touched.constructor === Object)
+              }
+            >
+              <input type="submit" value="SIGN UP" />
+            </Button>
+          </FormGroup>
         )}
-        <FormInput
-          type="text"
-          placeholder="Store Name"
-          name="storeName"
-          {...register('storeName', { required: true })}
-        />
-        {errors.storeName && (
-          <Alert severity="warning">Store Name Required</Alert>
-        )}
-        <FormInput
-          type="password"
-          placeholder="Password"
-          name="password"
-          {...register('password', { required: true, minLength: 6 })}
-        />
-        {errors.password && (
-          <Alert severity="warning">
-            Password Required and minimal 6 character
-          </Alert>
-        )}
-        <Button primary className="btn-wrapper">
-          <input type="submit" value="SIGN UP" />
-        </Button>
-      </FormGroup>
-
+      </Formik>
       <AuthFooter register session="customer" />
     </AuthContainer>
   );

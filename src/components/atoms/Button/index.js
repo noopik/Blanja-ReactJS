@@ -1,7 +1,15 @@
 import React from 'react';
 import { BtnLink, ButtonItem } from './styled';
 
-const Button = ({ children, primary, className, onClick, type }) => {
+const Button = ({
+  children,
+  primary,
+  className,
+  disabled,
+  onClick,
+  type,
+  ...props
+}) => {
   return (
     <>
       {type === 'link' && (
@@ -10,7 +18,13 @@ const Button = ({ children, primary, className, onClick, type }) => {
         </BtnLink>
       )}
       {type !== 'link' && (
-        <ButtonItem primary={primary} className={className} onClick={onClick}>
+        <ButtonItem
+          primary={primary}
+          className={className}
+          onClick={onClick}
+          disabled={disabled}
+          {...props}
+        >
           {children}
         </ButtonItem>
       )}

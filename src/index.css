@@ -76,3 +76,10 @@ body {
 .cyan {
   background: cyan;
 }
+
+
+/* Input Invalid */
+
+.input-invalid {
+  color: red;
+}

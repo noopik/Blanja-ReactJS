@@ -1,11 +1,19 @@
 import styled from 'styled-components';
 
 export const ButtonItem = styled.button`
-  background: ${({ primary }) => (primary ? '#db3022' : 'transparent')};
+  background: ${({ primary, disabled }) => {
+    if (disabled) return '#cacaca';
+    if (primary) return '#db3022';
+    return 'transparent';
+  }};
   border-radius: 25px;
   border: 0;
   box-sizing: border-box;
-  color: ${({ primary }) => (primary ? 'white' : '#9b9b9b')};
+  color: ${({ primary, disabled }) => {
+    if (disabled) return '#666666';
+    if (primary) return 'white';
+    return '#3b3b3b';
+  }};
   width: 100%;
   padding: 8px 0;
   /* height: 36px; */
@@ -18,10 +26,18 @@ export const ButtonItem = styled.button`
   border-style: solid;
 
   &:hover {
-    opacity: 0.8;
-    cursor: pointer;
-    color: ${({ primary }) => (primary ? 'white' : '#1b1b1b')};
-    border-color: ${({ primary }) => (primary ? '#db3022' : '#1b1b1b')}px;
+    opacity: ${({ disabled }) => (disabled ? 1 : 0.8)};
+    cursor: ${({ disabled }) => (disabled ? 'default' : 'pointer')};
+    color: ${({ primary, disabled }) => {
+      if (disabled) return '#666666';
+      if (primary) return 'white';
+      return 'transparent';
+    }};
+    border-color: ${({ primary, disabled }) => {
+      if (disabled) return '#cacaca';
+      if (primary) return '#db3022';
+      return '#1b1b1b';
+    }}px;
   }
 `;
 
