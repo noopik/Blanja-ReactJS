@@ -47,22 +47,32 @@ export const userSessionActive = (data) => {
   return { type: typeRedux.setUserLogin, value: data };
 };
 
-export const userUpdateProfile = (id, token) => (dispatch) => {
-  dispatch(showLoading(true));
-  Axios.get(`/users/${id}`, {
+export const userUpdateProfile = (data, token) => (dispatch, getState) => {
+  // dispatch(showLoading(true));
+  const userState = getState().userReducer;
+  const formData = new FormData();
+  formData.append('email', userState.email);
+  formData.append('password', userState.password);
+  formData.append('name', data.name);
+  formData.append('role', userState.role);
+  formData.append('description', data.description);
+  formData.append('verified', userState.verified);
+  formData.append('phoneNumber', data.phone);
+  formData.append('storeName', userState.storeName);
+  formData.append('image', data.image ? data.image : userState.image);
+  Axios.post(`/users/${userState.idUser}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
     .then((res) => {
-      const data = res.data.data;
-      console.log(12121, data);
-      dispatch({ type: typeRedux.setUserLogin, value: data });
       dispatch(showLoading(false));
+      dispatch({ type: typeRedux.setUserLogin, value: res.data.data });
+      return Toast('Success Update Profile', 'success');
     })
     .catch((err) => {
-      console.log(err.response);
       dispatch(showLoading(false));
+      return Toast('Failed updated profile', 'error');
     });
 };
 

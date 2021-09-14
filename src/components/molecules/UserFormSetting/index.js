@@ -1,27 +1,29 @@
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import Alert from '@material-ui/lab/Alert';
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Formik } from 'formik';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { AvatarDefault } from '../../../assets/images';
-import { Axios } from '../../../config';
-import { showLoading } from '../../../redux/actions';
-import { phoneRegExp, typeRedux } from '../../../utils';
-import { Button, Divider, FormInput, Toast } from '../../atoms';
-import { customMedia } from '../../Layouts';
 import * as yup from 'yup';
-import { Formik } from 'formik';
+import { AvatarDefault } from '../../../assets/images';
+import { userUpdateProfile } from '../../../redux/actions';
+import { phoneRegExp } from '../../../utils';
+import {
+  AlertValidationForm,
+  Button,
+  Divider,
+  FormInput,
+  Toast,
+} from '../../atoms';
+import { customMedia } from '../../Layouts';
 
 const UserFormSetting = ({ session, ...props }) => {
-  const { name, email, phoneNumber, image } = props.data;
-
-  const [previewAvatar, setPreviewAvatar] = useState(AvatarDefault);
+  const userState = useSelector((state) => state.userReducer);
+  const [previewAvatar, setPreviewAvatar] = useState(userState.image);
+  const [uploadFileImage, setUploadFileImage] = useState();
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
-  const userState = useSelector((state) => state.userReducer);
   const validationForm = yup.object({
     name: yup.string().required('Name is required'),
     phone: yup
@@ -36,76 +38,28 @@ const UserFormSetting = ({ session, ...props }) => {
       .max(250, 'Description maximum 250 character'),
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-    watch,
-  } = useForm();
-
-  useEffect(() => {
-    handleInputAvatar();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [watch('avatar'), watch('name')]);
-
-  const onSubmit = (data) => {
-    delete data.avatar;
-    const changeAvatar = getValues('avatar')[0];
-    dispatch(showLoading(true));
-    Axios.get(`/users/${userState.idUser}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'content-Type': 'multipart/form-data',
-      },
-    })
-      .then((res) => {
-        const dataOld = res.data.data[0];
-        const formData = new FormData();
-        formData.append('email', dataOld.email);
-        formData.append('password', dataOld.password);
-        formData.append('name', data.name);
-        formData.append('role', dataOld.role);
-        formData.append('verified', dataOld.verified);
-        formData.append('phoneNumber', data.phoneNumber);
-        formData.append('storeName', dataOld.storeName);
-        formData.append('image', changeAvatar ? changeAvatar : dataOld.image);
-        Axios.post(`/users/${userState.idUser}`, formData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then((res) => {
-            dispatch(showLoading(false));
-            dispatch({ type: typeRedux.setUserName, value: data.name });
-
-            // dispatch(userUpdateProfile(userState.idUser, token));
-
-            return Toast('Success Update Profile', 'success');
-          })
-          .catch((err) => {
-            dispatch(showLoading(false));
-            console.log('err.response', err.response);
-            return Toast('Failed updated profile', 'error');
-          });
-      })
-      .catch((err) => {
-        dispatch(showLoading(false));
-      });
-  };
-
-  const handleInputAvatar = () => {
-    try {
-      const changeAvatar = getValues('avatar')[0];
-      const URLImage = URL.createObjectURL(changeAvatar);
-
-      setPreviewAvatar(URLImage);
-      dispatch({ type: typeRedux.setUserAvatar, value: URLImage });
-    } catch (error) {
-      // console.log(error);
+  const handlePriviewImage = (event) => {
+    const fileUploadImage = event.target.files[0];
+    console.log('fileUploadImage', fileUploadImage);
+    if (
+      fileUploadImage.type === 'image/jpeg' ||
+      fileUploadImage.type === 'image/jpg' ||
+      fileUploadImage.type === 'image/png' ||
+      fileUploadImage.type === 'image/gif'
+    ) {
+      if (fileUploadImage.size > 1048576 * 2) {
+        Toast('max size file is 2mb', 'error');
+      } else {
+        setPreviewAvatar(URL.createObjectURL(fileUploadImage));
+        setUploadFileImage(fileUploadImage);
+      }
+    } else {
+      Toast('Only image is allowed', 'error');
     }
   };
-  console.log('userState', userState);
+
+  // console.log('userState', userState);
+  // console.log('userState.name', userState.name);
   return (
     <Wrapper>
       <Formik
@@ -116,7 +70,11 @@ const UserFormSetting = ({ session, ...props }) => {
         }}
         validationSchema={validationForm}
         onSubmit={(values) => {
-          console.log(values);
+          const userDataUpdate = {
+            ...values,
+            image: uploadFileImage,
+          };
+          dispatch(userUpdateProfile(userDataUpdate, token));
         }}
       >
         {({
@@ -136,14 +94,15 @@ const UserFormSetting = ({ session, ...props }) => {
                 </label>
                 <div className="form-input">
                   <FormInput
-                    type="text"
                     name="name"
+                    type="text"
                     className="input"
-                    defaultValue={name}
-                    {...register('name', { required: true })}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.name}
                   />
-                  {errors.name && (
-                    <Alert severity="warning">Name Required!</Alert>
+                  {errors.name && touched.name && errors.name && (
+                    <AlertValidationForm message={errors.name} />
                   )}
                 </div>
               </div>
@@ -156,8 +115,8 @@ const UserFormSetting = ({ session, ...props }) => {
                     type="text"
                     name="email"
                     className="input"
-                    value={email}
-                    // defaultValue={email}
+                    value={userState.email}
+                    disabled
                   />
                 </div>
               </div>
@@ -169,27 +128,52 @@ const UserFormSetting = ({ session, ...props }) => {
                   <FormInput
                     type="text"
                     name="phone"
-                    // value="089652365"
                     className="input"
-                    defaultValue={phoneNumber}
-                    {...register('phoneNumber', {
-                      required: true,
-                      minLength: 11,
-                    })}
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.phone}
                   />
-                  {errors.phoneNumber && (
-                    <Alert severity="warning">
-                      Phone Number Required and minimal 11 character
-                    </Alert>
+                  {errors.phone && touched.phone && errors.phone && (
+                    <AlertValidationForm message={errors.phone} />
                   )}
                 </div>
               </div>
-              {session && FormSeller}
+              {session && (
+                <div className="form-wrapper">
+                  <label htmlFor="phone" className="name-input">
+                    Store Description
+                  </label>
+                  <div className="form-input">
+                    <textarea
+                      className="text-area"
+                      name="description"
+                      placeholder="Product Description"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.description}
+                    ></textarea>
+                  </div>
+                  {errors.description &&
+                    touched.description &&
+                    errors.description && (
+                      <AlertValidationForm message={errors.description} />
+                    )}
+                </div>
+              )}
               {!session && <FormUser />}
               <div className="form-wrapper">
                 <label />
                 {/* <DatePicker /> */}
-                <Button className="btn-save" type="submit" primary>
+                <Button
+                  className="btn-save"
+                  type="submit"
+                  disabled={
+                    !isValid ||
+                    (Object.keys(touched).length === 0 &&
+                      touched.constructor === Object)
+                  }
+                  primary
+                >
                   Save
                 </Button>
               </div>
@@ -198,27 +182,27 @@ const UserFormSetting = ({ session, ...props }) => {
               <Divider className="vertical" />
               <div className="image-wrapper">
                 <div className="avatar-wrapper">
-                  <img
-                    src={image ? image : previewAvatar}
-                    alt={name}
-                    className="avatar"
-                  />
+                  {userState.image && (
+                    <img
+                      src={previewAvatar ? previewAvatar : userState.image}
+                      alt={userState.name}
+                      className="avatar"
+                    />
+                  )}
+                  {!userState.image && (
+                    <img
+                      src={AvatarDefault}
+                      alt={userState.name}
+                      className="avatar"
+                    />
+                  )}
                 </div>
                 <div className="select-avatar">
-                  <Button
-                    type="submit"
-                    disabled={
-                      !isValid ||
-                      (Object.keys(touched).length === 0 &&
-                        touched.constructor === Object)
-                    }
-                  >
-                    Select Image
-                  </Button>
+                  <Button type="submit">Select Image</Button>
                   <input
                     type="file"
-                    onChange={handleInputAvatar}
-                    {...register('avatar')}
+                    name="image"
+                    onChange={(event) => handlePriviewImage(event)}
                   />
                 </div>
               </div>
@@ -231,23 +215,6 @@ const UserFormSetting = ({ session, ...props }) => {
 };
 
 export default UserFormSetting;
-
-// DINAMYC CONTENT
-
-const FormSeller = (
-  <div className="form-wrapper">
-    <label htmlFor="phone" className="name-input">
-      Store Description
-    </label>
-    <div className="form-input">
-      <textarea
-        className="text-area"
-        name="description"
-        placeholder="Product Description"
-      ></textarea>
-    </div>
-  </div>
-);
 
 const FormUser = () => {
   const [value, setValue] = useState('female');
