@@ -9,9 +9,11 @@ import styled from 'styled-components';
 import { AvatarDefault } from '../../../assets/images';
 import { Axios } from '../../../config';
 import { showLoading } from '../../../redux/actions';
-import { typeRedux } from '../../../utils';
+import { phoneRegExp, typeRedux } from '../../../utils';
 import { Button, Divider, FormInput, Toast } from '../../atoms';
 import { customMedia } from '../../Layouts';
+import * as yup from 'yup';
+import { Formik } from 'formik';
 
 const UserFormSetting = ({ session, ...props }) => {
   const { name, email, phoneNumber, image } = props.data;
@@ -20,6 +22,19 @@ const UserFormSetting = ({ session, ...props }) => {
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
   const userState = useSelector((state) => state.userReducer);
+  const validationForm = yup.object({
+    name: yup.string().required('Name is required'),
+    phone: yup
+      .string()
+      .matches(phoneRegExp, 'Phone number is not valid')
+      .required('Phone number is required')
+      .min(11, 'Password must be at least 11 charaters')
+      .max(13, 'Password must be less than 13 charaters'),
+    description: yup
+      .string()
+      .required('Name is required')
+      .max(250, 'Description maximum 250 character'),
+  });
 
   const {
     register,
@@ -90,91 +105,127 @@ const UserFormSetting = ({ session, ...props }) => {
       // console.log(error);
     }
   };
-
+  console.log('userState', userState);
   return (
     <Wrapper>
-      <Form className="form" onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <div className="form-wrapper">
-            <label htmlFor="name" className="name-input">
-              Name
-            </label>
-            <div className="form-input">
-              <FormInput
-                type="text"
-                name="name"
-                className="input"
-                defaultValue={name}
-                {...register('name', { required: true })}
-              />
-              {errors.name && <Alert severity="warning">Name Required!</Alert>}
+      <Formik
+        initialValues={{
+          name: userState.name || '',
+          phone: userState.phoneNumber || '',
+          description: '',
+        }}
+        validationSchema={validationForm}
+        onSubmit={(values) => {
+          console.log(values);
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isValid,
+        }) => (
+          <Form className="form" onSubmit={handleSubmit}>
+            <div>
+              <div className="form-wrapper">
+                <label htmlFor="name" className="name-input">
+                  Name
+                </label>
+                <div className="form-input">
+                  <FormInput
+                    type="text"
+                    name="name"
+                    className="input"
+                    defaultValue={name}
+                    {...register('name', { required: true })}
+                  />
+                  {errors.name && (
+                    <Alert severity="warning">Name Required!</Alert>
+                  )}
+                </div>
+              </div>
+              <div className="form-wrapper">
+                <label htmlFor="email" className="name-input">
+                  Email
+                </label>
+                <div className="form-input">
+                  <FormInput
+                    type="text"
+                    name="email"
+                    className="input"
+                    value={email}
+                    // defaultValue={email}
+                  />
+                </div>
+              </div>
+              <div className="form-wrapper">
+                <label htmlFor="phone" className="name-input">
+                  Phone Number
+                </label>
+                <div className="form-input">
+                  <FormInput
+                    type="text"
+                    name="phone"
+                    // value="089652365"
+                    className="input"
+                    defaultValue={phoneNumber}
+                    {...register('phoneNumber', {
+                      required: true,
+                      minLength: 11,
+                    })}
+                  />
+                  {errors.phoneNumber && (
+                    <Alert severity="warning">
+                      Phone Number Required and minimal 11 character
+                    </Alert>
+                  )}
+                </div>
+              </div>
+              {session && FormSeller}
+              {!session && <FormUser />}
+              <div className="form-wrapper">
+                <label />
+                {/* <DatePicker /> */}
+                <Button className="btn-save" type="submit" primary>
+                  Save
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className="form-wrapper">
-            <label htmlFor="email" className="name-input">
-              Email
-            </label>
-            <div className="form-input">
-              <FormInput
-                type="text"
-                name="email"
-                className="input"
-                value={email}
-                // defaultValue={email}
-              />
-            </div>
-          </div>
-          <div className="form-wrapper">
-            <label htmlFor="phone" className="name-input">
-              Phone Number
-            </label>
-            <div className="form-input">
-              <FormInput
-                type="text"
-                name="phone"
-                // value="089652365"
-                className="input"
-                defaultValue={phoneNumber}
-                {...register('phoneNumber', { required: true, minLength: 11 })}
-              />
-              {errors.phoneNumber && (
-                <Alert severity="warning">
-                  Phone Number Required and minimal 11 character
-                </Alert>
-              )}
-            </div>
-          </div>
-          {session && FormSeller}
-          {!session && <FormUser />}
-          <div className="form-wrapper">
-            <label />
-            {/* <DatePicker /> */}
-            <Button className="btn-save" type="submit" primary>
-              Save
-            </Button>
-          </div>
-        </div>
-        <ProfileWrapper className="profile-image">
-          <Divider className="vertical" />
-          <div className="image-wrapper">
-            <div className="avatar-wrapper">
-              <img
-                src={image ? image : previewAvatar}
-                alt={name}
-                className="avatar"
-              />
-            </div>
-            <div className="select-avatar">
-              <Button type="submit">Select Image</Button>
-              <input
-                type="file"
-                onChange={handleInputAvatar}
-                {...register('avatar')}
-              />
-            </div>
-          </div>
-        </ProfileWrapper>
-      </Form>
+            <ProfileWrapper className="profile-image">
+              <Divider className="vertical" />
+              <div className="image-wrapper">
+                <div className="avatar-wrapper">
+                  <img
+                    src={image ? image : previewAvatar}
+                    alt={name}
+                    className="avatar"
+                  />
+                </div>
+                <div className="select-avatar">
+                  <Button
+                    type="submit"
+                    disabled={
+                      !isValid ||
+                      (Object.keys(touched).length === 0 &&
+                        touched.constructor === Object)
+                    }
+                  >
+                    Select Image
+                  </Button>
+                  <input
+                    type="file"
+                    onChange={handleInputAvatar}
+                    {...register('avatar')}
+                  />
+                </div>
+              </div>
+            </ProfileWrapper>
+          </Form>
+        )}
+      </Formik>
     </Wrapper>
   );
 };
