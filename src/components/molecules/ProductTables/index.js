@@ -85,7 +85,7 @@ const ProductTables = ({ dataSeller }) => {
   };
   const actionEditProduct = () => {
     // console.log(editSelected);
-    history.push('/admin/seller/selling', { id: editSelected });
+    history.push(`/admin/seller/selling/${editSelected}`);
   };
 
   return (

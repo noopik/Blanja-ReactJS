@@ -1,31 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import Alert from '@material-ui/lab/Alert';
+import { Formik } from 'formik';
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { Button, FormInput, Toast } from '../../../components/atoms';
+import * as Yup from 'yup';
+import {
+  AlertValidationForm,
+  Button,
+  FormInput,
+} from '../../../components/atoms';
 import { Text } from '../../../components/atoms/Typography';
 import { FormGroup } from '../../../components/molecules';
 import { Axios } from '../../../config';
-import { showLoading } from '../../../redux/actions';
+import { userResetPassword } from '../../../redux/actions';
 import { typeRedux } from '../../../utils';
-
 const VerifiedPassword = ({ onClick, data: userData }) => {
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userReducer);
   const history = useHistory();
 
-  // const [form, setForm] = useState({
-  //   password: '',
-  //   confirmNewPassword: '',
-  // });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const validate = Yup.object({
+    password: Yup.string()
+      .min(8, 'Password must be at least 8 charaters')
+      .max(255, 'Password must be at least 255 charaters')
+      .required('Password is required'),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref('password'), null], 'Password must match')
+      .required('Confirm password is required'),
+  });
 
   useEffect(() => {
     Axios.get(`users/${userData.decode.id}`, {
@@ -40,72 +42,74 @@ const VerifiedPassword = ({ onClick, data: userData }) => {
       });
   }, []);
 
-  const onSubmit = (data) => {
-    // Matching password
-    if (!data.password && !data.confirmationPassword) {
-      return null;
-    }
-    const password = data.password;
-    const isMatch = password.localeCompare(data.confirmationPassword); // return 0 for match - Include Case Sensitive
-
-    if (isMatch !== 0) {
-      return Toast(`New password must be match. Try again`, 'error');
-    }
-
-    dispatch(showLoading(true));
-    const userUpdate = {
-      ...userState,
-      ...data,
-    };
-    // console.log(userUpdate);
-
-    const pathPost = `/users/${userData.decode.id}`;
-    Axios.post(pathPost, userUpdate, {
-      headers: { Authorization: `Bearer ${userData.token}` },
-    })
-      .then((res) => {
-        dispatch(showLoading(false));
-        history.push('/customer-login');
-        return Toast('Password Successfully Update. Please login', 'success');
-      })
-      .catch((err) => {
-        dispatch(showLoading(false));
-      });
-  };
-
   return (
     <>
       <Text color="primary" className="text-warning-custom">
         You need to change your password to activate your account
       </Text>
-      <FormGroup onSubmit={handleSubmit(onSubmit)}>
-        <FormInput
-          type="password"
-          name="password"
-          placeholder="Password"
-          {...register('password', { required: true, minLength: 6 })}
-        />
-        {errors.password && (
-          <Alert severity="warning">
-            Password Required and minimal 6 character
-          </Alert>
+      <Formik
+        initialValues={{
+          password: '',
+          confirmPassword: '',
+        }}
+        validationSchema={validate}
+        onSubmit={(values) => {
+          dispatch(userResetPassword(values, userState, userData, history));
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isValid,
+        }) => (
+          <FormGroup onSubmit={handleSubmit}>
+            <div>
+              <FormInput
+                type="password"
+                name="password"
+                placeholder="Password"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.password}
+                // {...register('password', { required: true, minLength: 6 })}
+              />
+              {errors.password && touched.password && errors.password && (
+                <AlertValidationForm message={errors.password} />
+              )}
+            </div>
+            <div>
+              <FormInput
+                type="password"
+                name="confirmPassword"
+                placeholder="Confirmation New Password"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.confirmPassword}
+              />
+              {errors.confirmPassword &&
+                touched.confirmPassword &&
+                errors.confirmPassword && (
+                  <AlertValidationForm message={errors.confirmPassword} />
+                )}
+            </div>
+            <Button
+              primary
+              className="btn-wrapper"
+              disabled={
+                !isValid ||
+                (Object.keys(touched).length === 0 &&
+                  touched.constructor === Object)
+              }
+            >
+              <input type="submit" value="Submit" />
+            </Button>
+          </FormGroup>
         )}
-        <FormInput
-          type="password"
-          name="confirmationPassword"
-          placeholder="Confirmation New Password"
-          {...register('confirmationPassword', {
-            required: true,
-            minLength: 6,
-          })}
-        />
-        {errors.confirmationPassword && (
-          <Alert severity="warning">Password Required and Match</Alert>
-        )}
-        <Button primary className="btn-wrapper">
-          <input type="submit" value="Submit" />
-        </Button>
-      </FormGroup>
+      </Formik>
     </>
   );
 };

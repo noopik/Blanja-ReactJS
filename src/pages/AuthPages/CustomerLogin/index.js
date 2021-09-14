@@ -1,9 +1,10 @@
-import Alert from '@material-ui/lab/Alert';
+import { Formik } from 'formik';
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import * as yup from 'yup';
 import {
+  AlertValidationForm,
   BrandLogo,
   Button,
   ButtonTogller,
@@ -18,25 +19,18 @@ import {
   FormGroup,
 } from '../../../components/molecules';
 import { userLogin } from '../../../redux/actions';
-import { regexEmailVadidationType } from '../../../utils';
 
 const CustomerLogin = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const role = 'customer';
-
-  const {
-    register,
-    handleSubmit,
-    // watch,
-    formState: { errors },
-  } = useForm();
-  // console.log('watch', watch('email'));
-  // console.log('watch', watch('password'));
-
-  const onSubmit = (data) => {
-    dispatch(userLogin(data, history, role));
-  };
+  const validationForm = yup.object({
+    email: yup.string().email('Email is invalid').required('Email is required'),
+    password: yup
+      .string()
+      .min(8, 'Password must be at least 8 charaters')
+      .required('Password is required'),
+  });
 
   useEffect(() => {
     document.title = 'Login | Customer';
@@ -56,28 +50,68 @@ const CustomerLogin = () => {
           Seller
         </ToggleItem>
       </ButtonTogller>
-      <FormGroup mt={40} onSubmit={handleSubmit(onSubmit)}>
-        <FormInput
-          type="text"
-          placeholder="Email"
-          name="email"
-          {...register('email', { pattern: regexEmailVadidationType })}
-        />
-        {errors.email && <Alert severity="warning">Email invalid!</Alert>}
-        <FormInput
-          type="password"
-          placeholder="Password"
-          name="password"
-          {...register('password', { required: true })}
-        />
-        {errors.password && (
-          <Alert severity="warning">Password Required!</Alert>
+      <Formik
+        initialValues={{
+          email: '',
+          password: '',
+        }}
+        validationSchema={validationForm}
+        onSubmit={(values) => {
+          // console.log(values);
+          dispatch(userLogin(values, history, role));
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isValid,
+        }) => (
+          <FormGroup mt={40} onSubmit={handleSubmit}>
+            <div>
+              <FormInput
+                type="text"
+                placeholder="Email"
+                name="email"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email}
+              />
+              {errors.email && touched.email && errors.email && (
+                <AlertValidationForm message={errors.email} />
+              )}
+            </div>
+            <div>
+              <FormInput
+                type="password"
+                placeholder="Password"
+                name="password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+              />
+              {errors.password && touched.password && errors.password && (
+                <AlertValidationForm message={errors.password} />
+              )}
+            </div>
+            <AuthForgotPassword />
+            <Button
+              primary
+              className="btn-wrapper"
+              disabled={
+                !isValid ||
+                (Object.keys(touched).length === 0 &&
+                  touched.constructor === Object)
+              }
+            >
+              LOGIN
+            </Button>
+          </FormGroup>
         )}
-        <AuthForgotPassword />
-        <Button primary className="btn-wrapper">
-          <input type="submit" value="LOGIN" />
-        </Button>
-      </FormGroup>
+      </Formik>
       <AuthFooter login session="customer" />
     </AuthContainer>
   );

@@ -1,6 +1,7 @@
 import { Toast } from '../../components/atoms';
 import { Axios } from '../../config';
 import { showLoading } from './loadingAction';
+
 export const userRegister = (formUser, history, role) => (dispatch) => {
   dispatch(showLoading(true));
 

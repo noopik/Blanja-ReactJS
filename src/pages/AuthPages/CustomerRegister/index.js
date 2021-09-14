@@ -1,9 +1,10 @@
-import Alert from '@material-ui/lab/Alert';
+import { Formik } from 'formik';
 import React, { useEffect } from 'react';
-import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import * as yup from 'yup';
 import {
+  AlertValidationForm,
   BrandLogo,
   Button,
   ButtonTogller,
@@ -14,20 +15,21 @@ import { Heading } from '../../../components/atoms/Typography';
 import { AuthContainer } from '../../../components/Layouts';
 import { AuthFooter, FormGroup } from '../../../components/molecules';
 import { userRegister } from '../../../redux/actions';
-import { regexEmailVadidationType } from '../../../utils';
-
 const CustomerRegister = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const role = 'customer';
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const validationForm = yup.object({
+    name: yup.string().required('Name is required'),
+    email: yup.string().email('Email is invalid').required('Email is required'),
+    password: yup
+      .string()
+      .min(8, 'Password must be at least 8 charaters')
+      .required('Password is required'),
+  });
 
-  const onSubmit = (data) => {
+  const actionSubmitForm = (data) => {
     const dataSend = {
       ...data,
       role,
@@ -53,37 +55,79 @@ const CustomerRegister = () => {
           Seller
         </ToggleItem>
       </ButtonTogller>
-      <FormGroup mt={40} onSubmit={handleSubmit(onSubmit)}>
-        <FormInput
-          type="text"
-          placeholder="Name"
-          name="name"
-          {...register('name', { required: true })}
-        />
-        {errors.name && <Alert severity="warning">Name Required!</Alert>}
-        <FormInput
-          type="text"
-          placeholder="Email"
-          name="email"
-          {...register('email', { pattern: regexEmailVadidationType })}
-        />
-        {errors.email && <Alert severity="warning">Email invalid!</Alert>}
-        <FormInput
-          type="password"
-          placeholder="Password"
-          name="password"
-          {...register('password', { required: true, minLength: 6 })}
-        />
-        {errors.password && (
-          <Alert severity="warning">
-            Password Required and minimal 6 character
-          </Alert>
+      <Formik
+        initialValues={{
+          name: '',
+          email: '',
+        }}
+        validationSchema={validationForm}
+        onSubmit={(values) => {
+          actionSubmitForm(values);
+        }}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          handleSubmit,
+          isValid,
+        }) => (
+          <FormGroup mt={40} onSubmit={handleSubmit}>
+            <div>
+              <FormInput
+                type="text"
+                placeholder="Name"
+                name="name"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.username}
+              />
+              {errors.name && touched.name && errors.name && (
+                <AlertValidationForm message={errors.name} />
+              )}
+            </div>
+            <div>
+              <FormInput
+                type="text"
+                placeholder="Email"
+                name="email"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email}
+              />
+              {errors.email && touched.email && errors.email && (
+                <AlertValidationForm message={errors.email} />
+              )}
+            </div>
+            <div>
+              <FormInput
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                value={values.password}
+              />
+              {errors.password && touched.password && errors.password && (
+                <AlertValidationForm message={errors.password} />
+              )}
+            </div>
+            <Button
+              primary
+              className="btn-wrapper"
+              disabled={
+                !isValid ||
+                (Object.keys(touched).length === 0 &&
+                  touched.constructor === Object)
+              }
+            >
+              SIGN UP
+            </Button>
+          </FormGroup>
         )}
-        <Button primary className="btn-wrapper">
-          <input type="submit" value="SIGN UP" />
-        </Button>
-      </FormGroup>
-
+      </Formik>
       <AuthFooter register session="customer" />
     </AuthContainer>
   );
