@@ -65,3 +65,26 @@ export const userUpdateProfile = (id, token) => (dispatch) => {
       dispatch(showLoading(false));
     });
 };
+
+export const userResetPassword =
+  (data, userState, userData, history) => (dispatch) => {
+    console.log('run ');
+    dispatch(showLoading(true));
+    const userUpdate = {
+      ...userState,
+      ...data,
+    };
+
+    const pathPost = `/users/${userData.decode.id}`;
+    Axios.post(pathPost, userUpdate, {
+      headers: { Authorization: `Bearer ${userData.token}` },
+    })
+      .then((res) => {
+        dispatch(showLoading(false));
+        history.replace('/customer-login');
+        return Toast('Password Successfully Update. Please login', 'success');
+      })
+      .catch((err) => {
+        dispatch(showLoading(false));
+      });
+  };

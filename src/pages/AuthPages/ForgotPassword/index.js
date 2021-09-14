@@ -104,9 +104,7 @@ const ForgotPassword = () => {
                   onChange={handleChange}
                   value={values.email}
                 />
-                {errors.email && touched.email && errors.email && (
-                  <AlertValidationForm message={errors.email} />
-                )}
+                {errors.email && <AlertValidationForm message={errors.email} />}
               </div>
               <Button
                 primary
