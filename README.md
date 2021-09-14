@@ -2,7 +2,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://res.cloudinary.com/dnv-images/image/upload/v1627485625/Blanja%20com/Group_1158_qc0qap.png" alt="Logo" width="135" height="50">
   </a>
 
   <h3 align="center">project_title</h3>
