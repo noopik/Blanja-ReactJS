@@ -2,13 +2,13 @@
 <br />
 <p align="center">
   <a href="https://github.com/github_username/repo_name">
-    <img src="https://res.cloudinary.com/dnv-images/image/upload/v1627485625/Blanja%20com/Group_1158_qc0qap.png" alt="Logo" width="135" height="50">
+    <img src="https://res.cloudinary.com/dnv-images/image/upload/v1631599120/Blanja%20com/blanja_pdgveq.svg" alt="Logo" width="140" height="194">
   </a>
 
-  <h3 align="center">project_title</h3>
+  <h3 align="center">Blanja: Fashion e-commerce</h3>
 
   <p align="center">
-    project_description
+    BLANJA is an online fashion store that offers <br> a collection of clothing, accessories, shoes and other products for men and women.
     <br />
     <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
