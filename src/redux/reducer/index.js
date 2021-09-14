@@ -1,23 +1,15 @@
 import { combineReducers } from 'redux';
-import { registerReducer } from './registerReducer';
 import { searchReducer } from './searchReducer';
 import { navReducer } from './navReducer';
 import { loadingReducer } from './loadingReducer';
 import { userReducer } from './userReducer';
-import {
-  allProductReducer,
-  cartProductReducer,
-  productItemReducer,
-  chooseProductReducer,
-} from './productReducer';
+import { productReducer } from './productReducer';
+import { cartReducer } from './cartReducer';
 
 const reducer = combineReducers({
-  chooseProductReducer,
-  productItemReducer,
-  cartProductReducer,
-  allProductReducer,
+  cartReducer,
+  productReducer,
   userReducer,
-  registerReducer,
   searchReducer,
   navReducer,
   loadingReducer,

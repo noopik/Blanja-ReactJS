@@ -1,5 +1,7 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 import { CardProduct, Loader } from '../../components/atoms';
 import { MainContent, SectionContent } from '../../components/Layouts';
 import {
@@ -10,33 +12,34 @@ import {
   Navbar,
 } from '../../components/molecules';
 import { Item } from '../../components/molecules/CardGrouping/styled';
+import { getItemProduct } from '../../redux/actions';
 import { DetailProduct, HeaderProductPage } from './styled';
 
 const ProductDetail = () => {
-  // const dispatch = useDispatch();
-
-  // let { id } = useParams();
-
-  const { exist, data } = useSelector((state) => state.productItemReducer);
+  const { id } = useParams();
+  const [product, setProduct] = useState();
+  // const { exist, data } = useSelector((state) => state.productItemReducer);
   const token = localStorage.getItem('token');
-  const allProductsState = useSelector((state) => state.allProductReducer);
+  const allProductsState = useSelector((state) => state.productReducer);
 
   // console.log('itemProductState', data);
 
-  // useEffect(() => {
-  //   dispatch(getItemProduct(id));
-  // }, [id]);
-  // console.log(id);
+  useEffect(() => {
+    getItemProduct(id, token, (data) => {
+      setProduct(data);
+    });
+  }, [id]);
+
   return (
     <>
       <Navbar session={token ? 'user' : 'public'} />
       <MainContent>
-        {exist && (
+        {product && (
           <>
             <SectionContent>
-              <Breadcrumbs data={data} title={data.id_category} />
-              <HeaderProductPage data={data} />
-              <DetailProduct data={data} />
+              <Breadcrumbs data={product} title={product.id_category} />
+              <HeaderProductPage data={product} />
+              <DetailProduct data={product} />
             </SectionContent>
           </>
         )}

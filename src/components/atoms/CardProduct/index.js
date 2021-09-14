@@ -54,8 +54,7 @@ const CardProduct = ({
   }, [title]);
 
   const actionCard = () => {
-    // console.log(1213, id);
-    dispatch(getItemProduct(idProduct, token));
+    // dispatch(getItemProduct(idProduct, token));
     history.push(`/products/${idProduct}`);
   };
 

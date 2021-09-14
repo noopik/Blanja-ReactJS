@@ -11,7 +11,7 @@ import {
 import { CardProduct, Loader } from '../../components/atoms';
 import { Item } from '../../components/molecules/CardGrouping/styled';
 import { Axios } from '../../../src/config';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { showLoading } from '../../redux/actions';
 
@@ -24,8 +24,10 @@ const CategoryPage = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const pathname = history.location.pathname;
-  const categoryId = pathname.split('/').pop();
+  const { id: categoryId } = useParams();
+  console.log(categoryId);
+  // const pathname = history.location.pathname;
+  // const categoryId = pathname.split('/').pop();
 
   useEffect(() => {
     document.title = 'Blanja | T-Shirt';
@@ -33,29 +35,29 @@ const CategoryPage = () => {
 
   // DATA FOR NEW PRODUCTS SECTION
   useEffect(() => {
-    dispatch(showLoading(true));
-    Axios.get(`/category/${categoryId}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-      .then((res) => {
-        const resData = res.data.data[0];
-        // console.log(resData);
+    // dispatch(showLoading(true));
+    // Axios.get(`/category/${categoryId}`, {
+    //   headers: { Authorization: `Bearer ${token}` },
+    // })
+    //   .then((res) => {
+    //     const resData = res.data.data[0];
+    //     // console.log(resData);
 
-        setCategoryItem(resData);
-        Axios.get(`/products?category=${resData.nameCategory}`)
-          .then((result) => {
-            const resData = result.data.data;
-            setdataProducts(resData);
-            dispatch(showLoading(false));
-          })
-          .catch((err) => {
-            console.log(err);
-            dispatch(showLoading(false));
-          });
+    //     setCategoryItem(resData);
+    Axios.get(`/products?category=${categoryId}`)
+      .then((result) => {
+        const resData = result.data.data;
+        setdataProducts(resData);
+        // dispatch(showLoading(false));
       })
       .catch((err) => {
         console.log(err);
+        // dispatch(showLoading(false));
       });
+    // })
+    // .catch((err) => {
+    //   console.log(err);
+    // });
   }, []);
   return (
     <>

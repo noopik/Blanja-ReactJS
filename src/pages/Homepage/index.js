@@ -21,19 +21,11 @@ const Homepage = () => {
   const token = localStorage.getItem('token');
   // const history = useHistory();
   const dispatch = useDispatch();
-  const allProductsState = useSelector((state) => state.allProductReducer);
+  const allProductsState = useSelector((state) => state.productReducer);
   const { isShow: loadingState } = useSelector((state) => state.loadingReducer);
 
   useEffect(() => {
     document.title = 'Blanja | Homepage';
-  });
-
-  // CHECK IS USER LOGIN EXIST OR NOT
-  Axios.get(`/users/verify-token`, {
-    headers: { Authorization: `Bearer ${token}` },
-  }).then((result) => {
-    const dataResult = result.data.data;
-    dispatch({ type: typeRedux.setUserLogin, value: dataResult });
   });
 
   useEffect(() => {}, []);
@@ -77,15 +69,17 @@ const Homepage = () => {
           <CardGrouping>
             {allProductsState.exist &&
               allProductsState?.data.map((item) => (
-                <Item key={item.id}>
-                  <CardProduct
-                    title={item.nameProduct}
-                    image={item.imageProduct}
-                    price={item.price}
-                    store="Zalora"
-                    idProduct={item.id}
-                  />
-                </Item>
+                // <Item key={item.id}>
+                <CardProduct
+                  key={item.id}
+                  title={item.nameProduct}
+                  image={item.imageProduct}
+                  price={item.price}
+                  store="Zalora"
+                  idProduct={item.id}
+                  className="item"
+                />
+                // </Item>
               ))}
             {!allProductsState.exist && <Loader line />}
           </CardGrouping>
@@ -105,6 +99,7 @@ const Homepage = () => {
                     price={item.price}
                     idProduct={item.id}
                     store="Zalora"
+                    className="item"
                   />
                 </Item>
               ))}

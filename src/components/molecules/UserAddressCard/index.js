@@ -1,18 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { Button } from '../../atoms';
 import { Heading, Text } from '../../atoms/Typography';
 
 const UserAddressCard = ({ onClick }) => {
+  const { userReducer: userState } = useSelector((state) => state);
+
   return (
     <Wrapper>
       <Heading as={2} className="username">
-        Addreas Janea
+        {userState.name}
       </Heading>
       <Text as="lg" color="secondary">
-        Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja, Kabupaten
-        Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c 16] Sokaraja, Kab.
-        Banyumas, 53181
+        {userState?.address ? userState?.address : 'Fill in your address first'}
       </Text>
       <Button className="btn-action" type="link" onClick={onClick} primary>
         Change Address

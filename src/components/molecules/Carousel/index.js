@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
@@ -9,6 +9,7 @@ import {
   DMCarousel3,
   DMCarousel4,
 } from '../../../assets/images';
+import { Axios } from '../../../config';
 import { ImageCard } from './styled';
 // import './styled/carousel.css';
 import ButtonArrow from './styled/ButtonArrow';
@@ -78,17 +79,35 @@ const MultipleItems = ({ className }) => {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
-
+  const [product, setProduct] = useState([]);
   const HeaderCarousel = styled.header`
     /* background-color: yellow; */
   `;
+
+  useEffect(() => {
+    Axios.get('/products?page=2&limit=5')
+      .then((result) => {
+        const resData = result.data.data;
+        setProduct(resData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  console.log('product', product);
   return (
     <HeaderCarousel className={className}>
       <Slider {...settings}>
-        <ImageCard image={DMCarousel1} title="Casual Epic" to="#" />
-        <ImageCard image={DMCarousel2} title="Urban Distro" to="#" />
-        <ImageCard image={DMCarousel3} title="Metropolitan" to="#" />
-        <ImageCard image={DMCarousel4} title="Anak Gunung" to="#" />
+        {product &&
+          product.map((item) => {
+            return (
+              <ImageCard
+                image={item.imageProduct}
+                title={item.nameProduct}
+                to={`/products/${item.id}`}
+              />
+            );
+          })}
       </Slider>
     </HeaderCarousel>
   );

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { moneyFormatter } from '../../../utils';
 import { Button, CardWrapper, Divider } from '../../atoms';
 import { Heading, Text } from '../../atoms/Typography';
 
-const CardCheckout = ({ myBag, checkout, buyAction }) => {
+const CardCheckout = ({ myBag, checkout, buyAction, pricing }) => {
   return (
     <CardWrapper>
       <Heading as={3}>Shopping summary</Heading>
@@ -11,7 +12,7 @@ const CardCheckout = ({ myBag, checkout, buyAction }) => {
         <div className="d-flex mb-4">
           <Text as="lg">Total price</Text>
           <Text as="lg" font="medium" display="flex" justifyContent="flex-end">
-            $ 40.0
+            $ {pricing.totalPrice}
           </Text>
         </div>
       )}
@@ -22,7 +23,7 @@ const CardCheckout = ({ myBag, checkout, buyAction }) => {
               Order
             </Text>
             <Text as="lg" font="bold" display="flex" justifyContent="flex-end">
-              $ 40.0
+              Rp. {moneyFormatter.format(pricing.totalPrice)}
             </Text>
           </div>
           <div className="d-flex justify-content-between mb-4">
@@ -30,7 +31,7 @@ const CardCheckout = ({ myBag, checkout, buyAction }) => {
               Delivery
             </Text>
             <Text as="lg" font="bold" display="flex" justifyContent="flex-end">
-              $ 40.0
+              Rp {moneyFormatter.format(pricing.deliveryPrice)}
             </Text>
           </div>
           <Divider className="mb-2" />
@@ -46,7 +47,10 @@ const CardCheckout = ({ myBag, checkout, buyAction }) => {
               justifyContent="flex-end"
               color="primary"
             >
-              $ 40.0
+              Rp{' '}
+              {moneyFormatter.format(
+                pricing.totalPrice - pricing.deliveryPrice
+              )}
             </Text>
           </div>
         </>

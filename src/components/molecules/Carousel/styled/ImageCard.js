@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { ImageCarousel1 } from '../../../../assets/images';
+import { DMNullImage, ImageCarousel1 } from '../../../../assets/images';
 
 const Wrapper = styled.div`
   width: 95%;
@@ -40,7 +40,8 @@ const Wrapper = styled.div`
     font-style: normal;
     font-weight: bold;
     font-size: 38px;
-    line-height: 38px;
+    line-height: 55px;
+    text-align: center;
   }
   h3.category {
     background-color: #0e0e0d45;
@@ -64,7 +65,7 @@ const ImageCard = ({
       <Wrapper className={className}>
         <img
           className={`${category ? 'category' : ''} ${bgCard}`}
-          src={image ? image : ImageCarousel1}
+          src={image ? image : DMNullImage}
           alt={title}
         />
         <h3 className={category ? 'category' : 'main'}>

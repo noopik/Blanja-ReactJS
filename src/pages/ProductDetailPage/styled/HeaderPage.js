@@ -9,14 +9,14 @@ import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
 import { Heading, Text } from '../../../components/atoms/Typography';
 import { customMedia } from '../../../components/Layouts';
 import { ImageGaleryProduct } from '../../../components/molecules';
+import { addToCart, addToSingleCart, singleCart } from '../../../redux/actions';
 import { typeRedux } from '../../../utils';
 
 const HeaderPage = ({ data }) => {
-  const [dataProduct, setDataProduct] = useState({});
+  const [chooseProduct, setChooseProduct] = useState({});
   const history = useHistory();
   const dispatch = useDispatch();
   // const userState = useSelector((state) => state.userReducer);
-  const productItemState = useSelector((state) => state.productItemReducer);
   const chooseProductReducer = useSelector(
     (state) => state.chooseProductReducer
   );
@@ -29,50 +29,46 @@ const HeaderPage = ({ data }) => {
   //   checkedG: false,
   // });
 
-  useEffect(() => {
-    setDataProduct(data);
-    dispatch({
-      type: typeRedux.setChooseProductId,
-      value: data,
-    });
+  // useEffect(() => {
+  //   // setDataProduct(data);
+  //   // dispatch({
+  //   //   type: typeRedux.setChooseProductId,
+  //   //   value: data,
+  //   // });
 
-    const pricing = {
-      price: productItemState.data.price,
-      totalChoose: 1,
+  //   // const pricing = {
+  //   //   price: data.price,
+  //   //   totalChoose: 1,
+  //   // };
+
+  //   // dispatch({
+  //   //   type: typeRedux.setChooseProductSize,
+  //   //   value: 'XS',
+  //   // });
+  //   // dispatch({
+  //   //   type: typeRedux.setChooseProductCount,
+  //   //   value: pricing,
+  //   // });
+  // }, [data]);
+
+  const actionSingleCart = () => {
+    const dataProductSelected = {
+      ...data,
+      ...chooseProduct,
     };
-
-    dispatch({
-      type: typeRedux.setChooseProductSize,
-      value: 'XS',
-    });
-    dispatch({
-      type: typeRedux.setChooseProductCount,
-      value: pricing,
-    });
-  }, [data]);
-
-  const handleActionBuy = () => {
-    history.push('/checkout');
+    dispatch(addToSingleCart(dataProductSelected, history));
   };
 
   const counterSize = (value) => {
-    // console.log(value);
-    dispatch({
-      type: typeRedux.setChooseProductSize,
-      value: value,
-    });
+    setChooseProduct({ ...chooseProduct, size: value });
   };
+
   const counterTotal = (value) => {
     const pricing = {
-      price: productItemState.data.price,
-      totalChoose: value,
+      totalItem: value,
+      totalPrice: data.price * value,
     };
-    // console.log(123, pricing);
-
-    dispatch({
-      type: typeRedux.setChooseProductCount,
-      value: pricing,
-    });
+    setChooseProduct({ ...chooseProduct, ...pricing });
   };
 
   // // Handle Selected Color
@@ -92,7 +88,6 @@ const HeaderPage = ({ data }) => {
       insertToCart = {
         productChoose: oldCart,
       };
-      dispatch({ type: typeRedux.setProductToCart, value: insertToCart });
       history.push('/my-bag');
     } else {
       chooseProduct = {
@@ -102,18 +97,18 @@ const HeaderPage = ({ data }) => {
       insertToCart = {
         productChoose: [{ ...chooseProduct }],
       };
-
-      dispatch({ type: typeRedux.setProductToCart, value: insertToCart });
       history.push('/my-bag');
     }
   };
 
+  console.log('chooseProduct', chooseProduct);
+
   return (
     <Main>
-      <ImageGaleryProduct images={dataProduct.imageProduct} />
+      <ImageGaleryProduct images={data.imageProduct} />
       <aside>
         <Heading>
-          {dataProduct.nameProduct ? dataProduct.nameProduct : <Loader line />}
+          {data.nameProduct ? data.nameProduct : <Loader line />}
         </Heading>
         <Text as="lg" color="secondary" className="rating">
           Zalora
@@ -123,9 +118,9 @@ const HeaderPage = ({ data }) => {
           Price
         </Text>
         <Heading className="total-price">
-          {dataProduct.price ? (
+          {data.price ? (
             <NumberFormat
-              value={dataProduct.price}
+              value={data.price}
               displayType={'text'}
               thousandSeparator={true}
               prefix={'Rp. '}
@@ -185,7 +180,7 @@ const HeaderPage = ({ data }) => {
           <Button className="btn-mini" onClick={addProductToCart}>
             Add Bag
           </Button>
-          <Button primary className="btn-main" onClick={handleActionBuy}>
+          <Button primary className="btn-main" onClick={actionSingleCart}>
             Buy Now
           </Button>
         </div>

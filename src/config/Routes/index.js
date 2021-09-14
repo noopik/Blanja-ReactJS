@@ -41,13 +41,9 @@ const Routes = () => {
         />
         {/* MAIN HOME */}
         <Route exact path="/" component={Homepage} />
-        <PrivateRoute path="/categories" component={CategoryPage} />
-        <PrivateRoute
-          exact
-          path="/products/:id"
-          component={ProductDetailPage}
-        />
-        <PrivateRoute path="/products" component={ResultProducts} />
+        <PrivateRoute path="/categories/:id" component={CategoryPage} />
+        <PrivateRoute exact path="/products" component={ResultProducts} />
+        <PrivateRoute path="/products/:id" component={ProductDetailPage} />
         <PrivateRoute path="/my-bag" component={MyBag} />
         <PrivateRoute path="/checkout" component={CheckoutPage} />
         <Route

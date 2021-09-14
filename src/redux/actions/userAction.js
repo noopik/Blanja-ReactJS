@@ -25,7 +25,7 @@ export const userLogin = (formUser, history, role) => (dispatch) => {
         const pathByRole = { seller: '/admin/seller', customer: '/' };
         localStorage.setItem('token', dataUserResponse.token);
         localStorage.setItem('refreshToken', dataUserResponse.refresh);
-        history.push(`${pathByRole[role]}`);
+        history.replace(`${pathByRole[role]}`);
       }
     })
     .catch((err) => {
