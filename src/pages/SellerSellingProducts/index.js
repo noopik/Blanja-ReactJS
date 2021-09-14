@@ -4,11 +4,10 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import FormControl from '@material-ui/core/FormControl';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import CancelIcon from '@material-ui/icons/Cancel';
 import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import * as yup from 'yup';
 import { Axios } from '../../../src/config';
@@ -22,13 +21,21 @@ import {
 } from '../../components/atoms';
 import { Text } from '../../components/atoms/Typography';
 import { customMedia } from '../../components/Layouts';
-import { addProduct, getItemProduct, showLoading } from '../../redux/actions';
+import {
+  addProduct,
+  getItemProduct,
+  showLoading,
+  updateProduct,
+} from '../../redux/actions';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 
 const SellerSellingProducts = () => {
+  const [product, setProduct] = useState();
   const [category, setCategory] = useState([]);
-  const [selectedColor, setSelectedColor] = useState();
+  const [selectedColor, setSelectedColor] = useState(
+    product?.color ? product?.color : ''
+  );
   const [description, setDescription] = useState('');
   const [uploadImage, setUploadImage] = useState([]);
   const [previewAvatar, setPreviewAvatar] = useState([]);
@@ -36,9 +43,6 @@ const SellerSellingProducts = () => {
   const history = useHistory();
   const userState = useSelector((state) => state.userReducer);
   const token = localStorage.getItem('token');
-  const { exist, data: currentValue } = useSelector(
-    (state) => state.productItemReducer
-  );
   const validationForm = yup.object({
     name: yup
       .string()
@@ -52,25 +56,22 @@ const SellerSellingProducts = () => {
     stock: yup.number().required('Stock is required'),
     category: yup.string().required('Category is required'),
   });
-  // console.log(exist);
-  // UPDATE PRODUCTS
-  const idProductUpdate = history.location.state?.id;
-  // console.log(idProductUpdate);
-
-  // HANDLE FORM
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   watch,
-  //   getValues,
-  // } = useForm();
-
-  // const { slug } = useParams();
+  const { idProduct } = useParams();
 
   useEffect(() => {
-    if (idProductUpdate) {
-      dispatch(getItemProduct(idProductUpdate, token));
+    if (idProduct) {
+      Axios.get(`/products/${idProduct}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+        .then((res) => {
+          const dataItemProduct = res.data.data;
+          // console.log(dataItemProduct);
+          setProduct(dataItemProduct);
+          setPreviewAvatar(dataItemProduct.imageProduct);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
     }
     Axios.get(`/category`)
       .then((res) => {
@@ -79,17 +80,14 @@ const SellerSellingProducts = () => {
         setCategory(resData);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
       });
-  }, [idProductUpdate]);
+  }, [idProduct]);
 
   // Upload Image
 
   const handleInputImageProduct = async (e) => {
     const fileImages = e.target.files;
-    // console.log(Array.isArray(fileImages));
-    // console.log(fileImages);
-    // return;
     const fileUpload = [];
     Array.from(fileImages).map((image) => {
       if (
@@ -115,8 +113,6 @@ const SellerSellingProducts = () => {
     });
     setUploadImage(fileUpload);
   };
-  console.log('uploadImage', uploadImage);
-  console.log('previewAvatar', previewAvatar);
 
   const handlePreview = () => {
     if (uploadImage.length > 0) {
@@ -131,7 +127,6 @@ const SellerSellingProducts = () => {
 
   useEffect(() => {
     handlePreview();
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uploadImage]);
 
@@ -159,64 +154,16 @@ const SellerSellingProducts = () => {
     setSelectedColor(change.value);
   };
 
-  const onSubmit = (data) => {
-    const formData = new FormData();
-    formData.append('owner', userState.idUser);
-    formData.append('description', description);
-    formData.append('color', selectedColor);
-    formData.append('image', uploadImage);
-    formData.append('id_category', data.category);
-    formData.append('nameProduct', data.nameProduct);
-    formData.append('stock', data.stock);
-    Array.from(data.productImage).forEach((image) => {
-      formData.append('image', image);
-    });
-    formData.append('price', data.price);
-
-    dispatch(showLoading(true));
-    if (idProductUpdate) {
-      Axios.post(`/products/${idProductUpdate}`, formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => {
-          Toast('Success products updated', 'success');
-          console.log(res);
-          dispatch(showLoading(false));
-          history.push('/admin/seller/products');
-          return;
-        })
-        .catch((err) => {
-          console.log(err.response);
-          dispatch(showLoading(false));
-          return Toast('Error', 'error');
-        });
-    } else {
-      Axios.post(`/products`, formData, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-        .then((res) => {
-          Toast('Success products Added', 'success');
-          console.log(res);
-          dispatch(showLoading(false));
-          history.push('/admin/seller/products');
-        })
-        .catch((err) => {
-          console.log(err.response);
-          dispatch(showLoading(false));
-          return Toast('Error', 'error');
-        });
-    }
-  };
-
   return (
     <>
       <UserProfilePage session="seller" dataUser={userState}>
         <Formik
+          enableReinitialize
           initialValues={{
-            name: '',
-            price: '',
-            stock: '',
-            category: '',
+            name: product?.nameProduct || '',
+            price: product?.price || '',
+            stock: product?.stock || '',
+            category: product?.id_category || '',
           }}
           validationSchema={validationForm}
           onSubmit={(values) => {
@@ -226,8 +173,10 @@ const SellerSellingProducts = () => {
               image: uploadImage,
               color: selectedColor,
             };
-            console.log('formik submit', dataProduct);
-            dispatch(addProduct(dataProduct, token, history));
+            // console.log('formik submit', dataProduct);
+            idProduct
+              ? dispatch(updateProduct(dataProduct, token, history, idProduct))
+              : dispatch(addProduct(dataProduct, token, history));
           }}
         >
           {({
@@ -253,7 +202,6 @@ const SellerSellingProducts = () => {
                       name="name"
                       placeholder="Product Name"
                       className="input"
-                      // defaultValue={currentValue.nameProduct}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.name}
@@ -277,7 +225,6 @@ const SellerSellingProducts = () => {
                       name="price"
                       className="input"
                       placeholder="Price"
-                      defaultValue={currentValue.price}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.price}
@@ -298,7 +245,6 @@ const SellerSellingProducts = () => {
                       type="text"
                       name="stock"
                       className="input"
-                      defaultValue={currentValue.stock}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.stock}
@@ -420,7 +366,7 @@ const SellerSellingProducts = () => {
               <Main heading="Description">
                 <CKEditor
                   editor={ClassicEditor}
-                  data={currentValue.description}
+                  data={product?.description}
                   onReady={(editor) => {
                     // You can store the "editor" and use when it is needed.
                     // console.log('Editor is ready to use!', editor);
@@ -438,7 +384,7 @@ const SellerSellingProducts = () => {
                 />
               </Main>
               <ButtonWrapper>
-                {/* {!idProductUpdate && (
+                {/* {!idProduct && (
                   <Button
                     className="btn"
                     primary
@@ -462,7 +408,7 @@ const SellerSellingProducts = () => {
                       touched.constructor === Object)
                   }
                 >
-                  {idProductUpdate ? 'UPDATE' : 'SELL'}
+                  {idProduct ? 'UPDATE' : 'SELL'}
                 </Button>
               </ButtonWrapper>
             </form>

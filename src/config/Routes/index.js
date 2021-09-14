@@ -74,7 +74,7 @@ const Routes = () => {
           component={SellerSellingProducts}
         />
         <PrivateRoute
-          path="/admin/seller/selling/:slug"
+          path="/admin/seller/selling/:idProduct"
           component={SellerSellingProducts}
         />
         <PrivateRoute path="/admin/seller/orders" />
