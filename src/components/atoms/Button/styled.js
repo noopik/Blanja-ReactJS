@@ -31,7 +31,6 @@ export const ButtonItem = styled.button`
     color: ${({ primary, disabled }) => {
       if (disabled) return '#666666';
       if (primary) return 'white';
-      return 'transparent';
     }};
     border-color: ${({ primary, disabled }) => {
       if (disabled) return '#cacaca';

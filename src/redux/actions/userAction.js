@@ -37,9 +37,10 @@ export const userLogin = (formUser, history, role) => (dispatch) => {
     });
 };
 
-export const userLogout = () => {
+export const userLogout = () => (dispatch) => {
   localStorage.removeItem('token');
   localStorage.removeItem('refreshToken');
+  dispatch({ type: typeRedux.setUserLogout });
   return { type: typeRedux.setUserLogout, value: {} };
 };
 

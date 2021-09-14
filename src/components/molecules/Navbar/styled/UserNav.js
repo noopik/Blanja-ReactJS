@@ -8,7 +8,7 @@ import { userLogout } from '../../../../redux/actions';
 import { Button } from '../../../atoms';
 import { customMedia } from '../../../Layouts';
 
-const UserNav = ({ avatar }) => {
+const UserNav = () => {
   const [showAvatarPopup, setShowAvatarPopup] = useState(false);
   const userState = useSelector((state) => state.userReducer);
   const history = useHistory();

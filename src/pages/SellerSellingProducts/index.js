@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
@@ -21,12 +22,7 @@ import {
 } from '../../components/atoms';
 import { Text } from '../../components/atoms/Typography';
 import { customMedia } from '../../components/Layouts';
-import {
-  addProduct,
-  getItemProduct,
-  showLoading,
-  updateProduct,
-} from '../../redux/actions';
+import { addProduct, updateProduct } from '../../redux/actions';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 
