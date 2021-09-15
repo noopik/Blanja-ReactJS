@@ -25,30 +25,21 @@ export const getAllProducts = (limit) => (dispatch) => {
     });
 };
 
-export const getItemProduct = (id, token) => (dispatch) => {
-  dispatch(showLoading(true));
+export const getItemProduct = (id, token, data) => {
   Axios.get(`/products/${id}`, {
     headers: { Authorization: `Bearer ${token}` },
   })
     .then((res) => {
       const dataItem = res.data.data;
-      dispatch(showLoading(false));
-      const sendData = { exist: true, data: dataItem };
-      dispatch({ type: typeRedux.setProductItem, value: sendData });
-      return dataItem;
+      // console.log('dataItem', dataItem);
+      // dispatch(showLoading(false));
+      // const sendData = { exist: true, data: dataItem };
+      // dispatch({ type: typeRedux.setProductItem, value: sendData });
+      data(dataItem);
     })
     .catch((err) => {
-      console.log(err);
+      console.log(err.response);
     });
-};
-
-export const insertProductToCart = (oldData, newItem) => {
-  const data = oldData;
-  data.push(newItem);
-  const sendData = {
-    productChoose: [{ ...data }],
-  };
-  return { type: typeRedux.setProductToCart, value: sendData };
 };
 
 export const searchProduct = (keyword) => (dispatch) => {

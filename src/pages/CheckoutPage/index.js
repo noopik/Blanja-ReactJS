@@ -21,16 +21,17 @@ import {
   ModalPayment,
   Navbar,
 } from '../../components/molecules';
+import { moneyFormatter } from '../../utils';
 
 const CheckoutPage = () => {
   const [showModalAddress, setShowModalAddress] = useState(false);
   const [showModalBuy, setShowModalBuy] = useState(false);
-  const { productChoose } = useSelector((state) => state.cartProductReducer);
-
+  const { cartReducer: cartState, userReducer: userState } = useSelector(
+    (state) => state
+  );
   useEffect(() => {
     document.title = 'Blanja | Checkout';
   });
-
   return (
     <>
       <Navbar session="user" />
@@ -44,12 +45,12 @@ const CheckoutPage = () => {
               </Heading>
               <CardWrapper className="detail-user">
                 <Heading as={3} font="medium">
-                  Andreas Jane
+                  {userState.name}
                 </Heading>
                 <Text>
-                  Perumahan Sapphire Mediterania, Wiradadi, Kec. Sokaraja,
-                  Kabupaten Banyumas, Jawa Tengah, 53181 [Tokopedia Note: blok c
-                  16] Sokaraja, Kab. Banyumas, 53181
+                  {userState?.address
+                    ? userState?.address
+                    : 'Fill in your address first'}
                 </Text>
                 <div className="btn-wrapper">
                   <Button onClick={() => setShowModalAddress(true)}>
@@ -57,20 +58,24 @@ const CheckoutPage = () => {
                   </Button>
                 </div>
               </CardWrapper>
-              {productChoose.length > 0 &&
-                productChoose.map((product) => (
+              {cartState.data.length > 0 &&
+                cartState.data.map((product) => (
                   <CheckoutDetail
                     body
                     nameProduct={product.nameProduct}
                     store="IStanbul"
-                    total={product.price}
+                    total={`Rp. ${moneyFormatter.format(product.price)}`}
                     image={product.imageProduct[0]}
                     checkout
                   />
                 ))}
             </AsideLeft>
             <AsideRight className="right">
-              <CardCheckout checkout buyAction={() => setShowModalBuy(true)} />
+              <CardCheckout
+                pricing={cartState?.pricing}
+                checkout
+                buyAction={() => setShowModalBuy(true)}
+              />
             </AsideRight>
           </AsideContent>
         </SectionContent>

@@ -1,26 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import NumberFormat from 'react-number-format';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
+import {
+  Button,
+  Counter,
+  Loader,
+  StarRating,
+  Toast,
+} from '../../../components/atoms';
 import { Heading, Text } from '../../../components/atoms/Typography';
 import { customMedia } from '../../../components/Layouts';
 import { ImageGaleryProduct } from '../../../components/molecules';
-import { typeRedux } from '../../../utils';
+import { addToSingleCart } from '../../../redux/actions';
 
 const HeaderPage = ({ data }) => {
-  const [dataProduct, setDataProduct] = useState({});
+  const [chooseProduct, setChooseProduct] = useState({});
   const history = useHistory();
   const dispatch = useDispatch();
   // const userState = useSelector((state) => state.userReducer);
-  const productItemState = useSelector((state) => state.productItemReducer);
-  const chooseProductReducer = useSelector(
-    (state) => state.chooseProductReducer
-  );
-  const cartProductState = useSelector((state) => state.cartProductReducer);
+  // const chooseProductReducer = useSelector(
+  //   (state) => state.chooseProductReducer
+  // );
+  // const cartProductState = useSelector((state) => state.cartProductReducer);
 
   // const [color, setColor] = useState({
   //   red: false,
@@ -29,91 +34,110 @@ const HeaderPage = ({ data }) => {
   //   checkedG: false,
   // });
 
-  useEffect(() => {
-    setDataProduct(data);
-    dispatch({
-      type: typeRedux.setChooseProductId,
-      value: data,
-    });
+  // useEffect(() => {
+  //   // setDataProduct(data);
+  //   // dispatch({
+  //   //   type: typeRedux.setChooseProductId,
+  //   //   value: data,
+  //   // });
 
-    const pricing = {
-      price: productItemState.data.price,
-      totalChoose: 1,
-    };
+  //   // const pricing = {
+  //   //   price: data.price,
+  //   //   totalChoose: 1,
+  //   // };
 
-    dispatch({
-      type: typeRedux.setChooseProductSize,
-      value: 'XS',
-    });
-    dispatch({
-      type: typeRedux.setChooseProductCount,
-      value: pricing,
-    });
-  }, [data]);
+  //   // dispatch({
+  //   //   type: typeRedux.setChooseProductSize,
+  //   //   value: 'XS',
+  //   // });
+  //   // dispatch({
+  //   //   type: typeRedux.setChooseProductCount,
+  //   //   value: pricing,
+  //   // });
+  // }, [data]);
 
-  const handleActionBuy = () => {
-    history.push('/checkout');
+  const actionSingleCart = () => {
+    let dataProductSelected = {};
+    if (Object.keys(chooseProduct).length > 0) {
+      dataProductSelected = {
+        ...data,
+        ...chooseProduct,
+      };
+    } else {
+      dataProductSelected = {
+        ...data,
+        totalItem: 1,
+        totalPrice: data.price * 1,
+      };
+    }
+    dispatch(addToSingleCart(dataProductSelected, history));
   };
 
   const counterSize = (value) => {
-    // console.log(value);
-    dispatch({
-      type: typeRedux.setChooseProductSize,
-      value: value,
-    });
+    setChooseProduct({ ...chooseProduct, size: value });
   };
+
   const counterTotal = (value) => {
     const pricing = {
-      price: productItemState.data.price,
-      totalChoose: value,
+      totalItem: value,
+      totalPrice: data.price * value,
     };
-    // console.log(123, pricing);
-
-    dispatch({
-      type: typeRedux.setChooseProductCount,
-      value: pricing,
-    });
+    setChooseProduct({ ...chooseProduct, ...pricing });
   };
 
+  // const actionAddProductToCarts = () => {
+  //   let dataProductSelected = {};
+  //   // console.log('chooseProduct', chooseProduct);
+  //   if (Object.keys(chooseProduct).length > 0) {
+  //     dataProductSelected = {
+  //       ...data,
+  //       ...chooseProduct,
+  //     };
+  //   } else {
+  //     dataProductSelected = {
+  //       ...data,
+  //       totalItem: 1,
+  //       totalPrice: data.price * 1,
+  //     };
+  //   }
+  //   dispatch(addProductToCarts(dataProductSelected));
+  // };
   // // Handle Selected Color
   // const handleColors = (e, change) => {};
 
   // Action Add Bag
   // console.log('productItemState', productItemState);
-  const addProductToCart = () => {
-    const oldCart = cartProductState.productChoose;
-    let chooseProduct;
-    let insertToCart;
-    if (oldCart) {
-      chooseProduct = {
-        ...chooseProductReducer,
-      };
-      oldCart.push({ ...chooseProduct });
-      insertToCart = {
-        productChoose: oldCart,
-      };
-      dispatch({ type: typeRedux.setProductToCart, value: insertToCart });
-      history.push('/my-bag');
-    } else {
-      chooseProduct = {
-        ...chooseProductReducer,
-      };
+  // const addProductToCart = () => {
+  //   const oldCart = cartProductState.productChoose;
+  //   let chooseProduct;
+  //   // let insertToCart;
+  //   if (oldCart) {
+  //     chooseProduct = {
+  //       ...chooseProductReducer,
+  //     };
+  //     oldCart.push({ ...chooseProduct });
+  //     // insertToCart = {
+  //     //   productChoose: oldCart,
+  //     // };
+  //     history.push('/my-bag');
+  //   } else {
+  //     chooseProduct = {
+  //       ...chooseProductReducer,
+  //     };
 
-      insertToCart = {
-        productChoose: [{ ...chooseProduct }],
-      };
-
-      dispatch({ type: typeRedux.setProductToCart, value: insertToCart });
-      history.push('/my-bag');
-    }
-  };
+  //     // insertToCart = {
+  //     //   productChoose: [{ ...chooseProduct }],
+  //     // };
+  //     history.push('/my-bag');
+  //   }
+  // };
 
   return (
     <Main>
-      <ImageGaleryProduct images={dataProduct.imageProduct} />
+      <ImageGaleryProduct images={data.imageProduct} />
       <aside>
         <Heading>
-          {dataProduct.nameProduct ? dataProduct.nameProduct : <Loader line />}
+          {data.nameProduct ? data.nameProduct : <Loader line />}
         </Heading>
         <Text as="lg" color="secondary" className="rating">
           Zalora
@@ -123,9 +147,9 @@ const HeaderPage = ({ data }) => {
           Price
         </Text>
         <Heading className="total-price">
-          {dataProduct.price ? (
+          {data.price ? (
             <NumberFormat
-              value={dataProduct.price}
+              value={data.price}
               displayType={'text'}
               thousandSeparator={true}
               prefix={'Rp. '}
@@ -182,10 +206,19 @@ const HeaderPage = ({ data }) => {
         </div>
         <div className="d-flex">
           <Button className="btn-mini">Chat</Button>
-          <Button className="btn-mini" onClick={addProductToCart}>
+          <Button
+            className="btn-mini"
+            // onClick={actionAddProductToCarts}
+            onClick={() =>
+              Toast(
+                'Sorry this feature under development. You can buy this product directly by clicking Buy Now ',
+                'warning'
+              )
+            }
+          >
             Add Bag
           </Button>
-          <Button primary className="btn-main" onClick={handleActionBuy}>
+          <Button primary className="btn-main" onClick={actionSingleCart}>
             Buy Now
           </Button>
         </div>

@@ -68,7 +68,7 @@ const sizeModal = {
   large: 800,
 };
 
-const ContentModal = styled(CardWrapper)`
+const ContentModal = styled((props) => <CardWrapper {...props} />)`
   width: max-content;
   z-index: 999;
   padding: 0;

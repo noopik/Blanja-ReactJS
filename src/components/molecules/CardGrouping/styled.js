@@ -25,11 +25,14 @@ export const GridContainer = styled.div`
     display: grid;
     grid-template-columns: auto;
   `}
+  .item {
+    /* background-color: yellow; */
+  }
 `;
 
 export const Item = styled.div`
   /* background-color: #070707; */
   /* width: 250px; */
   /* width: auto; */
-  max-width: 280px;
+  /* max-width: 280px; */
 `;
