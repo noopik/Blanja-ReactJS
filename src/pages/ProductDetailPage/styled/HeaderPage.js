@@ -5,11 +5,17 @@ import NumberFormat from 'react-number-format';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
-import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
+import {
+  Button,
+  Counter,
+  Loader,
+  StarRating,
+  Toast,
+} from '../../../components/atoms';
 import { Heading, Text } from '../../../components/atoms/Typography';
 import { customMedia } from '../../../components/Layouts';
 import { ImageGaleryProduct } from '../../../components/molecules';
-import { addProductToCarts, addToSingleCart } from '../../../redux/actions';
+import { addToSingleCart } from '../../../redux/actions';
 
 const HeaderPage = ({ data }) => {
   const [chooseProduct, setChooseProduct] = useState({});
@@ -79,23 +85,23 @@ const HeaderPage = ({ data }) => {
     setChooseProduct({ ...chooseProduct, ...pricing });
   };
 
-  const actionAddProductToCarts = () => {
-    let dataProductSelected = {};
-    // console.log('chooseProduct', chooseProduct);
-    if (Object.keys(chooseProduct).length > 0) {
-      dataProductSelected = {
-        ...data,
-        ...chooseProduct,
-      };
-    } else {
-      dataProductSelected = {
-        ...data,
-        totalItem: 1,
-        totalPrice: data.price * 1,
-      };
-    }
-    dispatch(addProductToCarts(dataProductSelected));
-  };
+  // const actionAddProductToCarts = () => {
+  //   let dataProductSelected = {};
+  //   // console.log('chooseProduct', chooseProduct);
+  //   if (Object.keys(chooseProduct).length > 0) {
+  //     dataProductSelected = {
+  //       ...data,
+  //       ...chooseProduct,
+  //     };
+  //   } else {
+  //     dataProductSelected = {
+  //       ...data,
+  //       totalItem: 1,
+  //       totalPrice: data.price * 1,
+  //     };
+  //   }
+  //   dispatch(addProductToCarts(dataProductSelected));
+  // };
   // // Handle Selected Color
   // const handleColors = (e, change) => {};
 
@@ -200,7 +206,16 @@ const HeaderPage = ({ data }) => {
         </div>
         <div className="d-flex">
           <Button className="btn-mini">Chat</Button>
-          <Button className="btn-mini" onClick={actionAddProductToCarts}>
+          <Button
+            className="btn-mini"
+            // onClick={actionAddProductToCarts}
+            onClick={() =>
+              Toast(
+                'Sorry this feature under development. You can buy this product directly by clicking Buy Now ',
+                'warning'
+              )
+            }
+          >
             Add Bag
           </Button>
           <Button primary className="btn-main" onClick={actionSingleCart}>
