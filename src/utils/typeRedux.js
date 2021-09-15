@@ -3,6 +3,7 @@ export const typeRedux = {
   setUserLogout: 'SET_USER_LOGOUT',
   setUserAvatar: 'SET_USER_AVATAR',
   setUserName: 'SET_USER_NAME',
+  setUserAddress: 'SET_USER_ADDRESS',
   setAllProduct: 'SET_PRODUCTS_COLLECTION',
   setProductItem: 'SET_PRODUCT_ITEM',
   setAddToCartProducts: 'SET_ADD_TO_CART_PRODUCTS',

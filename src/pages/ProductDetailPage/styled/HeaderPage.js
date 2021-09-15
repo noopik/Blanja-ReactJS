@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import NumberFormat from 'react-number-format';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,8 +9,7 @@ import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
 import { Heading, Text } from '../../../components/atoms/Typography';
 import { customMedia } from '../../../components/Layouts';
 import { ImageGaleryProduct } from '../../../components/molecules';
-import { addToCart, addToSingleCart, singleCart } from '../../../redux/actions';
-import { typeRedux } from '../../../utils';
+import { addToSingleCart } from '../../../redux/actions';
 
 const HeaderPage = ({ data }) => {
   const [chooseProduct, setChooseProduct] = useState({});
@@ -52,10 +51,19 @@ const HeaderPage = ({ data }) => {
   // }, [data]);
 
   const actionSingleCart = () => {
-    const dataProductSelected = {
-      ...data,
-      ...chooseProduct,
-    };
+    let dataProductSelected = {};
+    if (Object.keys(chooseProduct).length > 0) {
+      dataProductSelected = {
+        ...data,
+        ...chooseProduct,
+      };
+    } else {
+      dataProductSelected = {
+        ...data,
+        totalItem: 1,
+        totalPrice: data.price * 1,
+      };
+    }
     dispatch(addToSingleCart(dataProductSelected, history));
   };
 
@@ -79,24 +87,24 @@ const HeaderPage = ({ data }) => {
   const addProductToCart = () => {
     const oldCart = cartProductState.productChoose;
     let chooseProduct;
-    let insertToCart;
+    // let insertToCart;
     if (oldCart) {
       chooseProduct = {
         ...chooseProductReducer,
       };
       oldCart.push({ ...chooseProduct });
-      insertToCart = {
-        productChoose: oldCart,
-      };
+      // insertToCart = {
+      //   productChoose: oldCart,
+      // };
       history.push('/my-bag');
     } else {
       chooseProduct = {
         ...chooseProductReducer,
       };
 
-      insertToCart = {
-        productChoose: [{ ...chooseProduct }],
-      };
+      // insertToCart = {
+      //   productChoose: [{ ...chooseProduct }],
+      // };
       history.push('/my-bag');
     }
   };

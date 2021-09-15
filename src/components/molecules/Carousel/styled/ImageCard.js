@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { DMNullImage, ImageCarousel1 } from '../../../../assets/images';
+import { DMNullImage } from '../../../../assets/images';
 
 const Wrapper = styled.div`
   width: 95%;

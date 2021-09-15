@@ -3,12 +3,6 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import styled from 'styled-components';
-import {
-  DMCarousel1,
-  DMCarousel2,
-  DMCarousel3,
-  DMCarousel4,
-} from '../../../assets/images';
 import { Axios } from '../../../config';
 import { ImageCard } from './styled';
 // import './styled/carousel.css';

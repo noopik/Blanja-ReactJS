@@ -1,12 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { Button } from '../../atoms';
 import { Heading, Text } from '../../atoms/Typography';
 
 const UserAddressCard = ({ onClick }) => {
   const { userReducer: userState } = useSelector((state) => state);
-
   return (
     <Wrapper>
       <Heading as={2} className="username">
@@ -15,9 +13,9 @@ const UserAddressCard = ({ onClick }) => {
       <Text as="lg" color="secondary">
         {userState?.address ? userState?.address : 'Fill in your address first'}
       </Text>
-      <Button className="btn-action" type="link" onClick={onClick} primary>
+      {/* <Button className="btn-action" type="link" onClick={onClick} primary>
         Change Address
-      </Button>
+      </Button> */}
     </Wrapper>
   );
 };

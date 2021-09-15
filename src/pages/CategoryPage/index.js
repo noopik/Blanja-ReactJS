@@ -1,5 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Axios } from '../../../src/config';
+import { CardProduct, Loader } from '../../components/atoms';
 import { MainContent, SectionContent } from '../../components/Layouts';
 import {
   Breadcrumbs,
@@ -8,12 +11,7 @@ import {
   HeaderSection,
   Navbar,
 } from '../../components/molecules';
-import { CardProduct, Loader } from '../../components/atoms';
 import { Item } from '../../components/molecules/CardGrouping/styled';
-import { Axios } from '../../../src/config';
-import { useHistory, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { showLoading } from '../../redux/actions';
 
 const CategoryPage = () => {
   const [dataProducts, setdataProducts] = useState([{}]);
@@ -22,8 +20,8 @@ const CategoryPage = () => {
   const [categoryItem, setCategoryItem] = useState([]);
   const token = localStorage.getItem('token');
 
-  const history = useHistory();
-  const dispatch = useDispatch();
+  // const history = useHistory();
+  // const dispatch = useDispatch();
   const { id: categoryId } = useParams();
   console.log(categoryId);
   // const pathname = history.location.pathname;
@@ -36,28 +34,28 @@ const CategoryPage = () => {
   // DATA FOR NEW PRODUCTS SECTION
   useEffect(() => {
     // dispatch(showLoading(true));
-    // Axios.get(`/category/${categoryId}`, {
-    //   headers: { Authorization: `Bearer ${token}` },
-    // })
-    //   .then((res) => {
-    //     const resData = res.data.data[0];
-    //     // console.log(resData);
+    Axios.get(`/category/${categoryId}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        const resData = res.data.data[0];
+        // console.log(resData);
 
-    //     setCategoryItem(resData);
-    Axios.get(`/products?category=${categoryId}`)
-      .then((result) => {
-        const resData = result.data.data;
-        setdataProducts(resData);
-        // dispatch(showLoading(false));
+        setCategoryItem(resData);
+        Axios.get(`/products?category=${categoryId}`)
+          .then((result) => {
+            const resData = result.data.data;
+            setdataProducts(resData);
+            // dispatch(showLoading(false));
+          })
+          .catch((err) => {
+            console.log(err);
+            // dispatch(showLoading(false));
+          });
       })
       .catch((err) => {
         console.log(err);
-        // dispatch(showLoading(false));
       });
-    // })
-    // .catch((err) => {
-    //   console.log(err);
-    // });
   }, []);
   return (
     <>

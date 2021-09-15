@@ -79,7 +79,6 @@ export const userUpdateProfile = (data, token) => (dispatch, getState) => {
 
 export const userResetPassword =
   (data, userState, userData, history) => (dispatch) => {
-    console.log('run ');
     dispatch(showLoading(true));
     const userUpdate = {
       ...userState,
@@ -97,5 +96,37 @@ export const userResetPassword =
       })
       .catch((err) => {
         dispatch(showLoading(false));
+      });
+  };
+
+export const userAddressAction =
+  (values, token, closeModal) => (dispatch, getState) => {
+    const userState = getState().userReducer;
+    const sendData = {
+      id_user: userState.idUser,
+      name_address: values.saveAddress,
+      name_recipient: values.name,
+      phone_recipient: values.phone,
+      address: values.address,
+      postal_code: values.postalCode,
+      city: values.city,
+      primary_address: values.primary,
+    };
+    // console.log('sendData', sendData);
+    Axios.post(`/address`, sendData, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        Toast('Success Address Added', 'success');
+        console.log(res);
+        const resData = res.data.data;
+        const addressUser = `${resData.name_address},  ${resData.phone_recipient} | ${resData.address}, ${resData.city}, ${resData.postal_code}.`;
+        // console.log('addressUser', addressUser);
+        dispatch({ type: typeRedux.setUserAddress, value: addressUser });
+        closeModal(false);
+      })
+      .catch((err) => {
+        console.log(err.response);
+        return Toast('Error', 'error');
       });
   };

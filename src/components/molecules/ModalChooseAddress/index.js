@@ -1,6 +1,10 @@
+import { Formik } from 'formik';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import Modal from '../Modal';
+import * as yup from 'yup';
+import { userAddressAction } from '../../../redux/actions';
+import { phoneRegExp } from '../../../utils';
 import {
   AlertValidationForm,
   BtnNewAddres,
@@ -8,11 +12,9 @@ import {
   FormInput,
   InputCheck,
 } from '../../atoms';
-import UserAddressCard from '../UserAddressCard';
 import { Text } from '../../atoms/Typography';
-import * as yup from 'yup';
-import { Formik } from 'formik';
-import { phoneRegExp } from '../../../utils';
+import Modal from '../Modal';
+import UserAddressCard from '../UserAddressCard';
 
 const ModalChooseAddress = () => {
   const [showAddNewAddress, setShowAddNewAddress] = useState(false);
@@ -25,15 +27,41 @@ const ModalChooseAddress = () => {
       .required('Phone number is required')
       .min(11, 'Password must be at least 11 charaters')
       .max(13, 'Password must be less than 13 charaters'),
-    store: yup.string().required('Store is required'),
     address: yup.string().required('Address is required'),
     city: yup.string().required('City is required'),
-    primary: yup.bool(),
     postalCode: yup
       .number()
       .typeError('Postal code be a number')
       .required('Postal code is required'),
   });
+  // const userState = useSelector((state) => state.userReducer);
+  const token = localStorage.getItem('token');
+  const dispatch = useDispatch();
+  // const actionSubmitAddress = (values) => {
+  //   // const sendData = {
+  //   //   id_user: userState.idUser,
+  //   //   name_address: values.saveAddress,
+  //   //   name_recipient: values.name,
+  //   //   phone_recipient: values.phone,
+  //   //   address: values.address,
+  //   //   postal_code: values.postalCode,
+  //   //   city: values.city,
+  //   //   primary_address: values.primary,
+  //   // };
+  //   // console.log('sendData', sendData);
+  //   // Axios.post(`/address`, sendData, {
+  //   //   headers: { Authorization: `Bearer ${token}` },
+  //   // })
+  //   //   .then((res) => {
+  //   //     Toast('Success Address Added', 'success');
+  //   //     console.log(res);
+  //   //     setShowAddNewAddress(false);
+  //   //   })
+  //   //   .catch((err) => {
+  //   //     console.log(err.response);
+  //   //     return Toast('Error', 'error');
+  //   //   });
+  // };
   return (
     <>
       <WrapperModal>
@@ -48,12 +76,23 @@ const ModalChooseAddress = () => {
       >
         <Formik
           initialValues={{
+            saveAddress: '',
             name: '',
-            email: '',
+            phone: '',
+            store: '',
+            address: '',
+            city: '',
+            primary: '',
+            postalCode: '',
           }}
           validationSchema={validationForm}
           onSubmit={(values) => {
-            console.log(values);
+            // actionSubmitAddress(values);
+            dispatch(
+              userAddressAction(values, token, (closeModal) => {
+                setShowAddNewAddress(closeModal);
+              })
+            );
           }}
         >
           {({
@@ -65,7 +104,7 @@ const ModalChooseAddress = () => {
             handleSubmit,
             isValid,
           }) => (
-            <ContentAddNewAddress>
+            <ContentAddNewAddress onSubmit={handleSubmit}>
               <div className="form-wrapper">
                 <label className="label">
                   Save address as (ex : home address, office address)
@@ -200,11 +239,13 @@ const ModalChooseAddress = () => {
                 <Button
                   primary
                   className="btn"
+                  type="submit"
                   disabled={
                     !isValid ||
                     (Object.keys(touched).length === 0 &&
                       touched.constructor === Object)
                   }
+                  // disabled={errors}
                 >
                   Save
                 </Button>
@@ -226,7 +267,7 @@ const WrapperModal = styled.div`
   padding: 1rem;
 `;
 
-const ContentAddNewAddress = styled.div`
+const ContentAddNewAddress = styled.form`
   padding: 1rem;
   .form-wrapper {
     /* background-color: yellow; */

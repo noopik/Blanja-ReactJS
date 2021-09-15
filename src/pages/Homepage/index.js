@@ -14,7 +14,6 @@ import {
 import { Item } from '../../components/molecules/CardGrouping/styled';
 import Footer from '../../components/molecules/Footer';
 import { getAllProducts, showLoading } from '../../redux/actions';
-import { typeRedux } from '../../utils';
 
 const Homepage = () => {
   const [popularProducts, setPopularProducts] = useState([]);
