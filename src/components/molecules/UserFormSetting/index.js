@@ -32,15 +32,12 @@ const UserFormSetting = ({ session, ...props }) => {
       .required('Phone number is required')
       .min(11, 'Password must be at least 11 charaters')
       .max(13, 'Password must be less than 13 charaters'),
-    description: yup
-      .string()
-      .required('Name is required')
-      .max(250, 'Description maximum 250 character'),
+    description: yup.string().max(250, 'Description maximum 250 character'),
   });
 
   const handlePriviewImage = (event) => {
     const fileUploadImage = event.target.files[0];
-    console.log('fileUploadImage', fileUploadImage);
+    // console.log('fileUploadImage', fileUploadImage);
     if (
       fileUploadImage.type === 'image/jpeg' ||
       fileUploadImage.type === 'image/jpg' ||
@@ -58,7 +55,7 @@ const UserFormSetting = ({ session, ...props }) => {
     }
   };
 
-  // console.log('userState', userState);
+  console.log('previewAvatar', previewAvatar);
   // console.log('userState.name', userState.name);
   return (
     <Wrapper>
@@ -152,12 +149,12 @@ const UserFormSetting = ({ session, ...props }) => {
                       onBlur={handleBlur}
                       value={values.description}
                     ></textarea>
+                    {errors.description &&
+                      touched.description &&
+                      errors.description && (
+                        <AlertValidationForm message={errors.description} />
+                      )}
                   </div>
-                  {errors.description &&
-                    touched.description &&
-                    errors.description && (
-                      <AlertValidationForm message={errors.description} />
-                    )}
                 </div>
               )}
               {!session && <FormUser />}
@@ -167,11 +164,11 @@ const UserFormSetting = ({ session, ...props }) => {
                 <Button
                   className="btn-save"
                   type="submit"
-                  disabled={
-                    !isValid ||
-                    (Object.keys(touched).length === 0 &&
-                      touched.constructor === Object)
-                  }
+                  // disabled={
+                  //   !isValid ||
+                  //   (Object.keys(touched).length === 0 &&
+                  //     touched.constructor === Object)
+                  // }
                   primary
                 >
                   Save
@@ -182,14 +179,14 @@ const UserFormSetting = ({ session, ...props }) => {
               <Divider className="vertical" />
               <div className="image-wrapper">
                 <div className="avatar-wrapper">
-                  {userState.image && (
+                  {(previewAvatar || userState.image) && (
                     <img
                       src={previewAvatar ? previewAvatar : userState.image}
                       alt={userState.name}
                       className="avatar"
                     />
                   )}
-                  {!userState.image && (
+                  {!userState.image && !previewAvatar && (
                     <img
                       src={AvatarDefault}
                       alt={userState.name}
@@ -198,7 +195,9 @@ const UserFormSetting = ({ session, ...props }) => {
                   )}
                 </div>
                 <div className="select-avatar">
-                  <Button type="submit">Select Image</Button>
+                  <Button type="submit" className="btn">
+                    Select Image
+                  </Button>
                   <input
                     type="file"
                     name="image"
@@ -392,10 +391,15 @@ const ProfileWrapper = styled.div`
       }
       .select-avatar {
         position: relative;
+        .btn {
+          &:hover {
+            cursor: pointer;
+          }
+        }
         input {
           display: flex;
-          width: 150px;
-          height: 150px;
+          width: 100%;
+          height: 100%;
           position: absolute;
           right: 0;
           top: 0;
