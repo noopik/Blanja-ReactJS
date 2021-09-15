@@ -2,24 +2,24 @@
 import React, { useState } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import NumberFormat from 'react-number-format';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { Button, Counter, Loader, StarRating } from '../../../components/atoms';
 import { Heading, Text } from '../../../components/atoms/Typography';
 import { customMedia } from '../../../components/Layouts';
 import { ImageGaleryProduct } from '../../../components/molecules';
-import { addToSingleCart } from '../../../redux/actions';
+import { addProductToCarts, addToSingleCart } from '../../../redux/actions';
 
 const HeaderPage = ({ data }) => {
   const [chooseProduct, setChooseProduct] = useState({});
   const history = useHistory();
   const dispatch = useDispatch();
   // const userState = useSelector((state) => state.userReducer);
-  const chooseProductReducer = useSelector(
-    (state) => state.chooseProductReducer
-  );
-  const cartProductState = useSelector((state) => state.cartProductReducer);
+  // const chooseProductReducer = useSelector(
+  //   (state) => state.chooseProductReducer
+  // );
+  // const cartProductState = useSelector((state) => state.cartProductReducer);
 
   // const [color, setColor] = useState({
   //   red: false,
@@ -79,37 +79,52 @@ const HeaderPage = ({ data }) => {
     setChooseProduct({ ...chooseProduct, ...pricing });
   };
 
+  const actionAddProductToCarts = () => {
+    let dataProductSelected = {};
+    // console.log('chooseProduct', chooseProduct);
+    if (Object.keys(chooseProduct).length > 0) {
+      dataProductSelected = {
+        ...data,
+        ...chooseProduct,
+      };
+    } else {
+      dataProductSelected = {
+        ...data,
+        totalItem: 1,
+        totalPrice: data.price * 1,
+      };
+    }
+    dispatch(addProductToCarts(dataProductSelected));
+  };
   // // Handle Selected Color
   // const handleColors = (e, change) => {};
 
   // Action Add Bag
   // console.log('productItemState', productItemState);
-  const addProductToCart = () => {
-    const oldCart = cartProductState.productChoose;
-    let chooseProduct;
-    // let insertToCart;
-    if (oldCart) {
-      chooseProduct = {
-        ...chooseProductReducer,
-      };
-      oldCart.push({ ...chooseProduct });
-      // insertToCart = {
-      //   productChoose: oldCart,
-      // };
-      history.push('/my-bag');
-    } else {
-      chooseProduct = {
-        ...chooseProductReducer,
-      };
+  // const addProductToCart = () => {
+  //   const oldCart = cartProductState.productChoose;
+  //   let chooseProduct;
+  //   // let insertToCart;
+  //   if (oldCart) {
+  //     chooseProduct = {
+  //       ...chooseProductReducer,
+  //     };
+  //     oldCart.push({ ...chooseProduct });
+  //     // insertToCart = {
+  //     //   productChoose: oldCart,
+  //     // };
+  //     history.push('/my-bag');
+  //   } else {
+  //     chooseProduct = {
+  //       ...chooseProductReducer,
+  //     };
 
-      // insertToCart = {
-      //   productChoose: [{ ...chooseProduct }],
-      // };
-      history.push('/my-bag');
-    }
-  };
-
-  console.log('chooseProduct', chooseProduct);
+  //     // insertToCart = {
+  //     //   productChoose: [{ ...chooseProduct }],
+  //     // };
+  //     history.push('/my-bag');
+  //   }
+  // };
 
   return (
     <Main>
@@ -185,7 +200,7 @@ const HeaderPage = ({ data }) => {
         </div>
         <div className="d-flex">
           <Button className="btn-mini">Chat</Button>
-          <Button className="btn-mini" onClick={addProductToCart}>
+          <Button className="btn-mini" onClick={actionAddProductToCarts}>
             Add Bag
           </Button>
           <Button primary className="btn-main" onClick={actionSingleCart}>
