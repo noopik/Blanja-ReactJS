@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AsideLeft, AsideRight } from '../../components/atoms';
 import {
   AsideContent,
@@ -12,10 +12,9 @@ import {
   HeaderSection,
   Navbar,
 } from '../../components/molecules';
-import { typeRedux } from '../../utils';
 
 const MyBag = () => {
-  const { productChoose } = useSelector((state) => state.cartProductReducer);
+  const cartState = useSelector((state) => state.cartReducer);
   // const cartProductState = useSelector((state) => state.cartProductReducer);
   // const [selected, setSelected] = useState({
   //   idProduct: '',
@@ -23,22 +22,21 @@ const MyBag = () => {
   // });
   // const [dataSelected, setDataSelected] = useState([]);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     document.title = 'Blanja | My Bag';
   });
 
   const counterTotal = (value) => {
-    const sendData = {
-      price: productChoose.price,
-      total: value,
-    };
-
-    dispatch({
-      type: typeRedux.setChooseProductCount,
-      value: sendData,
-    });
+    // const sendData = {
+    //   price: productChoose.price,
+    //   total: value,
+    // };
+    // dispatch({
+    //   type: typeRedux.setChooseProductCount,
+    //   value: sendData,
+    // });
   };
 
   // console.log(cartProductState);
@@ -62,7 +60,7 @@ const MyBag = () => {
   const actionDelete = () => {
     // console.log(selected);
   };
-  // console.log('selected', selected);
+  console.log('cartState', cartState);
 
   return (
     <>
@@ -74,11 +72,11 @@ const MyBag = () => {
             <AsideLeft className="left">
               <CheckoutDetail
                 heading
-                totalProduct={productChoose ? productChoose.length : 0}
+                // totalProduct={productChoose ? productChoose.length : 0}
                 clickDelete={actionDelete}
               />
-              {productChoose &&
-                productChoose.map((product, index) => (
+              {cartState?.data &&
+                cartState.data.map((product, index) => (
                   <CheckoutDetail
                     body
                     nameProduct={product.nameProduct}
@@ -92,7 +90,7 @@ const MyBag = () => {
                 ))}
             </AsideLeft>
             <AsideRight className="right">
-              <CardCheckout myBag />
+              <CardCheckout myBag pricing={cartState?.pricing} />
             </AsideRight>
           </AsideContent>
         </SectionContent>

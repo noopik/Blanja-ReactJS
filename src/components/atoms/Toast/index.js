@@ -24,6 +24,17 @@ export const Toast = (message, type) => {
         progress: undefined,
       });
       break;
+    case 'warning':
+      toast.warning(message, {
+        position: 'top-center',
+        autoClose: 8000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      break;
     case 'info':
       toast.info(message, {
         position: 'top-center',

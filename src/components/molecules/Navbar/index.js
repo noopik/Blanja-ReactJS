@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { BrandLogo, ButtonIcon, SearchInput } from '../../atoms';
 import {} from '../../atoms/Typography';
 import {} from '../../molecules';
@@ -14,10 +14,10 @@ const NavbarComponent = ({ onChange, value, session }) => {
   // const location = useLocation();
   // const history = useHistory();
   // const userState = useSelector((state) => state.userReducer);
-  const { isShow: loadingState } = useSelector((state) => state.loadingReducer);
+  // const { isShow: loadingState } = useSelector((state) => state.loadingReducer);
 
   // const global = useSelector((state) => state);
-  console.log(loadingState);
+  // console.log(loadingState);
 
   // const handleSearch = (e) => {
   //   onSearch = {

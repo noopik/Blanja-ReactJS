@@ -13,6 +13,7 @@ const initialUser = {
   refresh: '',
   token: '',
   storeName: '',
+  address: '',
 };
 
 // REDUCER FOR REGISTER FLOW
@@ -48,6 +49,11 @@ export const userReducer = (state = { initialUser }, action) => {
       return {
         ...state,
         name: action.value,
+      };
+    case typeRedux.setUserAddress:
+      return {
+        ...state,
+        address: action.value,
       };
     default:
       return state;

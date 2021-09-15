@@ -1,10 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import NumberFormat from 'react-number-format';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { DMNullImage } from '../../../assets/images';
-import { getItemProduct } from '../../../redux/actions';
 import StarRating from '../StarRating';
 import { BodyProduct, Card } from './styled';
 
@@ -17,11 +16,11 @@ const CardProduct = ({
   image,
   idProduct,
 }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const history = useHistory();
   // const [slug, setSlug] = useState('');
   const [titleProduct, setTitleProduct] = useState('');
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
 
   const slugUrl = () => {
     // let slug = title;
@@ -54,8 +53,7 @@ const CardProduct = ({
   }, [title]);
 
   const actionCard = () => {
-    // console.log(1213, id);
-    dispatch(getItemProduct(idProduct, token));
+    // dispatch(getItemProduct(idProduct, token));
     history.push(`/products/${idProduct}`);
   };
 

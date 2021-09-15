@@ -1,25 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const FormInput = ({
-  type,
-  placeholder,
-  name,
-  onChange,
-  value,
-  className,
-  defaultValue,
-  ...props
-}) => {
+const FormInput = ({ type, placeholder, name, className, ...props }) => {
   return (
     <Input
       type={type}
       placeholder={placeholder}
       name={name}
-      onChange={onChange}
-      value={value}
       className={className}
-      defaultValue={defaultValue}
       {...props}
     />
   );

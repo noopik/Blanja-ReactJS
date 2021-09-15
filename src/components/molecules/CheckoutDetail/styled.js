@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { CardWrapper } from '../../atoms';
 
-export const Wrapper = styled(CardWrapper)`
+export const Wrapper = styled((props) => <CardWrapper {...props} />)`
   display: flex;
   margin-bottom: 1rem;
 
@@ -25,3 +25,7 @@ export const Wrapper = styled(CardWrapper)`
     }
   }
 `;
+
+// const ExtendedComponent = styled(props => <CardWrapper {...props} />)`
+//   [Your awesome styles here]
+// `;
