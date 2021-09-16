@@ -1,7 +1,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/github_username/repo_name">
+  <a href="https://github.com/dwinovic/Blanja-ReactJS">
     <img src="https://res.cloudinary.com/dnv-images/image/upload/v1631599120/Blanja%20com/blanja_pdgveq.svg" alt="Logo" width="140" height="194">
   </a>
 
@@ -13,7 +13,7 @@
     <a href="https://github.com/dwinovic/Blanja-ReactJS"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/dwinovic/Blanja-ReactJS">View Demo</a>
+    <a href="https://blanja.vercel.app/">View Demo</a>
     ·
     <a href="https://github.com/dwinovic/Blanja-ReactJS">Report Bug</a>
     ·
@@ -27,20 +27,28 @@
   <ol>
     <li>
       <a href="#about-the-project">About The Project</a>
+        <ol>
+            <li>
+                <a href="#build-with">Build With</a>
+            </li>
+        </ol>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
+      <ol>
+        <li>
+          <a href="#installation">Installation</a>
+        </li>
+        <li>
+          <a href="#prerequisites">Prerequisites</a>
+        </li>
+        <li>
+          <a href="#related-project">Related Project</a>
+        </li>
+      </ol>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
+    <li><a href="#screenshots">Screenshots</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
@@ -48,8 +56,69 @@
 
 ## About The Project
 
+### Prerequisites
+
 <b>Blanja</b> is an online shop that currently focuses on the fashion market. Allows sellers to market their fashion products and customers can buy the best and cheap fashion needs.
 
-## Features
+### Build With
+* [JavaScript](https://www.javascript.com/)
+* [React Js](https://reactjs.org/)
+* [Redux](https://redux.js.org/)
+* [Styled Components](https://styled-components.com/)
+* [Formik](https://formik.org/)
+* [Material UI](https://material-ui.com/)
 
-- 
+## Getting Started
+
+This is an example of how to list things you need to use the software and how to install them.
+* [Node Js](https://nodejs.org/en/download/)
+
+### Installation
+
+1. Clone These 2 Repos (Backend and Frontend)
+```sh
+git clone https://github.com/dwinovic/Blanja-ReactJS.git
+```
+2. Go To Folder Repo
+```sh
+cd Blanja-ReactJS
+```
+3. Install Module
+```sh
+npm install
+```
+4. Add .env file at root folder project, and add following
+```sh
+REACT_APP_API_SERVER=[BACKEND_API]
+REACT_APP_TIMEOUT=5000
+```
+5. Start website
+```sh
+npm start
+```
+
+### Related Project
+* [`Frontend-Blanja`](https://github.com/dwinovic/Blanja-ReactJS)
+* [`Backend-Blanja`](https://github.com/dwinovic/blanja-backend)
+
+## Screenshots
+
+<div align="center">
+    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631751966/Blanja%20com/Blanja_01_qtyptw.png">   
+    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631751966/Blanja%20com/Blanja_02_txalbt.png">
+</div>
+<div align="center">
+    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631751969/Blanja%20com/Blanja_03_zlzxus.png">   
+    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631751968/Blanja%20com/Blanja_04_kkuxbk.png">
+</div>
+<div align="center">
+    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631751966/Blanja%20com/Blanja_05_mdkaeq.png">   
+    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631751966/Blanja%20com/Blanja_06_keeaql.png">
+</div>
+
+## Contact
+My Email : novidwicahya19@gmail.com
+
+Project Link: [https://github.com/dwinovic/Blanja-ReactJS](https://github.com/dwinovic/Blanja-ReactJS)
+
+
