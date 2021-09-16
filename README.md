@@ -56,8 +56,6 @@
 
 ## About The Project
 
-### Prerequisites
-
 <b>Blanja</b> is an online shop that currently focuses on the fashion market. Allows sellers to market their fashion products and customers can buy the best and cheap fashion needs.
 
 ### Build With
@@ -69,6 +67,8 @@
 * [Material UI](https://material-ui.com/)
 
 ## Getting Started
+
+### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
 * [Node Js](https://nodejs.org/en/download/)
