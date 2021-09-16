@@ -112,8 +112,8 @@ npm start
     <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631751968/Blanja%20com/Blanja_04_kkuxbk.png">
 </div>
 <div align="center">
-    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631751966/Blanja%20com/Blanja_05_mdkaeq.png">   
-    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631751966/Blanja%20com/Blanja_06_keeaql.png">
+    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631753876/Blanja%20com/Blanja_05_cbwnvu.png">   
+    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631753879/Blanja%20com/Blanja_06_s0t7dp.png">
 </div>
 
 ## Contact
