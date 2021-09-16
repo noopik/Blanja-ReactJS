@@ -75,7 +75,7 @@ export default class MultipleItems extends Component {
     this.pause = this.pause.bind(this);
     this.state = {
       categories: [],
-      colors: ['red', 'blue', 'orange', 'cyan'],
+      colors: ['red', 'blue', 'orange', 'cyan', 'blue'],
     };
   }
   play() {

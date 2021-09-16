@@ -130,9 +130,7 @@ const UserNav = () => {
         {showAvatarPopup && (
           <div className="popup">
             <div className="item">
-              <a href="/profile" onClick={handleProfile}>
-                My Profile
-              </a>
+              <p onClick={handleProfile}>My Profile</p>
             </div>
             <div className="item">
               <Button primary onClick={actionLogout}>
@@ -192,9 +190,8 @@ const Wrapper = styled.div`
       border-radius: 15px 0 15px 15px;
       .item {
         margin-bottom: 1rem;
-        a {
+        p {
           color: #222222;
-          text-decoration: none;
           &:hover {
             cursor: pointer;
           }
