@@ -1,14 +1,20 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import {
   BankGopay,
   BankMastercard,
   BankPosIndonesia,
 } from '../../../assets/images';
-import { Button, Divider, InputCheck } from '../../atoms';
+import { moneyFormatter } from '../../../utils';
+import { Button, Divider, InputCheck, Toast } from '../../atoms';
 import { Heading, Text } from '../../atoms/Typography';
 
 const ModalPayment = () => {
+  const { cartReducer: cartState } = useSelector((state) => state);
+  const history = useHistory();
+
   return (
     <>
       <WrapperModal>
@@ -60,7 +66,7 @@ const ModalPayment = () => {
               Order
             </Text>
             <Text className="text" as="lg" font="bold">
-              $ 40.0
+              $ {moneyFormatter.format(cartState?.pricing.totalPrice)}
             </Text>
           </div>
           <div className="row">
@@ -68,7 +74,7 @@ const ModalPayment = () => {
               Delivery
             </Text>
             <Text className="text" as="lg" font="bold">
-              $ 5.0
+              $ {moneyFormatter.format(cartState?.pricing.deliveryPrice)}
             </Text>
           </div>
         </div>
@@ -78,10 +84,24 @@ const ModalPayment = () => {
               Shooping Summary
             </Text>
             <Text as="lg" font="bold" color="primary" className="totalPrice">
-              $. 45.0
+              $.{' '}
+              {moneyFormatter.format(
+                cartState?.pricing.totalPrice - cartState?.pricing.deliveryPrice
+              )}
             </Text>
           </div>
-          <Button primary className="btn-action">
+          <Button
+            primary
+            className="btn-action"
+            onClick={() => {
+              Toast(
+                `Thank you for ordering. Your order is being processed.
+              Have a nice day`,
+                'success'
+              );
+              history.push('/');
+            }}
+          >
             Buy
           </Button>
         </div>
