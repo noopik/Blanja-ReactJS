@@ -153,6 +153,7 @@ export default class MultipleItems extends Component {
             categories.map((item, index) => (
               <ImageCard
                 category
+                key={index}
                 image={item.image ? item.image : DMNullImage}
                 title={item.nameCategory}
                 bgCard={colors[index]}

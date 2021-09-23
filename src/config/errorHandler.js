@@ -8,7 +8,6 @@ export default function errorHandler(error) {
       else message = error.response.message;
 
       if (typeof message === 'string') {
-        console.log(message);
       }
 
       return Promise.reject(error);

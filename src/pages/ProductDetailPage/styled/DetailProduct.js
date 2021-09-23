@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { Loader } from '../../../components/atoms';
 import { Heading, Text } from '../../../components/atoms/Typography';
-import { CardGrouping } from '../../../components/molecules';
 import { customMedia } from '../../../components/Layouts';
-
+import { CardGrouping } from '../../../components/molecules';
 const DetailProduct = ({ data }) => {
   const [dataDescription, setDataDescription] = useState({});
 
@@ -27,7 +25,8 @@ const DetailProduct = ({ data }) => {
           {dataDescription.description ? (
             dataDescription.description
           ) : (
-            <Loader line className="loader" />
+            // <Loader line className="loader" />
+            <p>No description</p>
           )}
         </Text>
       </div>

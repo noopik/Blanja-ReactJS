@@ -19,10 +19,12 @@ import Loader from './Loader';
 import ButtonIcon from './ButtonIcon';
 import ScreenLoading from './ScreenLoading';
 import AlertValidationForm from './AlertValidationForm';
+import Checked from './Checked';
 export * from './Toast';
 
 export {
   AlertValidationForm,
+  Checked,
   ScreenLoading,
   IconLogo,
   BrandLogo,

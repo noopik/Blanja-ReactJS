@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import NumberFormat from 'react-number-format';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import {
@@ -19,6 +19,7 @@ import { addToSingleCart } from '../../../redux/actions';
 
 const HeaderPage = ({ data }) => {
   const [chooseProduct, setChooseProduct] = useState({});
+  const userState = useSelector((state) => state.userReducer);
   const history = useHistory();
   const dispatch = useDispatch();
   // const userState = useSelector((state) => state.userReducer);
@@ -57,6 +58,17 @@ const HeaderPage = ({ data }) => {
   // }, [data]);
 
   const actionSingleCart = () => {
+    // START = Improve nanti kalau nodemailer di Hosting sdh jalan
+    // if (!userState.verified) {
+    //   return Toast(
+    //     'Upps, sorry your account is not verified. Check your email.',
+    //     'warning'
+    //   );
+    // }
+    // END = Improve nanti kalau nodemailer di Hosting sdh jalan
+    if (userState.role === 'seller') {
+      return Toast('Upps, sorry your cannot buy your product.', 'warning');
+    }
     let dataProductSelected = {};
     if (Object.keys(chooseProduct).length > 0) {
       dataProductSelected = {
@@ -131,7 +143,6 @@ const HeaderPage = ({ data }) => {
   //     history.push('/my-bag');
   //   }
   // };
-
   return (
     <Main>
       <ImageGaleryProduct images={data.imageProduct} />

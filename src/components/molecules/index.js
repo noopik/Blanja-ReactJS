@@ -26,8 +26,10 @@ import ModalPayment from './ModalPayment';
 import AlertVerification from './AlertVerification/AlertVerification';
 import ProductTables from './ProductTables';
 import PaginationRange from './PaginationRange';
+import OrderTables from './OrderTable';
 
 export {
+  OrderTables,
   PaginationRange,
   ProductTables,
   AlertVerification,

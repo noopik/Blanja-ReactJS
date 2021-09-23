@@ -7,7 +7,6 @@ export const searchAction = (keyword, page) => (dispatch) => {
   dispatch(showLoading(true));
   Axios.get(`/products?src=${keyword}&limit=10&page=${page ? page : 1}`)
     .then((res) => {
-      console.log(123, res);
       dispatch(showLoading(false));
       if (res.data.statusCode === 200) {
         const sendState = {

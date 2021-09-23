@@ -1,3 +1,6 @@
+import { showLoading } from '.';
+import { Toast } from '../../components/atoms';
+import { Axios } from '../../config';
 import { typeRedux } from '../../utils';
 
 export const addToSingleCart = (data, history) => (dispatch) => {
@@ -28,3 +31,20 @@ export const addProductToCarts = (data) => (dispatch, getState) => {
   totalPrice += data.totalPrice;
   console.log('totalPrice', totalPrice);
 };
+
+export const actionCheckoutCart =
+  (data, token, router) => (dispatch, getState) => {
+    dispatch(showLoading(true));
+    Axios.post(`/transactions`, data, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then(() => {
+        dispatch(showLoading(false));
+        router.replace('/user/orders');
+        dispatch({ type: typeRedux.setResetCart });
+        Toast(`Success checkout`, 'success');
+      })
+      .catch((err) => {
+        dispatch(showLoading(false));
+      });
+  };

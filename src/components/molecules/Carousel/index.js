@@ -88,14 +88,14 @@ const MultipleItems = ({ className }) => {
         console.log(err);
       });
   }, []);
-  console.log('product', product);
   return (
     <HeaderCarousel className={className}>
       <Slider {...settings}>
         {product &&
-          product.map((item) => {
+          product.map((item, index) => {
             return (
               <ImageCard
+                key={index}
                 image={item.imageProduct}
                 title={item.nameProduct}
                 to={`/products/${item.id}`}

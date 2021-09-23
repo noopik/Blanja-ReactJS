@@ -1,5 +1,5 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import styled from 'styled-components';
 import {
@@ -7,14 +7,33 @@ import {
   BankMastercard,
   BankPosIndonesia,
 } from '../../../assets/images';
+import { actionCheckoutCart } from '../../../redux/actions';
 import { moneyFormatter } from '../../../utils';
-import { Button, Divider, InputCheck, Toast } from '../../atoms';
+import { Button, Checked, Divider, Toast } from '../../atoms';
 import { Heading, Text } from '../../atoms/Typography';
 
 const ModalPayment = () => {
-  const { cartReducer: cartState } = useSelector((state) => state);
+  const { cartReducer: cartState, userReducer: userState } = useSelector(
+    (state) => state
+  );
   const history = useHistory();
-
+  const dispatch = useDispatch();
+  const [selectBank, setSelectBank] = useState(false);
+  const token = localStorage.getItem('token');
+  const actionCheckout = () => {
+    if (!selectBank) {
+      return Toast(`Please select bank payment`, 'warning');
+    } else {
+      const dataCheckoutIn = {
+        idUser: userState.idUser,
+        bankPayment: selectBank,
+        idProduct: cartState.data[0].id,
+        quantity: cartState.data[0].totalItem,
+        statusOrder: 'Success',
+      };
+      dispatch(actionCheckoutCart(dataCheckoutIn, token, history));
+    }
+  };
   return (
     <>
       <WrapperModal>
@@ -22,37 +41,65 @@ const ModalPayment = () => {
           <Text as="lg" font="medium">
             Payment method
           </Text>
+
           <div className="bank">
-            <div className="iconBank">
-              <img src={BankGopay} alt="gopay" />
-            </div>
-            <div className="nameBank">
-              <Heading as={2}>Gopay</Heading>
-            </div>
-            <div className="checkbox">
-              <InputCheck />
+            <input
+              type="radio"
+              name="bank"
+              value="gopay"
+              id="gopay"
+              onChange={(e) => setSelectBank(e.target.value)}
+            />
+            <div className="checkmark">
+              <div className="iconBank">
+                <img src={BankGopay} alt="gopay" />
+              </div>
+              <div className="nameBank">
+                <Heading as={2}>Gopay</Heading>
+              </div>
+              <div className="checkbox">
+                <Checked checked={selectBank === 'gopay'} />
+              </div>
             </div>
           </div>
           <div className="bank">
-            <div className="iconBank">
-              <img src={BankPosIndonesia} alt="gopay" />
-            </div>
-            <div className="nameBank">
-              <Heading as={2}>Pos Indonesia</Heading>
-            </div>
-            <div className="checkbox">
-              <InputCheck />
+            <input
+              type="radio"
+              name="bank"
+              value="pos-indonesia"
+              id="pos-indonesia"
+              onChange={(e) => setSelectBank(e.target.value)}
+            />
+            <div className="checkmark">
+              <div className="iconBank">
+                <img src={BankPosIndonesia} alt="gopay" />
+              </div>
+              <div className="nameBank">
+                <Heading as={2}>Pos Indonesia</Heading>
+              </div>
+              <div className="checkbox">
+                <Checked checked={selectBank === 'pos-indonesia'} />
+              </div>
             </div>
           </div>
           <div className="bank">
-            <div className="iconBank">
-              <img src={BankMastercard} alt="gopay" />
-            </div>
-            <div className="nameBank">
-              <Heading as={2}>Mastercard</Heading>
-            </div>
-            <div className="checkbox">
-              <InputCheck />
+            <input
+              type="radio"
+              name="bank"
+              value="master-card"
+              id="master-card"
+              onChange={(e) => setSelectBank(e.target.value)}
+            />
+            <div className="checkmark">
+              <div className="iconBank">
+                <img src={BankMastercard} alt="gopay" />
+              </div>
+              <div className="nameBank">
+                <Heading as={2}>Mastercard</Heading>
+              </div>
+              <div className="checkbox">
+                <Checked checked={selectBank === 'master-card'} />
+              </div>
             </div>
           </div>
         </div>
@@ -66,7 +113,7 @@ const ModalPayment = () => {
               Order
             </Text>
             <Text className="text" as="lg" font="bold">
-              $ {moneyFormatter.format(cartState?.pricing.totalPrice)}
+              Rp. {moneyFormatter.format(cartState?.pricing.totalPrice)}
             </Text>
           </div>
           <div className="row">
@@ -74,7 +121,7 @@ const ModalPayment = () => {
               Delivery
             </Text>
             <Text className="text" as="lg" font="bold">
-              $ {moneyFormatter.format(cartState?.pricing.deliveryPrice)}
+              Rp. {moneyFormatter.format(cartState?.pricing.deliveryPrice)}
             </Text>
           </div>
         </div>
@@ -84,24 +131,13 @@ const ModalPayment = () => {
               Shooping Summary
             </Text>
             <Text as="lg" font="bold" color="primary" className="totalPrice">
-              $.{' '}
+              Rp..{' '}
               {moneyFormatter.format(
                 cartState?.pricing.totalPrice - cartState?.pricing.deliveryPrice
               )}
             </Text>
           </div>
-          <Button
-            primary
-            className="btn-action"
-            onClick={() => {
-              Toast(
-                `Thank you for ordering. Your order is being processed.
-              Have a nice day`,
-                'success'
-              );
-              history.push('/');
-            }}
-          >
+          <Button primary className="btn-action" onClick={actionCheckout}>
             Buy
           </Button>
         </div>
@@ -118,6 +154,35 @@ const WrapperModal = styled.div`
   .method {
     padding: 1rem;
     .bank {
+      display: block;
+      position: relative;
+      cursor: pointer;
+      font-size: 22px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      margin-bottom: 16px;
+      input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+        height: 100%;
+        width: 100%;
+      }
+      .checkmark {
+        display: flex;
+        justify-content: space-between;
+        margin-right: 10px;
+        .iconBank {
+          width: 100px;
+        }
+        .nameBank {
+          flex: 1;
+        }
+      }
+    }
+    /* .bank {
       margin-top: 1rem;
       display: flex;
       justify-content: space-between;
@@ -130,7 +195,7 @@ const WrapperModal = styled.div`
       .iconBank {
         max-width: 30px;
       }
-    }
+    } */
   }
   .divider {
     margin: 1rem 0;

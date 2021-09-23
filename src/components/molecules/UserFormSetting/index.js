@@ -37,7 +37,6 @@ const UserFormSetting = ({ session, ...props }) => {
 
   const handlePriviewImage = (event) => {
     const fileUploadImage = event.target.files[0];
-    // console.log('fileUploadImage', fileUploadImage);
     if (
       fileUploadImage.type === 'image/jpeg' ||
       fileUploadImage.type === 'image/jpg' ||
@@ -55,7 +54,6 @@ const UserFormSetting = ({ session, ...props }) => {
     }
   };
 
-  console.log('previewAvatar', previewAvatar);
   // console.log('userState.name', userState.name);
   return (
     <Wrapper>
@@ -84,7 +82,7 @@ const UserFormSetting = ({ session, ...props }) => {
           isValid,
         }) => (
           <Form className="form" onSubmit={handleSubmit}>
-            <div>
+            <div className="form-input-wrapper">
               <div className="form-wrapper">
                 <label htmlFor="name" className="name-input">
                   Name
@@ -266,65 +264,82 @@ const FormUser = () => {
 
 const Wrapper = styled.div`
   width: 100%;
-  /* background-color: cyan; */
   justify-content: space-between;
   ${customMedia.lessThan('1410px')`
     flex-direction: column-reverse; 
     width: 100%;
-  `}/* background-color: yellow; */
+  `}
 `;
 
 const Form = styled.form`
-  /* background-color: greenyellow; */
   &.form {
     display: flex;
+    justify-content: space-between;
     width: 100%;
-    .form-wrapper {
-      /* background-color: orange; */
-      display: flex;
-      flex-direction: row;
-      margin-bottom: 1rem;
-      width: 100%;
-      ${customMedia.lessThan('1410px')`
-      margin-top: 1rem;
-        width: 100%;
+    gap: 32px;
+    ${customMedia.lessThan('1126px')`
+      flex-direction: column-reverse;
+    `}
+    ${customMedia.lessThan('534px')`
+       gap:0px;
+    `}
+    .form-input-wrapper {
+      flex: 1;
+      .form-wrapper {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 1rem;
+        ${customMedia.lessThan('1410px')`
+          margin-top: 1rem;
+          width: 100%;
         `}
-      .name-input {
-        width: 200px;
-      }
-      .form-input {
-        .gender-wrapper {
-          /* background-color: red; */
-          display: flex;
-          flex-direction: row;
-          .gender {
-            /* background-color: yellow; */
+        ${customMedia.lessThan('534px')`
+          flex-direction: column;
+        `}
+        .name-input {
+          width: 200px;
+          text-align: right;
+          ${customMedia.lessThan('647px')`
+            width: 100px;
+          `}
+          ${customMedia.lessThan('534px')`
+            text-align: left;
+            width: 100%;
+            margin-right: 0;
+            justify-content: flex-start;
+          `}
+        }
+        .form-input {
+          width: 100%;
+          .gender-wrapper {
+            display: flex;
+            flex-direction: row;
+          }
+          .input {
+            width: 100%;
+            margin-bottom: 1rem;
+            ${customMedia.lessThan('534px')` 
+              margin-bottom: 0;
+            `}
+          }
+          input {
+            ${customMedia.lessThan('1410px')`
+              margin-top: 1rem;
+              width: 100%;
+          `}
           }
         }
-        width: 100%;
-        .input {
-          width: 100%;
-          margin-bottom: 1rem;
-          /* background-color: yellow; */
+        label {
+          margin-right: 32px;
+          width: 120px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 24px;
+          color: #9b9b9b;
         }
-        input {
-          ${customMedia.lessThan('1410px')`
-            margin-top: 1rem;
-            width: 100%;
-        `}
-        }
-      }
-      label {
-        margin-right: 32px;
-        width: 120px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 24px;
-        color: #9b9b9b;
-        /* background-color: yellow; */
       }
     }
 
@@ -353,35 +368,27 @@ const Form = styled.form`
 `;
 
 const ProfileWrapper = styled.div`
-  /* background-color: pink; */
   ${customMedia.lessThan('1410px')`
     /* for screen sizes less than 1280px */
-    width: 100%; 
+    // width: 100%; 
   `}
-
   /* RESPONSIVE lesstThan 1015px */
-
   &.profile-image {
     display: flex;
-    margin-left: 64px;
-    margin-right: 32px;
+    gap: 32px;
     /* RESPONSIVE lesstThan 1015px */
-    /* background-color: yellow; */
-    ${customMedia.lessThan('1586px')`
-    // margin-left: 0; 
-  `}
-    /* RESPONSIVE lesstThan 1015px */ 
-  ${customMedia.lessThan('1410px')` 
-    justify-content: center; 
-  `} 
-    ${customMedia.lessThan('1586px')`
-    // margin-left: 34px; 
-  `}
+    ${customMedia.lessThan('1410px')` 
+      justify-content: center; 
+    `}
     .vertical {
       width: 2px;
       height: 80%;
     }
     .image-wrapper {
+      padding: 0 60px;
+      ${customMedia.lessThan('1410px')`
+         padding: 0 30px;
+      `}
       .avatar-wrapper {
         img {
           border-radius: 100%;
@@ -409,15 +416,9 @@ const ProfileWrapper = styled.div`
       .avatar {
         width: 150px;
       }
-      margin-left: 79px;
-      ${customMedia.lessThan('1586px')`
-    /* for screen sizes less than 1280px */
-    // margin-left: 34px; 
-  `}
       display: flex;
       flex-direction: column;
       gap: 1rem;
-
       img {
         width: 110px;
       }

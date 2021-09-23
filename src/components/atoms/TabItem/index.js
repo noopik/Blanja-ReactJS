@@ -1,11 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { customMedia } from '../../Layouts';
-import SearchInput from '../SearchInput';
+import { Heading } from '../Typography';
 const TabContent = ({ children, title }) => {
   return (
     <Content>
-      <SearchInput className="input-wrapper" placeholder="Find your products" />
+      <Heading as={2} font="regular">
+        {title}
+      </Heading>
+      {/* <SearchInput className="input-wrapper" placeholder="Find your products" /> */}
       {children}
     </Content>
   );
