@@ -118,7 +118,6 @@ export const userAddressAction =
     })
       .then((res) => {
         Toast('Success Address Added', 'success');
-        console.log(res);
         const resData = res.data.data;
         const addressUser = `${resData.name_address},  ${resData.phone_recipient} | ${resData.address}, ${resData.city}, ${resData.postal_code}.`;
         // console.log('addressUser', addressUser);

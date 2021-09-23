@@ -19,13 +19,12 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     })
       .then((result) => {
         const dataResult = result.data.data;
-
         setIsLogin({ check: true, passed: true });
         dispatch(showLoading(false));
         dispatch({ type: typeRedux.setUserLogin, value: dataResult });
       })
       .catch((err) => {
-        console.log(err.response);
+        // console.log(err.response);
         setIsLogin({ check: true, passed: false });
         dispatch(showLoading(false));
         return Toast(

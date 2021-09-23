@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { moneyFormatter } from '../../../utils';
 import { Counter } from '../../atoms';
 import { Text } from '../../atoms/Typography';
 
@@ -28,7 +29,7 @@ const Body = ({
       {!checkout && (
         <Counter counterValue={counterTotal} defaultValue={defaultValue} />
       )}
-      <p className="price">{total}</p>
+      <p className="price">Rp. {moneyFormatter.format(total)}</p>
     </BodyWrapper>
   );
 };

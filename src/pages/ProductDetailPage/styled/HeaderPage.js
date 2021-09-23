@@ -58,11 +58,16 @@ const HeaderPage = ({ data }) => {
   // }, [data]);
 
   const actionSingleCart = () => {
-    if (!userState.verified) {
-      return Toast(
-        'Upps, sorry your account is not verified. Check your email.',
-        'warning'
-      );
+    // START = Improve nanti kalau nodemailer di Hosting sdh jalan
+    // if (!userState.verified) {
+    //   return Toast(
+    //     'Upps, sorry your account is not verified. Check your email.',
+    //     'warning'
+    //   );
+    // }
+    // END = Improve nanti kalau nodemailer di Hosting sdh jalan
+    if (userState.role === 'seller') {
+      return Toast('Upps, sorry your cannot buy your product.', 'warning');
     }
     let dataProductSelected = {};
     if (Object.keys(chooseProduct).length > 0) {
@@ -138,7 +143,6 @@ const HeaderPage = ({ data }) => {
   //     history.push('/my-bag');
   //   }
   // };
-
   return (
     <Main>
       <ImageGaleryProduct images={data.imageProduct} />

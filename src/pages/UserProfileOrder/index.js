@@ -1,11 +1,32 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect, useState } from 'react';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 import { Tabs, Tab } from 'react-bootstrap';
 import TabContent from '../../components/atoms/TabItem';
 import styled from 'styled-components';
+import { OrderTables } from '../../components/molecules';
+import { useSelector } from 'react-redux';
+import { Axios } from '../../config';
 
 const UserProfileOrder = () => {
+  const { userReducer: userState } = useSelector((state) => state);
+  const token = localStorage.getItem('token');
+  const [allData, setAllData] = useState([]);
+
+  useEffect(() => {
+    Axios.get(`/transactions/user/${userState.idUser}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+      .then((res) => {
+        const responseData = res.data.data;
+        setAllData(responseData);
+      })
+      .catch((err) => {
+        console.log('res', err.response);
+      });
+  }, []);
+
   return (
     <>
       <UserProfilePage
@@ -14,15 +35,29 @@ const UserProfileOrder = () => {
         session="customer"
       >
         <Main heading="My Orders">
-          <TabsWrapper defaultActiveKey="profile">
-            <Tab eventKey="home" title="Home">
-              <TabContent title="Home" />
+          <TabsWrapper defaultActiveKey="all-item">
+            <Tab eventKey="all-item" title="All Item">
+              <TabContent title="All Item">
+                <OrderTables data={allData} />
+              </TabContent>
             </Tab>
-            <Tab eventKey="profile" title="profile">
-              <TabContent title="profile" />
+            <Tab eventKey="profile" title="Get paid">
+              <TabContent title="Get paid" />
             </Tab>
-            <Tab eventKey="about" title="about">
-              <TabContent title="about" />
+            <Tab eventKey="processed" title="Processed">
+              <TabContent title="Processed" />
+            </Tab>
+            <Tab eventKey="get-paid" title="Get paid">
+              <TabContent title="Get paid" />
+            </Tab>
+            <Tab eventKey="sent" title="Sent">
+              <TabContent title="Sent" />
+            </Tab>
+            <Tab eventKey="completed" title="Completed">
+              <TabContent title="Completed" />
+            </Tab>
+            <Tab eventKey="order-cancel" title="Order cancel">
+              <TabContent title="Order cancel" />
             </Tab>
           </TabsWrapper>
         </Main>

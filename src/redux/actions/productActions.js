@@ -46,9 +46,7 @@ export const searchProduct = (keyword) => (dispatch) => {
   Axios.get(`/products`, {
     headers: { Authorization: `Bearer ${token}` },
   })
-    .then((res) => {
-      console.log(res);
-    })
+    .then((res) => {})
     .catch((err) => {
       console.log(err);
     });
@@ -74,7 +72,6 @@ export const addProduct = (data, token, history) => (dispatch, getState) => {
   })
     .then((res) => {
       Toast('Success products Added', 'success');
-      console.log(res);
       dispatch(showLoading(false));
       history.replace('/admin/seller/products');
     })

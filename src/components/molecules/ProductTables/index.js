@@ -10,6 +10,7 @@ import { Axios } from '../../../config';
 import { showLoading } from '../../../redux/actions';
 import { Button, Toast } from '../../atoms';
 import { Heading } from '../../atoms/Typography';
+import { customMedia } from '../../Layouts';
 import Modal from '../Modal';
 
 const ProductTables = ({ dataSeller }) => {
@@ -41,7 +42,6 @@ const ProductTables = ({ dataSeller }) => {
       .then((res) => {
         dispatch(showLoading(false));
         const data = res.data.data;
-        console.log(data);
         setShowData(data);
       })
       .catch((err) => {
@@ -188,8 +188,15 @@ const StyleProductTables = styled.div`
   p {
     margin: 0;
   }
+  ${customMedia.lessThan('737px')`
+    overflow: scroll;
+  `}
 
   .body {
+    ${customMedia.lessThan('737px')`
+      overflow-x: scroll;
+    `}
+    min-width: 600px;
     .action-btn {
       width: max-content;
       margin-right: 1rem;
