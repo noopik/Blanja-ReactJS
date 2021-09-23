@@ -9,10 +9,10 @@ const CardCheckout = ({ myBag, checkout, buyAction, pricing }) => {
     <CardWrapper>
       <Heading as={3}>Shopping summary</Heading>
       {myBag && (
-        <div className="d-flex mb-4">
-          <Text as="lg">Total price</Text>
+        <div className="d-flex justify-content-between mb-4">
+          <Text as="lg">Total price </Text>
           <Text as="lg" font="medium" display="flex" justifyContent="flex-end">
-            $ {pricing.totalPrice}
+            Rp. {moneyFormatter.format(pricing.totalPrice)}
           </Text>
         </div>
       )}

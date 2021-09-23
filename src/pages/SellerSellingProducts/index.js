@@ -29,9 +29,9 @@ import { Main } from '../UserProfile/styled';
 const SellerSellingProducts = () => {
   const [product, setProduct] = useState();
   const [category, setCategory] = useState([]);
-  const [selectedColor, setSelectedColor] = useState(
-    product?.color ? product?.color : ''
-  );
+  // const [selectedColor, setSelectedColor] = useState(
+  //   product?.color ? product?.color : ''
+  // );
   const [description, setDescription] = useState('');
   const [uploadImage, setUploadImage] = useState([]);
   const [previewAvatar, setPreviewAvatar] = useState([]);
@@ -127,28 +127,28 @@ const SellerSellingProducts = () => {
   }, [uploadImage]);
 
   // SELECT COLOR
-  const [size, setSize] = useState({
-    red: false,
-    blue: false,
-    orange: false,
-    pink: false,
-    yellow: false,
-  });
+  // const [size, setSize] = useState({
+  //   red: false,
+  //   blue: false,
+  //   orange: false,
+  //   pink: false,
+  //   yellow: false,
+  // });
 
-  const handleColors = (change) => {
-    const resetSize = {
-      red: false,
-      blue: false,
-      orange: false,
-      pink: false,
-      yellow: false,
-    };
-    setSize({
-      ...resetSize,
-      [change.value]: size[change.value] === true ? false : true,
-    });
-    setSelectedColor(change.value);
-  };
+  // const handleColors = (change) => {
+  //   const resetSize = {
+  //     red: false,
+  //     blue: false,
+  //     orange: false,
+  //     pink: false,
+  //     yellow: false,
+  //   };
+  //   setSize({
+  //     ...resetSize,
+  //     [change.value]: size[change.value] === true ? false : true,
+  //   });
+  //   setSelectedColor(change.value);
+  // };
 
   return (
     <>
@@ -167,7 +167,7 @@ const SellerSellingProducts = () => {
               ...values,
               description,
               image: uploadImage,
-              color: selectedColor,
+              // color: selectedColor,
             };
             // console.log('formik submit', dataProduct);
             idProduct
@@ -284,8 +284,8 @@ const SellerSellingProducts = () => {
                     <AlertValidationForm message={errors.category} />
                   )}
                 </div>
-
-                <div className="form-wrapper selected">
+                {/* START = FEATURE COLOR */}
+                {/* <div className="form-wrapper selected">
                   <label htmlFor="quantity">
                     <Text color="secondary" as="lg">
                       Color
@@ -323,7 +323,8 @@ const SellerSellingProducts = () => {
                       <p>yellow</p>
                     </div>
                   </ChooseColor>
-                </div>
+                </div> */}
+                {/* END = FEATURE COLOR */}
               </Main>
               <Main heading="Photo of Goods" className="photos">
                 <div className="photo-wrapper">
@@ -451,44 +452,44 @@ const InputImageProduct = styled.div`
   }
 `;
 
-const ChooseColor = styled.div`
-  display: flex;
-  gap: 1rem;
-  .box {
-    border: 1px solid #9b9b9b;
-    border-radius: 100%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+// const ChooseColor = styled.div`
+//   display: flex;
+//   gap: 1rem;
+//   .box {
+//     border: 1px solid #9b9b9b;
+//     border-radius: 100%;
+//     width: 40px;
+//     height: 40px;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
 
-    p {
-      display: none;
-    }
+//     p {
+//       display: none;
+//     }
 
-    &:hover {
-      cursor: pointer;
-      border: 0;
-    }
-    &.selected {
-      border: 2px solid #222222;
-    }
-  }
+//     &:hover {
+//       cursor: pointer;
+//       border: 0;
+//     }
+//     &.selected {
+//       border: 2px solid #222222;
+//     }
+//   }
 
-  .red {
-    background-color: red;
-  }
-  .blue {
-    background-color: blue;
-  }
-  .orange {
-    background-color: orange;
-  }
-  .pink {
-    background-color: pink;
-  }
-  .yellow {
-    background-color: yellow;
-  }
-`;
+//   .red {
+//     background-color: red;
+//   }
+//   .blue {
+//     background-color: blue;
+//   }
+//   .orange {
+//     background-color: orange;
+//   }
+//   .pink {
+//     background-color: pink;
+//   }
+//   .yellow {
+//     background-color: yellow;
+//   }
+// `;

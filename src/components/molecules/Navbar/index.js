@@ -45,7 +45,7 @@ const NavbarComponent = ({ onChange, value, session }) => {
         {session === 'public' && <PublicNav />}
         {session !== 'public' && <UserNav />}
         <ButtonIcon onClick={handleShowNavCollapes} />
-        <NavbarCollapse />
+        <NavbarCollapse session={session} />
       </Wrapper>
     </Navbar>
   );

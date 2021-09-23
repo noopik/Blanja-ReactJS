@@ -20,11 +20,10 @@ export const cartReducer = (state = { initialUser }, action) => {
         ...state,
         pricing: action.value,
       };
-    // case typeRedux.setSingleCart:
-    //   return {
-    //     ...state,
-    //     single: action.value,
-    //   };
+    case typeRedux.setResetCart:
+      return {
+        state: initialUser,
+      };
     default:
       return state;
   }

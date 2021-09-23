@@ -8,14 +8,14 @@ import { BrandLogo, Button } from '../../components/atoms';
 import { customMedia } from '../../components/Layouts';
 import { Axios } from '../../config';
 import { showLoading, userSessionActive } from '../../redux/actions';
-import { decodeJwtToken } from '../../utils';
+import { decodeJwtToken, typeRedux } from '../../utils';
 
 const VerifiedRegisterSuccess = () => {
   const { token } = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [dataRequestPassword, setDataRequestPassword] = useState({
+  const [dataVerified, setDataVerified] = useState({
     isExists: false,
     data: {},
     token: '',
@@ -23,14 +23,13 @@ const VerifiedRegisterSuccess = () => {
 
   useEffect(() => {
     decodeJwtToken(token).then((resultDecode) => {
-      setDataRequestPassword(resultDecode);
+      setDataVerified(resultDecode);
       document.title = `${resultDecode.decode.name} | Verified Success`;
-
       Axios.get(`/users/${resultDecode.decode.id}`, {
         headers: { Authorization: `Bearer ${token}` },
       }).then((resultGetUser) => {
         const dataUser = resultGetUser.data.data[0];
-        // console.log(resultGetUser);
+        console.log(resultGetUser);
         const verified = {
           ...dataUser,
           verified: 1,
@@ -39,10 +38,15 @@ const VerifiedRegisterSuccess = () => {
         dispatch(userSessionActive(dataUser));
         Axios.post(`/users/${resultDecode.decode.id}`, verified, {
           headers: { Authorization: `Bearer ${token}` },
-        }).then((res) => {
-          // console.log(res);
-          dispatch(showLoading(false));
-        });
+        })
+          .then((res) => {
+            console.log('res update', res);
+            dispatch({ type: typeRedux.setUserLogin, value: verified });
+            dispatch(showLoading(false));
+          })
+          .catch((err) => {
+            console.log('err', err.response);
+          });
       });
     });
   }, []);
@@ -52,7 +56,7 @@ const VerifiedRegisterSuccess = () => {
     history.push('/');
   };
 
-  if (!dataRequestPassword.isExists) {
+  if (!dataVerified.isExists) {
     return null;
   }
 
@@ -62,8 +66,8 @@ const VerifiedRegisterSuccess = () => {
         <div className="body">
           <BrandLogo />
           <h1 className="title">
-            Congratulation {dataRequestPassword.decode.name}! <br /> Your
-            account has been successfully activated
+            Congratulation {dataVerified.decode.name}! <br /> Your account has
+            been successfully activated
           </h1>
           <div className="image-wrapper">
             <img src={ICVerified} alt="success" />

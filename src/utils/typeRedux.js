@@ -8,6 +8,7 @@ export const typeRedux = {
   setProductItem: 'SET_PRODUCT_ITEM',
   setAddToCartProducts: 'SET_ADD_TO_CART_PRODUCTS',
   setPricingCart: 'SET_PRICING_CART',
+  setResetCart: 'SET_RESET_CART',
   // setSingleCart: 'SET_SINGLE_CART',
   setSearching: 'SET_SEARCHING',
   setChooseProductId: 'SET_CHOOSE_PRODUCT_ID',

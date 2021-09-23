@@ -1,22 +1,35 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import styled from 'styled-components';
+import { userLogout } from '../../../redux/actions';
 import { Button } from '../../atoms';
 import { customMedia } from '../../Layouts';
 
-const NavbarCollapse = ({ showOnClick }) => {
-  // const [showNavbar, setShowNavbar] = useState(showOnClick);
+const NavbarCollapse = ({ session }) => {
   const navState = useSelector((state) => state.navReducer);
+  const token = localStorage.getItem('token');
   const dispatch = useDispatch();
-  // const onShowNav = navState.isShow
   const { isShow } = navState;
-  // console.log(navState);
   const handleShowNav = () => {
-    // setShowNavbar(false);
     dispatch({ type: 'SET_NAVCOLLAPSE', value: false });
   };
+  const history = useHistory();
+  const userState = useSelector((state) => state.userReducer);
 
+  const actionLogout = () => {
+    dispatch(userLogout(history));
+    history.push('/customer-login');
+  };
+  const handleProfile = () => {
+    handleShowNav();
+    if (userState.role === 'customer') {
+      history.push('/user/setting');
+    }
+    if (userState.role === 'seller') {
+      history.push('/admin/seller');
+    }
+  };
   return (
     <>
       <NavbarCollapseWrapper showOnClick={isShow}>
@@ -29,27 +42,27 @@ const NavbarCollapse = ({ showOnClick }) => {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <g clip-path="url(#clip0)">
+              <g clipPath="url(#clip0)">
                 <path
                   d="M9 22C9.55228 22 10 21.5523 10 21C10 20.4477 9.55228 20 9 20C8.44772 20 8 20.4477 8 21C8 21.5523 8.44772 22 9 22Z"
                   stroke="#9B9B9B"
-                  stroke-width="2.33333"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2.33333"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M20 22C20.5523 22 21 21.5523 21 21C21 20.4477 20.5523 20 20 20C19.4477 20 19 20.4477 19 21C19 21.5523 19.4477 22 20 22Z"
                   stroke="#9B9B9B"
-                  stroke-width="2.33333"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2.33333"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M1 1H5L7.68 14.39C7.77144 14.8504 8.02191 15.264 8.38755 15.5583C8.75318 15.8526 9.2107 16.009 9.68 16H19.4C19.8693 16.009 20.3268 15.8526 20.6925 15.5583C21.0581 15.264 21.3086 14.8504 21.4 14.39L23 6H6"
                   stroke="#9B9B9B"
-                  stroke-width="2.33333"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2.33333"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </g>
               <defs>
@@ -59,14 +72,30 @@ const NavbarCollapse = ({ showOnClick }) => {
               </defs>
             </svg>
           </Link>
-          <Link to="/customer-login" className="prefix">
-            <ButtonNav primary className="btn">
-              Login
-            </ButtonNav>
-          </Link>
-          <Link to="/seller-login">
-            <ButtonNav className="btn">Signup</ButtonNav>
-          </Link>
+          {!token && (
+            <>
+              <Link to="/customer-login" className="prefix">
+                <ButtonNav primary className="btn">
+                  Login
+                </ButtonNav>
+              </Link>
+              <Link to="/seller-login">
+                <ButtonNav className="btn">Signup</ButtonNav>
+              </Link>
+            </>
+          )}
+          {token && (
+            <>
+              <div onClick={handleProfile}>
+                <ButtonNav primary className="btn">
+                  Profile
+                </ButtonNav>
+              </div>
+              <div onClick={actionLogout}>
+                <ButtonNav className="btn">Logout</ButtonNav>
+              </div>
+            </>
+          )}
           <div className="icon arrow" onClick={handleShowNav}>
             <svg
               viewBox="0 0 19 14"
