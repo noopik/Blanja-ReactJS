@@ -115,6 +115,12 @@ npm start
     <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631753876/Blanja%20com/Blanja_05_cbwnvu.png">   
     <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631753879/Blanja%20com/Blanja_06_s0t7dp.png">
 </div>
+<div align="center">
+    <img width="700" src="https://res.cloudinary.com/dnv-images/image/upload/v1632580211/Blanja%20com/screencapture-blanja-vercel-app-admin-seller-selling-2021-09-25-19_23_20_1_krbikm.png">   
+</div>
+<div align="center">
+    <img width="700" src="https://res.cloudinary.com/dnv-images/image/upload/v1632580226/Blanja%20com/screencapture-blanja-vercel-app-admin-seller-2021-09-25-19_23_00_1_g1grea.png">
+</div>
 
 ## Contact
 My Email : novidwicahya19@gmail.com
