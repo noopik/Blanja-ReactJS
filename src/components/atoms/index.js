@@ -20,9 +20,11 @@ import ButtonIcon from './ButtonIcon';
 import ScreenLoading from './ScreenLoading';
 import AlertValidationForm from './AlertValidationForm';
 import Checked from './Checked';
+import ScroolToTop from './ScroolToTop';
 export * from './Toast';
 
 export {
+  ScroolToTop,
   AlertValidationForm,
   Checked,
   ScreenLoading,

@@ -5,7 +5,6 @@ import 'slick-carousel/slick/slick.css';
 import styled from 'styled-components';
 // import './styled/carousel.css';
 import { DMNullImage } from '../../../assets/images/index';
-import { Axios } from '../../../config';
 import { ImageCard } from './../Carousel/styled';
 
 const ButtonNext = styled.div`
@@ -86,18 +85,18 @@ export default class MultipleItems extends Component {
   }
 
   componentDidMount() {
-    Axios.get('/category')
-      .then((res) => {
-        // console.log(res.data.data);
-        const resdata = res.data;
-        const data = resdata.data;
-        this.setState({
-          categories: data,
-        });
-      })
-      .catch((err) => {
-        // console.log(err);
-      });
+    // Axios.get('/category')
+    //   .then((res) => {
+    //     // console.log(res.data.data);
+    //     const resdata = res.data;
+    //     const data = resdata.data;
+    //     this.setState({
+    //       categories: data,
+    //     });
+    //   })
+    //   .catch((err) => {
+    //     // console.log(err);
+    //   });
   }
 
   render() {

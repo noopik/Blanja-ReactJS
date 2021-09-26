@@ -8,7 +8,6 @@ import { CardProduct } from '../../components/atoms';
 import { MainContent, SectionContent } from '../../components/Layouts';
 import {
   CardGrouping,
-  Footer,
   HeaderSection,
   Navbar,
   PaginationRange,
@@ -100,35 +99,40 @@ const ResultProducts = () => {
       <MainContent className="category-page">
         {searchState.exist && (
           <SectionContent>
-            <HeaderSection
-              title={`Menampilkan hasil pencarian: ${searchKeyword}`}
-            />
-            <InfoResult>
-              <div className="left">
-                <div className="item-info">
-                  <PageviewIcon color="disabled" />
-                  <p>
-                    Menampilkan {searchState.result.meta.limit} hasil pencarian
-                    ({searchState.result.meta.totalData} total data)
-                  </p>
-                </div>
-                <div className="item-info sort" onClick={handleFilter}>
-                  <FilterListIcon
-                    className={sortPrice === 'ASC' ? 'icon-filter' : ''}
-                    color="disabled"
-                  />
-                  <p>Harga Terendah</p>
-                </div>
-              </div>
-              <div className="pagination">
-                <PaginationRange keyword={searchKeyword} />
-                {/* <div className="btn-pagination ">First</div>
+            {searchKeyword && (
+              <>
+                <HeaderSection
+                  title={`Menampilkan hasil pencarian: ${searchKeyword}`}
+                />
+                <InfoResult>
+                  <div className="left">
+                    <div className="item-info">
+                      <PageviewIcon color="disabled" />
+                      <p>
+                        Menampilkan {searchState.result.meta.limit} hasil
+                        pencarian ({searchState.result.meta.totalData} total
+                        data)
+                      </p>
+                    </div>
+                    <div className="item-info sort" onClick={handleFilter}>
+                      <FilterListIcon
+                        className={sortPrice === 'ASC' ? 'icon-filter' : ''}
+                        color="disabled"
+                      />
+                      <p>Harga Terendah</p>
+                    </div>
+                  </div>
+                  <div className="pagination">
+                    <PaginationRange keyword={searchKeyword} />
+                    {/* <div className="btn-pagination ">First</div>
                 <div className="btn-pagination">-</div>
                 <div className="btn-pagination active">3</div>
                 <div className="btn-pagination">+</div>
                 <div className="btn-pagination">Last</div> */}
-              </div>
-            </InfoResult>
+                  </div>
+                </InfoResult>
+              </>
+            )}
             <CardGrouping>
               {searchState.result.data.map((item) => {
                 return (
@@ -169,7 +173,7 @@ const ResultProducts = () => {
           </SectionContent>
         )}
       </MainContent>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
