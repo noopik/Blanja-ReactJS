@@ -16,6 +16,9 @@ import Footer from '../../components/molecules/Footer';
 import { getAllProducts, showLoading } from '../../redux/actions';
 
 const Homepage = () => {
+  const [productHeader, setProductHeader] = useState([]);
+
+  const [categories, setCategories] = useState([]);
   const [popularProducts, setPopularProducts] = useState([]);
   const token = localStorage.getItem('token');
   // const history = useHistory();
@@ -47,6 +50,24 @@ const Homepage = () => {
         console.log(err);
         dispatch(showLoading(false));
       });
+    Axios.get('/category')
+      .then((res) => {
+        // console.log(res.data.data);
+        const resdata = res.data;
+        const data = resdata.data;
+        setCategories(data);
+      })
+      .catch((err) => {
+        // console.log(err);
+      });
+    Axios.get('/products?page=2&limit=5')
+      .then((result) => {
+        const resData = result.data.data;
+        setProductHeader(resData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   // Action Card Choose
@@ -55,13 +76,13 @@ const Homepage = () => {
     <>
       <Navbar session={token ? 'user' : 'public'} />
       <MainContent>
-        <Carousel className="carousel" />
+        <Carousel className="carousel" popularProducts={productHeader} />
         <SectionContent className="section">
           <HeaderSection
             title="Category"
             subTitle="What are you currently looking for"
           />
-          <CarouselCategory className="carousel" />
+          <CarouselCategory className="carousel" categories={categories} />
         </SectionContent>
         <SectionContent className="section">
           <HeaderSection title="New" subTitle="You’ve never seen it before!" />
