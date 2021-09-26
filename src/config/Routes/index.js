@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { ScroolToTop } from '../../components/atoms';
 import {
   CategoryPage,
   CheckoutPage,
@@ -29,52 +30,54 @@ const Routes = () => {
   return (
     <Router>
       <Switch>
-        {/* AUTH */}
-        <PublicRoute path="/customer-login" component={CustomerLogin} />
-        <PublicRoute path="/seller-login" component={SellerLogin} />
-        <PublicRoute path="/customer-register" component={CustomerRegister} />
-        <PublicRoute path="/seller-register" component={SellerRegister} />
-        <PublicRoute path="/forgot-password" component={ForgotPassword} />
-        <PublicRoute
-          path="/forgot-password/:token"
-          component={ForgotPassword}
-        />
-        {/* MAIN HOME */}
-        <Route exact path="/" component={Homepage} />
-        <PrivateRoute path="/categories/:id" component={CategoryPage} />
-        <PrivateRoute exact path="/products" component={ResultProducts} />
-        <PrivateRoute path="/products/:id" component={ProductDetailPage} />
-        <PrivateRoute path="/my-bag" component={MyBag} />
-        <PrivateRoute path="/checkout" component={CheckoutPage} />
-        <Route
-          path="/users-verified/:token"
-          component={VerifiedRegisterSuccess}
-        />
-        {/* USER CUSTOMER */}
-        <PrivateRoute path="/user/setting" component={UserProfileSetting} />
-        <PrivateRoute
-          path="/user/shipping-address"
-          component={UserProfileAddress}
-        />
-        <PrivateRoute path="/user/orders" component={UserProfileOrder} />
-        {/* USER SELLER */}
-        <PrivateRoute exact path="/admin/seller" component={SellerStore} />
-        <PrivateRoute
-          exact
-          path="/admin/seller/products"
-          component={SellerProductPage}
-        />
-        <PrivateRoute
-          exact
-          path="/admin/seller/selling"
-          component={SellerSellingProducts}
-        />
-        <PrivateRoute
-          path="/admin/seller/selling/:idProduct"
-          component={SellerSellingProducts}
-        />
-        <PrivateRoute path="/admin/seller/orders" />
-        <PrivateRoute path="/admin/seller#cancel" />
+        <ScroolToTop>
+          {/* AUTH */}
+          <PublicRoute path="/customer-login" component={CustomerLogin} />
+          <PublicRoute path="/seller-login" component={SellerLogin} />
+          <PublicRoute path="/customer-register" component={CustomerRegister} />
+          <PublicRoute path="/seller-register" component={SellerRegister} />
+          <PublicRoute path="/forgot-password" component={ForgotPassword} />
+          <PublicRoute
+            path="/forgot-password/:token"
+            component={ForgotPassword}
+          />
+          {/* MAIN HOME */}
+          <Route exact path="/" component={Homepage} />
+          <PrivateRoute path="/categories/:id" component={CategoryPage} />
+          <PrivateRoute exact path="/products" component={ResultProducts} />
+          <PrivateRoute path="/products/:id" component={ProductDetailPage} />
+          <PrivateRoute path="/my-bag" component={MyBag} />
+          <PrivateRoute path="/checkout" component={CheckoutPage} />
+          <Route
+            path="/users-verified/:token"
+            component={VerifiedRegisterSuccess}
+          />
+          {/* USER CUSTOMER */}
+          <PrivateRoute path="/user/setting" component={UserProfileSetting} />
+          <PrivateRoute
+            path="/user/shipping-address"
+            component={UserProfileAddress}
+          />
+          <PrivateRoute path="/user/orders" component={UserProfileOrder} />
+          {/* USER SELLER */}
+          <PrivateRoute exact path="/admin/seller" component={SellerStore} />
+          <PrivateRoute
+            exact
+            path="/admin/seller/products"
+            component={SellerProductPage}
+          />
+          <PrivateRoute
+            exact
+            path="/admin/seller/selling"
+            component={SellerSellingProducts}
+          />
+          <PrivateRoute
+            path="/admin/seller/selling/:idProduct"
+            component={SellerSellingProducts}
+          />
+          <PrivateRoute path="/admin/seller/orders" />
+          <PrivateRoute path="/admin/seller#cancel" />
+        </ScroolToTop>
       </Switch>
     </Router>
   );
