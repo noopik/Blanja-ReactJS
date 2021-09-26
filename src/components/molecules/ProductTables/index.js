@@ -66,7 +66,7 @@ const ProductTables = ({ dataSeller }) => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setShowDeleteModal(false);
         Toast('Product deleted', 'success');
         setRefresh(true);

@@ -5,7 +5,7 @@ const InputCheck = ({ className, onClick, ...props }) => {
   return (
     <Label className={className} onClick={onClick}>
       <input type="checkbox" {...props} />
-      <span class="checkmark"></span>
+      <span className="checkmark"></span>
     </Label>
   );
 };

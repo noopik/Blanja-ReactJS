@@ -29,8 +29,8 @@ import PublicRoute from './PublicRoute';
 const Routes = () => {
   return (
     <Router>
-      <Switch>
-        <ScroolToTop>
+      <ScroolToTop>
+        <Switch>
           {/* AUTH */}
           <PublicRoute path="/customer-login" component={CustomerLogin} />
           <PublicRoute path="/seller-login" component={SellerLogin} />
@@ -77,8 +77,8 @@ const Routes = () => {
           />
           <PrivateRoute path="/admin/seller/orders" />
           <PrivateRoute path="/admin/seller#cancel" />
-        </ScroolToTop>
-      </Switch>
+        </Switch>
+      </ScroolToTop>
     </Router>
   );
 };

@@ -19,17 +19,17 @@ export const addToSingleCart = (data, history) => (dispatch) => {
 };
 
 export const addProductToCarts = (data) => (dispatch, getState) => {
-  const cartsState = getState().cartReducer;
-  console.log('addProductToCarts', data);
-  console.log('cartsState', cartsState);
+  // const cartsState = getState().cartReducer;
+  // console.log('addProductToCarts', data);
+  // console.log('cartsState', cartsState);
   dispatch({ type: typeRedux.setAddToCartProducts, value: data });
   // pricing
-  let totalPrice = 0;
-  cartsState.data.forEach((product) => {
-    totalPrice += product.totalPrice;
-  });
-  totalPrice += data.totalPrice;
-  console.log('totalPrice', totalPrice);
+  // let totalPrice = 0;
+  // cartsState.data.forEach((product) => {
+  //   totalPrice += product.totalPrice;
+  // });
+  // totalPrice += data.totalPrice;
+  // console.log('totalPrice', totalPrice);
 };
 
 export const actionCheckoutCart =

@@ -5,9 +5,9 @@ import styled from 'styled-components';
 const NavCustomerAside = ({ active }) => {
   return (
     <Wrapper>
-      <div class="menu-wrapper">
+      <div className="menu-wrapper">
         <Link to={`/user/setting`} className="anchor">
-          <div class="icon-wrapper blue">
+          <div className="icon-wrapper blue">
             <svg
               width="16"
               height="16"
@@ -36,9 +36,9 @@ const NavCustomerAside = ({ active }) => {
           </p>
         </Link>
       </div>
-      <div class="menu-wrapper">
+      <div className="menu-wrapper">
         <Link to={`/user/shipping-address`} className="anchor">
-          <div class="icon-wrapper orange">
+          <div className="icon-wrapper orange">
             <svg
               width="16"
               height="16"
@@ -67,9 +67,9 @@ const NavCustomerAside = ({ active }) => {
           </p>
         </Link>
       </div>
-      <div class="menu-wrapper">
+      <div className="menu-wrapper">
         <Link to={`/user/orders`} className="anchor">
-          <div class="icon-wrapper pink">
+          <div className="icon-wrapper pink">
             <svg
               width="16"
               height="16"

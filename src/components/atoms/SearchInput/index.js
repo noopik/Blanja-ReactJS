@@ -98,7 +98,7 @@ const SearchInput = ({
             />
             <div className="icon-filter" onClick={handleShowModal}>
               <svg
-                class="stroke"
+                className="stroke"
                 width="40"
                 height="40"
                 viewBox="0 0 42 42"
@@ -137,29 +137,29 @@ const SearchInput = ({
             </Text>
 
             <div className="btn-wrapper">
-              <label class="container-check">
+              <label className="container-check">
                 <input type="checkbox" />
-                <span class="checkmark bg-black"></span>
+                <span className="checkmark bg-black"></span>
               </label>
-              <label class="container-check">
+              <label className="container-check">
                 <input type="checkbox" />
-                <span class="checkmark bg-white"></span>
+                <span className="checkmark bg-white"></span>
               </label>
-              <label class="container-check">
+              <label className="container-check">
                 <input type="checkbox" />
-                <span class="checkmark bg-red"></span>
+                <span className="checkmark bg-red"></span>
               </label>
-              <label class="container-check">
+              <label className="container-check">
                 <input type="checkbox" />
-                <span class="checkmark bg-brown"></span>
+                <span className="checkmark bg-brown"></span>
               </label>
-              <label class="container-check">
+              <label className="container-check">
                 <input type="checkbox" />
-                <span class="checkmark bg-caramel"></span>
+                <span className="checkmark bg-caramel"></span>
               </label>
-              <label class="container-check">
+              <label className="container-check">
                 <input type="checkbox" />
-                <span class="checkmark bg-donker"></span>
+                <span className="checkmark bg-donker"></span>
               </label>
             </div>
           </div>

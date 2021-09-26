@@ -6,13 +6,13 @@ import { customMedia } from '../../Layouts';
 
 const AlertVerification = () => {
   const [closeAlert, setCloseAlert] = useState(false);
-  const userState = useSelector((state) => state.userReducer.data);
+  const userState = useSelector((state) => state.userReducer);
 
   if (closeAlert) {
     return null;
   }
-
-  if (userState.verified === 0) {
+  // console.log('userState', userState);
+  if (userState?.data?.verified === 0) {
     return (
       <>
         <Wrapper>

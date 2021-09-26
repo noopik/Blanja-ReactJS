@@ -8,9 +8,9 @@ const NavSellerAside = ({ active }) => {
   return (
     <Wrapper className="nav-seller-wrapper">
       {/* ============ */}
-      <div class="menu-wrapper">
+      <div className="menu-wrapper">
         <a
-          class="anchor"
+          className="anchor"
           data-bs-toggle="collapse"
           href="#storeMenu"
           role="button"
@@ -18,7 +18,7 @@ const NavSellerAside = ({ active }) => {
           aria-controls="storeMenu"
         >
           <div className="d-flex">
-            <div class="icon-arrow left blue">
+            <div className="icon-arrow left blue">
               <svg
                 width="16"
                 height="16"
@@ -48,8 +48,8 @@ const NavSellerAside = ({ active }) => {
             <img src={ICMenuAside} className="icon-collapse" alt="icon" />
           </div>
         </a>
-        <div class="collapse" id="storeMenu">
-          <div class="card card-body">
+        <div className="collapse" id="storeMenu">
+          <div className="card card-body">
             <Link className="link" to="/admin/seller">
               Store Profile
             </Link>
@@ -57,9 +57,9 @@ const NavSellerAside = ({ active }) => {
         </div>
       </div>
       {/* ============= */}
-      <div class="menu-wrapper">
+      <div className="menu-wrapper">
         <a
-          class="anchor"
+          className="anchor"
           data-bs-toggle="collapse"
           href="#productsMenu"
           role="button"
@@ -67,7 +67,7 @@ const NavSellerAside = ({ active }) => {
           aria-controls="productsMenu"
         >
           <div className="d-flex">
-            <div class="icon-arrow left orange">
+            <div className="icon-arrow left orange">
               <svg
                 width="16"
                 height="16"
@@ -99,8 +99,8 @@ const NavSellerAside = ({ active }) => {
             <img src={ICMenuAside} alt="icon" className="icon-collapse" />
           </div>
         </a>
-        <div class="collapse" id="productsMenu">
-          <div class="card card-body">
+        <div className="collapse" id="productsMenu">
+          <div className="card card-body">
             <Link className="link" to="/admin/seller/products">
               My Products
             </Link>
@@ -111,9 +111,9 @@ const NavSellerAside = ({ active }) => {
         </div>
       </div>
       {/* ============= */}
-      <div class="menu-wrapper">
+      <div className="menu-wrapper">
         <a
-          class="anchor"
+          className="anchor"
           data-bs-toggle="collapse"
           href="#orderMenu"
           role="button"
@@ -121,7 +121,7 @@ const NavSellerAside = ({ active }) => {
           aria-controls="orderMenu"
         >
           <div className="d-flex">
-            <div class="icon-arrow left red">
+            <div className="icon-arrow left red">
               <svg
                 width="16"
                 height="16"
@@ -151,8 +151,8 @@ const NavSellerAside = ({ active }) => {
             <img src={ICMenuAside} className="icon-collapse" alt="icon" />
           </div>
         </a>
-        <div class="collapse" id="orderMenu">
-          <div class="card card-body">
+        <div className="collapse" id="orderMenu">
+          <div className="card card-body">
             <Link className="link" to="#">
               My Order
             </Link>

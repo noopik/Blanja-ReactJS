@@ -49,7 +49,7 @@ export const userSessionActive = (data) => {
 };
 
 export const userUpdateProfile = (data, token) => (dispatch, getState) => {
-  console.log('data send to backend:', data);
+  // console.log('data send to backend:', data);
   dispatch(showLoading(true));
   const userState = getState().userReducer.data;
   const formData = new FormData();
@@ -70,7 +70,7 @@ export const userUpdateProfile = (data, token) => (dispatch, getState) => {
   })
     .then((res) => {
       dispatch(showLoading(false));
-      console.log('res:', res);
+      // console.log('res:', res);
       dispatch({ type: typeRedux.setUserLogin, value: res.data.data });
       return Toast('Success Update Profile', 'success');
     })

@@ -174,7 +174,7 @@ const SellerSellingProducts = () => {
               // color: selectedColor,
             };
             // console.log('formik submit', dataProduct);
-            console.log('dataProduct', dataProduct);
+            // console.log('dataProduct', dataProduct);
             idProduct
               ? dispatch(updateProduct(dataProduct, token, history, idProduct))
               : dispatch(addProduct(dataProduct, token, history));

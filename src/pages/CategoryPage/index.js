@@ -15,15 +15,15 @@ import { Item } from '../../components/molecules/CardGrouping/styled';
 
 const CategoryPage = () => {
   const [dataProducts, setdataProducts] = useState([{}]);
-  const [isLoading, setIsLoading] = useState(false);
-  console.log(setIsLoading);
+  const [isLoading] = useState(false);
+  // console.log(setIsLoading);
   const [categoryItem, setCategoryItem] = useState([]);
   const token = localStorage.getItem('token');
 
   // const history = useHistory();
   // const dispatch = useDispatch();
   const { id: categoryId } = useParams();
-  console.log(categoryId);
+  // console.log(categoryId);
   // const pathname = history.location.pathname;
   // const categoryId = pathname.split('/').pop();
 
