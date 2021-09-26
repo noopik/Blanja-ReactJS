@@ -13,9 +13,9 @@ import { Button, Checked, Divider, Toast } from '../../atoms';
 import { Heading, Text } from '../../atoms/Typography';
 
 const ModalPayment = () => {
-  const { cartReducer: cartState, userReducer: userState } = useSelector(
-    (state) => state
-  );
+  const { cartReducer: cartState } = useSelector((state) => state);
+  const userState = useSelector((state) => state.userReducer.data);
+
   const history = useHistory();
   const dispatch = useDispatch();
   const [selectBank, setSelectBank] = useState(false);
@@ -29,7 +29,7 @@ const ModalPayment = () => {
         bankPayment: selectBank,
         idProduct: cartState.data[0].id,
         quantity: cartState.data[0].totalItem,
-        statusOrder: 'Success',
+        statusOrder: 'On Progress',
       };
       dispatch(actionCheckoutCart(dataCheckoutIn, token, history));
     }
@@ -131,7 +131,7 @@ const ModalPayment = () => {
               Shooping Summary
             </Text>
             <Text as="lg" font="bold" color="primary" className="totalPrice">
-              Rp..{' '}
+              Rp.{' '}
               {moneyFormatter.format(
                 cartState?.pricing.totalPrice - cartState?.pricing.deliveryPrice
               )}

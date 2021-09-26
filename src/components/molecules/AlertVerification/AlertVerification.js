@@ -6,7 +6,7 @@ import { customMedia } from '../../Layouts';
 
 const AlertVerification = () => {
   const [closeAlert, setCloseAlert] = useState(false);
-  const userState = useSelector((state) => state.userReducer);
+  const userState = useSelector((state) => state.userReducer.data);
 
   if (closeAlert) {
     return null;

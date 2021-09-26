@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { BtnNewAddres } from '../../components/atoms';
-import { UserAddressCard } from '../../components/molecules';
+import {
+  UserAddressCard,
+  Modal,
+  ModalChooseAddress,
+} from '../../components/molecules';
 import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 
 const UserProfileAddress = () => {
+  const [showModalAddress, setShowModalAddress] = useState(false);
+
   return (
     <>
       <UserProfilePage
@@ -18,11 +24,19 @@ const UserProfileAddress = () => {
           subHeading="Manage your shipping address"
         >
           <Content>
-            <BtnNewAddres onClick />
+            <BtnNewAddres onClick={() => setShowModalAddress(true)} />
             <UserAddressCard />
           </Content>
         </Main>
       </UserProfilePage>
+      <Modal
+        showModal={showModalAddress}
+        closeModal={() => setShowModalAddress(false)}
+        title="Choose Another Address"
+        size="large"
+      >
+        <ModalChooseAddress />
+      </Modal>
     </>
   );
 };

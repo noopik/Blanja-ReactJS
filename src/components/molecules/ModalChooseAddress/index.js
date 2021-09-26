@@ -10,9 +10,7 @@ import {
   BtnNewAddres,
   Button,
   FormInput,
-  InputCheck,
 } from '../../atoms';
-import { Text } from '../../atoms/Typography';
 import Modal from '../Modal';
 import UserAddressCard from '../UserAddressCard';
 
@@ -215,7 +213,7 @@ const ModalChooseAddress = () => {
                 </div>
                 <div className="middle"></div>
               </div>
-              <div className="is-primary-address">
+              {/* <div className="is-primary-address">
                 <div className="checkbox">
                   <InputCheck
                     className="input"
@@ -228,7 +226,7 @@ const ModalChooseAddress = () => {
                 <Text as="lg" color="secondary">
                   Make it the primary address
                 </Text>
-              </div>
+              </div> */}
               <div className="btn-action">
                 <Button
                   className="btn"

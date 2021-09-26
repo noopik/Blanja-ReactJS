@@ -53,7 +53,7 @@ export const searchProduct = (keyword) => (dispatch) => {
 };
 
 export const addProduct = (data, token, history) => (dispatch, getState) => {
-  const userState = getState().userReducer;
+  const userState = getState().userReducer.data;
   const formData = new FormData();
   formData.append('owner', userState.idUser);
   formData.append('description', data.description);
@@ -76,7 +76,7 @@ export const addProduct = (data, token, history) => (dispatch, getState) => {
       history.replace('/admin/seller/products');
     })
     .catch((err) => {
-      console.log(err.response);
+      console.log('err.response:', err.response);
       dispatch(showLoading(false));
       return Toast('Error', 'error');
     });
@@ -84,7 +84,7 @@ export const addProduct = (data, token, history) => (dispatch, getState) => {
 
 export const updateProduct =
   (data, token, history, idProduct) => (dispatch, getState) => {
-    const userState = getState().userReducer;
+    const userState = getState().userReducer.data;
     const formData = new FormData();
     formData.append('owner', userState.idUser);
     formData.append('description', data.description);
@@ -108,7 +108,7 @@ export const updateProduct =
         return;
       })
       .catch((err) => {
-        console.log(err.response);
+        console.log(err);
         dispatch(showLoading(false));
         return Toast('Error', 'error');
       });

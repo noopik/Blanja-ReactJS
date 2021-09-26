@@ -37,7 +37,7 @@ const SellerSellingProducts = () => {
   const [previewAvatar, setPreviewAvatar] = useState([]);
   const dispatch = useDispatch();
   const history = useHistory();
-  const userState = useSelector((state) => state.userReducer);
+  const userState = useSelector((state) => state.userReducer.data);
   const token = localStorage.getItem('token');
   const validationForm = yup.object({
     name: yup
@@ -81,6 +81,10 @@ const SellerSellingProducts = () => {
   }, [idProduct]);
 
   // Upload Image
+
+  useEffect(() => {
+    document.title = userState.name + ' | Sell Product';
+  });
 
   const handleInputImageProduct = async (e) => {
     const fileImages = e.target.files;
@@ -166,10 +170,11 @@ const SellerSellingProducts = () => {
             const dataProduct = {
               ...values,
               description,
-              image: uploadImage,
+              image: uploadImage.length > 0 ? uploadImage : previewAvatar,
               // color: selectedColor,
             };
             // console.log('formik submit', dataProduct);
+            console.log('dataProduct', dataProduct);
             idProduct
               ? dispatch(updateProduct(dataProduct, token, history, idProduct))
               : dispatch(addProduct(dataProduct, token, history));

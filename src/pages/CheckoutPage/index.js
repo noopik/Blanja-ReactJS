@@ -5,6 +5,7 @@ import {
   AsideRight,
   Button,
   CardWrapper,
+  Toast,
 } from '../../components/atoms';
 import { Heading, Text } from '../../components/atoms/Typography';
 import {
@@ -21,17 +22,17 @@ import {
   ModalPayment,
   Navbar,
 } from '../../components/molecules';
-import { moneyFormatter } from '../../utils';
 
 const CheckoutPage = () => {
   const [showModalAddress, setShowModalAddress] = useState(false);
   const [showModalBuy, setShowModalBuy] = useState(false);
-  const { cartReducer: cartState, userReducer: userState } = useSelector(
-    (state) => state
-  );
+  const { cartReducer: cartState } = useSelector((state) => state);
+  const userState = useSelector((state) => state.userReducer.data);
+  const UserAddress = useSelector((state) => state.userReducer.address);
   useEffect(() => {
     document.title = 'Blanja | Checkout';
   });
+  console.log('UserAddress', UserAddress);
   return (
     <>
       <Navbar session="user" />
@@ -48,9 +49,7 @@ const CheckoutPage = () => {
                   {userState.name}
                 </Heading>
                 <Text>
-                  {userState?.address
-                    ? userState?.address
-                    : 'Fill in your address first'}
+                  {UserAddress ? UserAddress : 'Fill in your address first'}
                 </Text>
                 <div className="btn-wrapper">
                   <Button onClick={() => setShowModalAddress(true)}>
@@ -64,7 +63,7 @@ const CheckoutPage = () => {
                     body
                     nameProduct={product.nameProduct}
                     store="IStanbul"
-                    total={`Rp. ${moneyFormatter.format(product.price)}`}
+                    total={product.price}
                     image={product.imageProduct[0]}
                     checkout
                   />
@@ -74,7 +73,12 @@ const CheckoutPage = () => {
               <CardCheckout
                 pricing={cartState?.pricing}
                 checkout
-                buyAction={() => setShowModalBuy(true)}
+                buyAction={() => {
+                  if (!UserAddress) {
+                    return Toast('Please, complete your address', 'warning');
+                  }
+                  setShowModalBuy(true);
+                }}
               />
             </AsideRight>
           </AsideContent>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { UserFormSetting } from '../../components/molecules';
@@ -10,11 +10,15 @@ const SellerStore = () => {
   let active = 'account';
   const dispatch = useDispatch();
 
-  const userState = useSelector((state) => state.userReducer);
+  const userState = useSelector((state) => state.userReducer.data);
 
   if (userState.name) {
     dispatch(showLoading(false));
   }
+
+  useEffect(() => {
+    document.title = userState.name + ' | Sell Store';
+  });
 
   return (
     <>

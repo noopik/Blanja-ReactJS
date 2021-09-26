@@ -16,7 +16,7 @@ import { userResetPassword } from '../../../redux/actions';
 import { typeRedux } from '../../../utils';
 const VerifiedPassword = ({ onClick, data: userData }) => {
   const dispatch = useDispatch();
-  const userState = useSelector((state) => state.userReducer);
+  const userState = useSelector((state) => state.userReducer.data);
   const history = useHistory();
 
   const validate = Yup.object({

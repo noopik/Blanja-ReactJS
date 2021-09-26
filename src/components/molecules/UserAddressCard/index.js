@@ -4,11 +4,11 @@ import styled from 'styled-components';
 import { Heading, Text } from '../../atoms/Typography';
 
 const UserAddressCard = ({ onClick }) => {
-  const { userReducer: userState } = useSelector((state) => state);
+  const userState = useSelector((state) => state.userReducer);
   return (
     <Wrapper>
       <Heading as={2} className="username">
-        {userState.name}
+        {userState.data.name}
       </Heading>
       <Text as="lg" color="secondary">
         {userState?.address ? userState?.address : 'Fill in your address first'}
