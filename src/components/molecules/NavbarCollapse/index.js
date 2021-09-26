@@ -15,7 +15,7 @@ const NavbarCollapse = ({ session }) => {
     dispatch({ type: 'SET_NAVCOLLAPSE', value: false });
   };
   const history = useHistory();
-  const userState = useSelector((state) => state.userReducer);
+  const userState = useSelector((state) => state.userReducer.data);
 
   const actionLogout = () => {
     dispatch(userLogout(history));

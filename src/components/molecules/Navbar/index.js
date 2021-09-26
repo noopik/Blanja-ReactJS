@@ -13,7 +13,7 @@ const NavbarComponent = ({ onChange, value, session }) => {
   const dispatch = useDispatch();
   // const location = useLocation();
   // const history = useHistory();
-  // const userState = useSelector((state) => state.userReducer);
+  //   const userState = useSelector((state) => state.userReducer.data);
   // const { isShow: loadingState } = useSelector((state) => state.loadingReducer);
 
   // const global = useSelector((state) => state);
@@ -31,7 +31,7 @@ const NavbarComponent = ({ onChange, value, session }) => {
   const handleShowNavCollapes = () => {
     dispatch({ type: 'SET_NAVCOLLAPSE', value: true });
   };
-
+  // console.log('session:', session);
   return (
     <Navbar>
       <AlertVerification />

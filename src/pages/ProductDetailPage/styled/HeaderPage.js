@@ -19,7 +19,7 @@ import { addToSingleCart } from '../../../redux/actions';
 
 const HeaderPage = ({ data }) => {
   const [chooseProduct, setChooseProduct] = useState({});
-  const userState = useSelector((state) => state.userReducer);
+  const userState = useSelector((state) => state.userReducer.data);
   const history = useHistory();
   const dispatch = useDispatch();
   // const userState = useSelector((state) => state.userReducer);

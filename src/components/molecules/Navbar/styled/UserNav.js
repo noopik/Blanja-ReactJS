@@ -10,7 +10,7 @@ import { customMedia } from '../../../Layouts';
 
 const UserNav = () => {
   const [showAvatarPopup, setShowAvatarPopup] = useState(false);
-  const userState = useSelector((state) => state.userReducer);
+  const userState = useSelector((state) => state.userReducer.data);
   const history = useHistory();
   const dispatch = useDispatch();
   const handlePopup = () => {
@@ -131,7 +131,7 @@ const UserNav = () => {
       <div className="btn-avatar" onClick={handlePopup}>
         <div className="icon user">
           <img
-            src={userState.image ? userState.image : AvatarDefault}
+            src={userState.imageUrl ? userState.imageUrl : AvatarDefault}
             alt="user"
           />
         </div>
