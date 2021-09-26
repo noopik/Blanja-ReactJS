@@ -30,6 +30,10 @@ const ProductDetail = () => {
     });
   }, [id]);
 
+  useEffect(() => {
+    document.title = product ? product.nameProduct : 'Detail Product...';
+  });
+
   return (
     <>
       <Navbar session={token ? 'user' : 'public'} />

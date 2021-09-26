@@ -49,8 +49,9 @@ export const userSessionActive = (data) => {
 };
 
 export const userUpdateProfile = (data, token) => (dispatch, getState) => {
-  // dispatch(showLoading(true));
-  const userState = getState().userReducer;
+  console.log('data send to backend:', data);
+  dispatch(showLoading(true));
+  const userState = getState().userReducer.data;
   const formData = new FormData();
   formData.append('email', userState.email);
   formData.append('password', userState.password);
@@ -60,7 +61,8 @@ export const userUpdateProfile = (data, token) => (dispatch, getState) => {
   formData.append('verified', userState.verified);
   formData.append('phoneNumber', data.phone);
   formData.append('storeName', userState.storeName);
-  formData.append('image', data.image ? data.image : userState.image);
+  formData.append('image', data.image ? data.image : userState.imageUrl);
+  formData.append('imageId', userState.imageId);
   Axios.post(`/users/${userState.idUser}`, formData, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -68,11 +70,13 @@ export const userUpdateProfile = (data, token) => (dispatch, getState) => {
   })
     .then((res) => {
       dispatch(showLoading(false));
+      console.log('res:', res);
       dispatch({ type: typeRedux.setUserLogin, value: res.data.data });
       return Toast('Success Update Profile', 'success');
     })
     .catch((err) => {
       dispatch(showLoading(false));
+      console.log('err.response:', err.response);
       return Toast('Failed updated profile', 'error');
     });
 };
@@ -101,7 +105,7 @@ export const userResetPassword =
 
 export const userAddressAction =
   (values, token, closeModal) => (dispatch, getState) => {
-    const userState = getState().userReducer;
+    const userState = getState().userReducer.data;
     const sendData = {
       id_user: userState.idUser,
       name_address: values.saveAddress,

@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { Axios } from '../../config';
 
 const UserProfileOrder = () => {
-  const { userReducer: userState } = useSelector((state) => state);
+  const userState = useSelector((state) => state.userReducer.data);
   const token = localStorage.getItem('token');
   const [allData, setAllData] = useState([]);
 
@@ -27,13 +27,13 @@ const UserProfileOrder = () => {
       });
   }, []);
 
+  useEffect(() => {
+    document.title = userState.name + ' | Orders';
+  });
+
   return (
     <>
-      <UserProfilePage
-        userName="Nopik | Orders"
-        active="order"
-        session="customer"
-      >
+      <UserProfilePage active="order" session="customer">
         <Main heading="My Orders">
           <TabsWrapper defaultActiveKey="all-item">
             <Tab eventKey="all-item" title="All Item">

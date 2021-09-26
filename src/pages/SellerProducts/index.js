@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -8,7 +8,11 @@ import UserProfilePage from '../UserProfile';
 import { Main } from '../UserProfile/styled';
 
 const SellerProductPage = () => {
-  const userState = useSelector((state) => state.userReducer);
+  const userState = useSelector((state) => state.userReducer.data);
+
+  useEffect(() => {
+    document.title = userState.name;
+  });
 
   return (
     <>

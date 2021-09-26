@@ -74,7 +74,7 @@ export default class MultipleItems extends Component {
     this.play = this.play.bind(this);
     this.pause = this.pause.bind(this);
     this.state = {
-      categories: [],
+      // categories: [],
       colors: ['red', 'blue', 'orange', 'cyan', 'blue'],
     };
   }
@@ -101,8 +101,8 @@ export default class MultipleItems extends Component {
   }
 
   render() {
-    const { className } = this.props;
-    const { categories, colors } = this.state;
+    const { className, categories } = this.props;
+    const { colors } = this.state;
     // console.log(categories);
     const settings = {
       infinite: true,

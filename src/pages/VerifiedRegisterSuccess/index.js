@@ -20,7 +20,9 @@ const VerifiedRegisterSuccess = () => {
     data: {},
     token: '',
   });
-
+  useEffect(() => {
+    document.title = 'Wellcome';
+  });
   useEffect(() => {
     decodeJwtToken(token).then((resultDecode) => {
       setDataVerified(resultDecode);

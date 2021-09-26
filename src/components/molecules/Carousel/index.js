@@ -53,7 +53,7 @@ function SamplePrevArrow(props) {
   );
 }
 
-const MultipleItems = ({ className }) => {
+const MultipleItems = ({ className, popularProducts }) => {
   const settings = {
     dots: true,
     className: 'center',
@@ -73,26 +73,13 @@ const MultipleItems = ({ className }) => {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
   };
-  const [product, setProduct] = useState([]);
-  const HeaderCarousel = styled.header`
-    /* background-color: yellow; */
-  `;
+  const HeaderCarousel = styled.header``;
 
-  useEffect(() => {
-    Axios.get('/products?page=2&limit=5')
-      .then((result) => {
-        const resData = result.data.data;
-        setProduct(resData);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
   return (
     <HeaderCarousel className={className}>
       <Slider {...settings}>
-        {product &&
-          product.map((item, index) => {
+        {popularProducts &&
+          popularProducts.map((item, index) => {
             return (
               <ImageCard
                 key={index}

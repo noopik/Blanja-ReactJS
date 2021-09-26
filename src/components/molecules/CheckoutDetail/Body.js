@@ -16,7 +16,7 @@ const Body = ({
   return (
     <BodyWrapper className="content">
       <div className="product">
-        <img src={image} alt="img" />
+        <img src={image} alt={nameProduct} />
         <div className="desc">
           <Text as="lg" className="">
             {nameProduct}

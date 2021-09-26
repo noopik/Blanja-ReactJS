@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { Axios } from '../../../config';
 import { showLoading } from '../../../redux/actions';
 import { Button, Toast } from '../../atoms';
-import { Heading } from '../../atoms/Typography';
+// import { Heading } from '../../atoms/Typography';
 import { customMedia } from '../../Layouts';
 import Modal from '../Modal';
 
@@ -90,9 +90,9 @@ const ProductTables = ({ dataSeller }) => {
 
   return (
     <StyleProductTables>
-      <Heading as={2} font="regular">
+      {/* <Heading as={2} font="regular">
         Seller Stroe
-      </Heading>
+      </Heading> */}
       <div className="body header">
         <div className="custom-row">
           <div className="col-name">

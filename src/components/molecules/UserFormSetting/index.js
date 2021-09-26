@@ -19,8 +19,8 @@ import {
 import { customMedia } from '../../Layouts';
 
 const UserFormSetting = ({ session, ...props }) => {
-  const userState = useSelector((state) => state.userReducer);
-  const [previewAvatar, setPreviewAvatar] = useState(userState.image);
+  const userState = useSelector((state) => state.userReducer.data);
+  const [previewAvatar, setPreviewAvatar] = useState(userState.imageUrl);
   const [uploadFileImage, setUploadFileImage] = useState();
   const dispatch = useDispatch();
   const token = localStorage.getItem('token');
@@ -54,7 +54,7 @@ const UserFormSetting = ({ session, ...props }) => {
     }
   };
 
-  // console.log('userState.name', userState.name);
+  // console.log('userState', userState);
   return (
     <Wrapper>
       <Formik
@@ -127,6 +127,7 @@ const UserFormSetting = ({ session, ...props }) => {
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.phone}
+                    placeholder="Add phone number"
                   />
                   {errors.phone && touched.phone && errors.phone && (
                     <AlertValidationForm message={errors.phone} />
@@ -177,14 +178,14 @@ const UserFormSetting = ({ session, ...props }) => {
               <Divider className="vertical" />
               <div className="image-wrapper">
                 <div className="avatar-wrapper">
-                  {(previewAvatar || userState.image) && (
+                  {(previewAvatar || userState.imageUrl) && (
                     <img
-                      src={previewAvatar ? previewAvatar : userState.image}
+                      src={previewAvatar ? previewAvatar : userState.imageUrl}
                       alt={userState.name}
                       className="avatar"
                     />
                   )}
-                  {!userState.image && !previewAvatar && (
+                  {!userState.imageUrl && !previewAvatar && (
                     <img
                       src={AvatarDefault}
                       alt={userState.name}
