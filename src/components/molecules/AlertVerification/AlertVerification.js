@@ -29,9 +29,9 @@ const AlertVerification = () => {
         </Wrapper>
       </>
     );
+  } else {
+    return null;
   }
-
-  return null;
 };
 
 export default AlertVerification;
