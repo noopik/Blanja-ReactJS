@@ -116,7 +116,7 @@ npm start
     <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631753879/Blanja%20com/Blanja_06_s0t7dp.png">
 </div>
 <div align="center">
-    <img width="700" src="https://res.cloudinary.com/dnv-images/image/upload/v1632580211/Blanja%20com/screencapture-blanja-vercel-app-admin-seller-selling-2021-09-25-19_23_20_1_krbikm.png">   
+    <img width="700" src="https://res.cloudinary.com/dnv-images/image/upload/v1632841719/Blanja_com/screencapture-blanja-vercel-app-admin-seller-selling-2021-09-28-22_07_18_1_esll4p.png">   
 </div>
 <div align="center">
     <img width="700" src="https://res.cloudinary.com/dnv-images/image/upload/v1632580226/Blanja%20com/screencapture-blanja-vercel-app-admin-seller-2021-09-25-19_23_00_1_g1grea.png">
