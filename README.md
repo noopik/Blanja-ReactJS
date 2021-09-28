@@ -112,7 +112,7 @@ npm start
     <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631751968/Blanja%20com/Blanja_04_kkuxbk.png">
 </div>
 <div align="center">
-    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631753876/Blanja%20com/Blanja_05_cbwnvu.png">   
+    <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1632842571/Blanja_com/06_Blanja_w7svxs.png">   
     <img width="350" src="https://res.cloudinary.com/dnv-images/image/upload/v1631753879/Blanja%20com/Blanja_06_s0t7dp.png">
 </div>
 <div align="center">
