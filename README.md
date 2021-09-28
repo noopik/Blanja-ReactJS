@@ -119,7 +119,7 @@ npm start
     <img width="700" src="https://res.cloudinary.com/dnv-images/image/upload/v1632841719/Blanja_com/screencapture-blanja-vercel-app-admin-seller-selling-2021-09-28-22_07_18_1_esll4p.png">   
 </div>
 <div align="center">
-    <img width="700" src="https://res.cloudinary.com/dnv-images/image/upload/v1632580226/Blanja%20com/screencapture-blanja-vercel-app-admin-seller-2021-09-25-19_23_00_1_g1grea.png">
+    <img width="700" src="https://res.cloudinary.com/dnv-images/image/upload/v1632841928/Blanja_com/screencapture-blanja-vercel-app-admin-seller-2021-09-28-22_11_27_1_dgoqpl.png">
 </div>
 
 ## Contact
